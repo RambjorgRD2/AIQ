@@ -1,0 +1,1283 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// UPDATE THIS: Link to your Notion intake form
+const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+---
+
+<Layout title="AIQ — Know Your AI Quotient">
+
+  <!-- ─── NAV ──────────────────────────────────────────── -->
+  <nav id="nav">
+    <div class="nav-inner container">
+      <a href="#" class="nav-logo" aria-label="AIQ Home">
+        <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#navGrad)">AIQ</text>
+          <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#navGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <defs>
+            <linearGradient id="navGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00CFFF"/>
+              <stop offset="1" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#society">Society</a></li>
+        <li><a href="#how">How It Works</a></li>
+      </ul>
+
+      <a href={NOTION_FORM_URL} class="btn-primary nav-cta" target="_blank" rel="noopener">
+        Join the Society
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <button class="nav-hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu glass" id="mobileMenu">
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#society" class="mobile-link">Society</a>
+    <a href="#how" class="mobile-link">How It Works</a>
+    <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener" style="margin-top:0.5rem">Join the Society</a>
+  </div>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section id="hero" class="grid-bg">
+    <!-- Glow blobs -->
+    <div class="glow-blob hero-glow-1"></div>
+    <div class="glow-blob hero-glow-2"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="chip">
+          <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#00CFFF"/></svg>
+          AI~Quotient
+        </div>
+        <h1 class="hero-headline">
+          Know Your<br />
+          <span class="gradient-text">AIQ.</span>
+        </h1>
+        <p class="hero-sub">
+          Your AI Quotient — the measure of how effectively you<br class="hero-br" />
+          think, work, and lead with artificial intelligence.
+        </p>
+        <div class="hero-ctas">
+          <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener">
+            Take the Assessment
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#society" class="btn-secondary">
+            Explore the Society
+          </a>
+        </div>
+        <p class="hero-note">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1a5.5 5.5 0 100 11A5.5 5.5 0 006.5 1zm0 5v3m0-5v1" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Free to join &mdash; no credit card required
+        </p>
+      </div>
+
+      <!-- Score ring -->
+      <div class="hero-visual animate-float">
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 200 200" width="240" height="240">
+            <!-- Outer decorative ring -->
+            <circle cx="100" cy="100" r="90" stroke="rgba(0,207,255,0.06)" stroke-width="1" fill="none"/>
+            <!-- Track -->
+            <circle
+              cx="100" cy="100" r="82"
+              stroke="rgba(0,207,255,0.1)"
+              stroke-width="12"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <!-- Arc — animated -->
+            <circle
+              id="scoreArc"
+              cx="100" cy="100" r="82"
+              stroke="url(#arcGrad)"
+              stroke-width="12"
+              fill="none"
+              stroke-linecap="round"
+              stroke-dasharray="515"
+              stroke-dashoffset="515"
+              transform="rotate(-90 100 100)"
+            />
+            <!-- Inner glow circle -->
+            <circle cx="100" cy="100" r="66" fill="rgba(0,207,255,0.03)" stroke="rgba(0,207,255,0.06)" stroke-width="1"/>
+
+            <!-- Score number -->
+            <text x="100" y="90" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="36" font-weight="700" fill="#E8F0FF" id="scoreNum">0</text>
+            <text x="100" y="112" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="500" fill="#6B7A99" letter-spacing="2">AI QUOTIENT</text>
+
+            <!-- Tier badge -->
+            <rect x="64" y="120" width="72" height="22" rx="11" fill="rgba(0,207,255,0.1)" stroke="rgba(0,207,255,0.25)" stroke-width="1"/>
+            <text x="100" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="9" font-weight="700" fill="#00CFFF" letter-spacing="1.5">ADVANCED</text>
+
+            <defs>
+              <linearGradient id="arcGrad" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00CFFF"/>
+                <stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+          </svg>
+
+          <!-- Orbiting dots -->
+          <div class="orbit-dot orbit-dot-1"></div>
+          <div class="orbit-dot orbit-dot-2"></div>
+          <div class="orbit-dot orbit-dot-3"></div>
+        </div>
+
+        <!-- Stat cards below ring -->
+        <div class="hero-stats">
+          <div class="stat-pill glass">
+            <span class="stat-num gradient-text">5K+</span>
+            <span class="stat-label">Members</span>
+          </div>
+          <div class="stat-pill glass">
+            <span class="stat-num gradient-text">40+</span>
+            <span class="stat-label">Courses</span>
+          </div>
+          <div class="stat-pill glass">
+            <span class="stat-num gradient-text">9</span>
+            <span class="stat-label">Tiers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint">
+      <div class="scroll-mouse"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT AIQ ─────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="chip">What is AIQ?</div>
+        <h2 class="section-title">
+          Intelligence, <span class="gradient-text">Measured.</span>
+        </h2>
+        <p class="section-sub">
+          AIQ is your AI Quotient — a composite measure of how fluently you think, apply, and lead with artificial intelligence across work, strategy, and life.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar glass reveal reveal-delay-1">
+          <div class="pillar-icon" style="--c:#00CFFF">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="currentColor" opacity=".2"/><path d="M9.5 3.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17z" stroke="#00CFFF" stroke-width="1.5" fill="none"/><path d="M7 12h5m0 0l-2-2m2 2l-2 2" stroke="#00CFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="9" r="1.5" fill="#00CFFF"/></svg>
+          </div>
+          <h3>Think</h3>
+          <p>How clearly you reason about AI — its possibilities, limits, and implications.</p>
+        </div>
+
+        <div class="pillar glass reveal reveal-delay-2">
+          <div class="pillar-icon" style="--c:#A855F7">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#A855F7" stroke-width="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#A855F7" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#A855F7" stroke-width="1.5"/><path d="M14 17.5h7M17.5 14v7" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Apply</h3>
+          <p>How effectively you use AI tools, workflows, and models to get real-world results.</p>
+        </div>
+
+        <div class="pillar glass reveal reveal-delay-3">
+          <div class="pillar-icon" style="--c:#EC4899">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.7l-4.9 2.5.9-5.5L4 8.8l5.5-.8L12 3z" stroke="#EC4899" stroke-width="1.5" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <h3>Lead</h3>
+          <p>How strategically you guide teams, decisions, and organizations through an AI-driven world.</p>
+        </div>
+      </div>
+
+      <!-- Score scale -->
+      <div class="score-scale reveal">
+        <p class="score-scale-label">AIQ Score Tiers</p>
+        <div class="scale-bar">
+          <div class="scale-fill"></div>
+          <div class="scale-markers">
+            <span class="scale-mark" style="left:0%">0</span>
+            <span class="scale-mark" style="left:22%">Aware</span>
+            <span class="scale-mark" style="left:44%">Practitioner</span>
+            <span class="scale-mark" style="left:67%">Advanced</span>
+            <span class="scale-mark" style="left:89%">Expert</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SOCIETY ───────────────────────────────────────── -->
+  <section id="society" class="society-section">
+    <div class="glow-blob society-glow"></div>
+    <div class="container">
+      <div class="society-grid">
+        <div class="society-left reveal">
+          <div class="chip">Members Community</div>
+          <h2 class="section-title">
+            The <span class="gradient-text-warm">SociA|~</span><br />Society
+          </h2>
+          <p class="section-sub" style="margin-bottom:2rem">
+            A curated community for people serious about mastering AI. Courses, live sessions, peer learning, and a path to real AI fluency — not hype.
+          </p>
+          <ul class="society-perks">
+            <li>
+              <div class="perk-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              Structured learning tracks by AIQ tier
+            </li>
+            <li>
+              <div class="perk-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              Live workshops & expert masterclasses
+            </li>
+            <li>
+              <div class="perk-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              AI tools, prompt libraries & playbooks
+            </li>
+            <li>
+              <div class="perk-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              Members-only community & accountability
+            </li>
+            <li>
+              <div class="perk-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#00CFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              AIQ certification upon completion
+            </li>
+          </ul>
+          <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener">
+            Join the Society
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="society-right reveal reveal-delay-2">
+          <div class="course-card glass">
+            <div class="course-card-header">
+              <span class="course-tag">Foundations</span>
+              <span class="course-level">Aware → Practitioner</span>
+            </div>
+            <h4>AI~Foundations</h4>
+            <p>Build your mental model of AI — what it is, how it thinks, and where to start.</p>
+            <div class="course-meta">
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 6 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 12 modules</span>
+            </div>
+          </div>
+
+          <div class="course-card glass">
+            <div class="course-card-header">
+              <span class="course-tag" style="background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.3);color:#A855F7">Advanced</span>
+              <span class="course-level">Practitioner → Advanced</span>
+            </div>
+            <h4>AI~Workflows</h4>
+            <p>Deploy AI into your actual work — automation, prompting, integrations, and systems thinking.</p>
+            <div class="course-meta">
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 10 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 20 modules</span>
+            </div>
+          </div>
+
+          <div class="course-card glass">
+            <div class="course-card-header">
+              <span class="course-tag" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);color:#EC4899">Expert</span>
+              <span class="course-level">Advanced → Expert</span>
+            </div>
+            <h4>AI~Leadership</h4>
+            <p>Lead AI strategy, change management, and organizational transformation.</p>
+            <div class="course-meta">
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 8 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 16 modules</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ──────────────────────────────────────── -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;margin:0 auto 3.5rem">
+        <div class="chip" style="justify-content:center">Everything included</div>
+        <h2 class="section-title">Built for serious AI learners</h2>
+        <p class="section-sub" style="margin:0 auto">Everything you need to go from curious to capable — and from capable to leading.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature glass reveal reveal-delay-1">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="url(#fg1)" stroke-width="1.5"/><path d="M7 11l3 3 5-5" stroke="url(#fg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fg1" x1="2" y1="2" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          </div>
+          <h3>AIQ Assessment</h3>
+          <p>Get a precise baseline score across Think, Apply, and Lead dimensions. Know exactly where you stand.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-2">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="url(#fg2)" stroke-width="1.5"/><path d="M7 8h8M7 11h5" stroke="url(#fg2)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="fg2" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs></svg>
+          </div>
+          <h3>Structured Courses</h3>
+          <p>Tier-based learning tracks designed to move you from where you are to where you want to be.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-3">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 16c0-2.8 2.2-5 5-5h4c2.8 0 5 2.2 5 5" stroke="url(#fg3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="8" r="3" stroke="url(#fg3)" stroke-width="1.5"/><defs><linearGradient id="fg3" x1="4" y1="3" x2="18" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+          </div>
+          <h3>Members Community</h3>
+          <p>Connect with peers, share wins, get feedback, and grow alongside other AI-fluent professionals.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-4">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 5h16M3 11h10M3 17h13" stroke="url(#fg4)" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="17" r="3" fill="none" stroke="url(#fg4)" stroke-width="1.5"/><defs><linearGradient id="fg4" x1="3" y1="5" x2="20" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+          </div>
+          <h3>Resources & Playbooks</h3>
+          <p>Curated prompt libraries, AI workflow templates, and tool guides — ready to use immediately.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-3">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2 6h6l-5 3.5 2 6L11 15l-5 3.5 2-6L3 9h6l2-6z" stroke="url(#fg5)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="fg5" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          </div>
+          <h3>Live Sessions</h3>
+          <p>Regular workshops, office hours, and expert masterclasses you can join live or watch on demand.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-4">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="13" width="14" height="7" rx="2" stroke="url(#fg6)" stroke-width="1.5"/><path d="M8 13V9a3 3 0 016 0v4" stroke="url(#fg6)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="17" r="1.2" fill="url(#fg6)"/><defs><linearGradient id="fg6" x1="4" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#00CFFF"/></linearGradient></defs></svg>
+          </div>
+          <h3>AIQ Certification</h3>
+          <p>Earn your verified AIQ certificate to showcase your AI fluency to employers, clients, and teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+  <section id="how" class="how-section grid-bg">
+    <div class="glow-blob how-glow"></div>
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;margin:0 auto 4rem">
+        <div class="chip" style="justify-content:center">The Process</div>
+        <h2 class="section-title">Three steps to AI fluency</h2>
+        <p class="section-sub" style="margin:0 auto">Simple, structured, and designed to create lasting results — not just surface knowledge.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal reveal-delay-1">
+          <div class="step-number">01</div>
+          <div class="step-connector"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="url(#sg1)" stroke-width="1.5"/><text x="14" y="19" text-anchor="middle" font-family="'JetBrains Mono'" font-size="13" font-weight="700" fill="url(#sg1)">?</text><defs><linearGradient id="sg1" x1="3" y1="3" x2="25" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+            </div>
+            <h3>Take the AIQ Assessment</h3>
+            <p>Answer a curated set of questions that measure your AI thinking, application, and leadership. Get your score in minutes.</p>
+          </div>
+        </div>
+
+        <div class="step reveal reveal-delay-2">
+          <div class="step-number">02</div>
+          <div class="step-connector"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="10" r="4" stroke="url(#sg2)" stroke-width="1.5"/><path d="M20 5l2 2-2 2" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="sg2" x1="6" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+            </div>
+            <h3>Join the SociA|~ Society</h3>
+            <p>Based on your score, you'll be placed in the right learning track. Access courses, community, and resources built for your level.</p>
+          </div>
+        </div>
+
+        <div class="step reveal reveal-delay-3">
+          <div class="step-number">03</div>
+          <div class="step-connector last"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 6 6.5 1-4.7 4.6 1.1 6.5L14 19.2 8.6 22.1l1.1-6.5L5 11l6.5-1L14 4z" stroke="url(#sg3)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="sg3" x1="5" y1="4" x2="23" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+            </div>
+            <h3>Level Up Your AIQ</h3>
+            <p>Track your growth over time. Retake the assessment, move through tiers, earn your certification, and lead with confidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section id="join" class="cta-section">
+    <div class="glow-blob cta-glow-1"></div>
+    <div class="glow-blob cta-glow-2"></div>
+    <div class="container">
+      <div class="cta-box glass reveal">
+        <div class="chip" style="justify-content:center">Ready?</div>
+        <h2 class="section-title" style="font-size:clamp(2.2rem,5vw,3.5rem);text-align:center">
+          The future belongs to the<br /><span class="gradient-text">highest AIQ.</span>
+        </h2>
+        <p style="color:var(--muted);font-size:1.1rem;max-width:480px;text-align:center;margin:0 auto 2.5rem">
+          Join the SociA|~ Society today. Take your assessment, find your tier, and start raising your AI~Quotient.
+        </p>
+        <div class="cta-buttons">
+          <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener" style="font-size:1.05rem;padding:1rem 2.5rem">
+            Join the Society — Free
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="hero-note" style="justify-content:center;margin-top:1.25rem">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1a5.5 5.5 0 100 11A5.5 5.5 0 006.5 1zm0 5v3m0-5v1" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
+          No credit card &bull; Takes 2 minutes &bull; Immediate access
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <a href="#" class="nav-logo" aria-label="AIQ Home">
+        <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
+          <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#footGrad)">AIQ</text>
+          <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#footGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <defs>
+            <linearGradient id="footGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00CFFF"/>
+              <stop offset="1" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+      <p class="footer-tagline">Know Your AIQ. Raise It.</p>
+      <nav class="footer-nav">
+        <a href="#about">About</a>
+        <a href="#society">Society</a>
+        <a href="#how">How It Works</a>
+        <a href={NOTION_FORM_URL} target="_blank" rel="noopener">Join</a>
+      </nav>
+      <p class="footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
+    </div>
+  </footer>
+
+</Layout>
+
+<!-- ─── STYLES ────────────────────────────────────────────── -->
+<style>
+  /* NAV */
+  #nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 1.5rem;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  #nav.scrolled {
+    background: rgba(4, 7, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(0, 207, 255, 0.08);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 72px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0 auto;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta { flex-shrink: 0; }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 1rem;
+    right: 1rem;
+    z-index: 99;
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 16px;
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .mobile-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px;
+    padding-bottom: 4rem;
+    overflow: hidden;
+  }
+
+  .hero-glow-1 {
+    width: 600px; height: 600px;
+    background: var(--cyan);
+    top: -100px; left: -200px;
+    opacity: 0.12;
+  }
+
+  .hero-glow-2 {
+    width: 500px; height: 500px;
+    background: var(--violet);
+    bottom: -50px; right: -100px;
+    opacity: 0.15;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content { max-width: 580px; }
+
+  .hero-headline {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease 0.15s forwards;
+    opacity: 0;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+    opacity: 0;
+  }
+
+  .hero-note {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    animation: fadeUp 0.8s ease 0.45s forwards;
+    opacity: 0;
+  }
+
+  .hero-br { display: none; }
+
+  /* Score ring */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  .score-ring-wrap {
+    position: relative;
+    width: 240px;
+    height: 240px;
+  }
+
+  .score-ring {
+    filter: drop-shadow(0 0 24px rgba(0, 207, 255, 0.25));
+  }
+
+  /* Orbiting dots */
+  .orbit-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+  }
+
+  .orbit-dot-1 {
+    animation: orbit1 8s linear infinite;
+    box-shadow: 0 0 8px var(--cyan);
+  }
+
+  .orbit-dot-2 {
+    background: var(--violet);
+    animation: orbit2 12s linear infinite;
+    box-shadow: 0 0 8px var(--violet);
+    width: 6px; height: 6px;
+  }
+
+  .orbit-dot-3 {
+    background: #EC4899;
+    animation: orbit3 16s linear infinite;
+    box-shadow: 0 0 8px #EC4899;
+    width: 5px; height: 5px;
+  }
+
+  @keyframes orbit1 {
+    from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+  }
+  @keyframes orbit2 {
+    from { transform: rotate(120deg) translateX(108px) rotate(-120deg); }
+    to   { transform: rotate(480deg) translateX(108px) rotate(-480deg); }
+  }
+  @keyframes orbit3 {
+    from { transform: rotate(240deg) translateX(100px) rotate(-240deg); }
+    to   { transform: rotate(600deg) translateX(100px) rotate(-600deg); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-16px); }
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    gap: 0.1rem;
+    min-width: 64px;
+  }
+
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    animation: fadeUp 1s ease 1s forwards;
+    opacity: 0;
+  }
+
+  .scroll-mouse {
+    width: 22px;
+    height: 36px;
+    border: 1.5px solid rgba(107, 122, 153, 0.4);
+    border-radius: 11px;
+    position: relative;
+  }
+
+  .scroll-mouse::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 6px;
+    background: var(--cyan);
+    border-radius: 2px;
+    animation: scrollDot 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDot {
+    0%, 100% { opacity: 1; top: 6px; }
+    50%        { opacity: 0; top: 18px; }
+  }
+
+  /* ABOUT */
+  .section-header { margin-bottom: 3rem; }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .pillar {
+    padding: 2rem;
+  }
+
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0, 207, 255, 0.06);
+    border: 1px solid rgba(0, 207, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .pillar h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+
+  /* Score scale */
+  .score-scale {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .score-scale-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .scale-bar {
+    position: relative;
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: visible;
+    margin-bottom: 2rem;
+  }
+
+  .scale-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #00CFFF, #A855F7, #EC4899);
+    border-radius: 4px;
+  }
+
+  .scale-markers {
+    position: relative;
+    height: 24px;
+    margin-top: 0.75rem;
+  }
+
+  .scale-mark {
+    position: absolute;
+    font-size: 0.72rem;
+    color: var(--muted);
+    transform: translateX(-50%);
+    font-weight: 500;
+  }
+
+  /* SOCIETY */
+  .society-section { overflow: hidden; }
+
+  .society-glow {
+    width: 700px; height: 700px;
+    background: var(--violet);
+    top: 50%; left: 60%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+  }
+
+  .society-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .society-perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .society-perks li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .perk-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 207, 255, 0.1);
+    border: 1px solid rgba(0, 207, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .society-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .course-card {
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .course-card:hover { transform: translateX(4px); }
+
+  .course-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 207, 255, 0.1);
+    border: 1px solid rgba(0, 207, 255, 0.25);
+    border-radius: 999px;
+    color: var(--cyan);
+  }
+
+  .course-level {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .course-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .course-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .course-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .feature {
+    padding: 1.75rem;
+  }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(0, 207, 255, 0.05);
+    border: 1px solid rgba(0, 207, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+  }
+
+  .feature h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* HOW IT WORKS */
+  .how-section { overflow: hidden; }
+
+  .how-glow {
+    width: 600px; height: 600px;
+    background: var(--cyan);
+    top: 50%; left: -100px;
+    transform: translateY(-50%);
+    opacity: 0.06;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .step-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-connector {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(to bottom, var(--cyan), transparent);
+    margin-bottom: 0;
+  }
+
+  .step-content {
+    padding: 1.75rem;
+    width: 100%;
+  }
+
+  .step-icon {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .step-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .step-content p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta-section { overflow: hidden; }
+
+  .cta-glow-1 {
+    width: 500px; height: 500px;
+    background: var(--cyan);
+    top: 0; left: 25%;
+    opacity: 0.08;
+  }
+
+  .cta-glow-2 {
+    width: 400px; height: 400px;
+    background: var(--violet);
+    bottom: 0; right: 20%;
+    opacity: 0.1;
+  }
+
+  .cta-box {
+    padding: 4rem 3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .cta-box .chip { margin-bottom: 1.25rem; }
+  .cta-box .section-title { margin-bottom: 1.25rem; }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--text); }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.5);
+    margin-top: 0.5rem;
+  }
+
+  /* ─── RESPONSIVE ───────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content { max-width: 100%; }
+
+    .hero-ctas { justify-content: center; }
+
+    .hero-note { justify-content: center; }
+
+    .hero-visual { margin: 0 auto; }
+
+    .hero-br { display: block; }
+
+    .pillars { grid-template-columns: 1fr; }
+
+    .society-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .steps { grid-template-columns: 1fr; }
+
+    .step-connector { display: none; }
+
+    .nav-links, .nav-cta { display: none; }
+
+    .nav-hamburger { display: flex; }
+
+    .mobile-menu { display: flex; }
+  }
+
+  @media (max-width: 560px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .cta-box { padding: 2.5rem 1.5rem; }
+    .hero-stats { gap: 0.5rem; }
+    .stat-pill { padding: 0.5rem 0.75rem; min-width: 54px; }
+  }
+</style>
+
+<!-- ─── SCRIPTS ─────────────────────────────────────────────── -->
+<script>
+  // Sticky nav on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav?.classList.add('scrolled');
+    else nav?.classList.remove('scrolled');
+  }, { passive: true });
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('open');
+  });
+
+  // Close mobile menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        (e.target as HTMLElement).classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Score ring animation
+  const arc = document.getElementById('scoreArc') as SVGCircleElement | null;
+  const numEl = document.getElementById('scoreNum');
+  const TARGET_SCORE = 847;
+  const MAX_SCORE = 1000;
+  const CIRCUMFERENCE = 515;
+  const targetOffset = CIRCUMFERENCE - (TARGET_SCORE / MAX_SCORE) * CIRCUMFERENCE;
+
+  function animateScore() {
+    if (!arc || !numEl) return;
+    const startTime = performance.now();
+    const duration = 1800;
+
+    function step(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+
+      // Arc
+      const currentOffset = CIRCUMFERENCE - eased * (CIRCUMFERENCE - targetOffset);
+      arc.style.strokeDashoffset = String(currentOffset);
+
+      // Number counter
+      const currentScore = Math.round(eased * TARGET_SCORE);
+      numEl.textContent = String(currentScore);
+
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // Trigger animation when hero visual enters viewport
+  const heroVisual = document.querySelector('.hero-visual');
+  const heroObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(animateScore, 400);
+      heroObs.disconnect();
+    }
+  }, { threshold: 0.3 });
+  if (heroVisual) heroObs.observe(heroVisual);
+</script>

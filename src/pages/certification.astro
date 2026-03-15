@@ -1,0 +1,238 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+---
+
+<Layout
+  title="AIQ Certification — Verified AI Quotient Credential"
+  description="Earn a verified AIQ Certificate. Complete your course track, demonstrate your AI fluency, and share a credential that signals real capability."
+>
+
+<nav class="p-nav">
+  <div class="p-nav-inner">
+    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#cn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#cn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="cn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">Take the Assessment →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="cert-hero grid-bg">
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--violet);top:-150px;right:-150px;opacity:0.12;"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:var(--cyan);bottom:-100px;left:-100px;opacity:0.08;"></div>
+  <div class="container">
+    <div class="cert-hero-inner">
+      <div>
+        <div class="chip reveal">Verified Credential</div>
+        <h1 class="cert-h1 reveal reveal-delay-1">
+          The AIQ <span class="gradient-text">Certificate.</span>
+        </h1>
+        <p class="cert-sub reveal reveal-delay-2">
+          A credential that signals real AI fluency — not just familiarity. Earned through demonstrated performance, not attendance. Verifiable, shareable, and meaningful to the people who matter.
+        </p>
+        <div class="cert-btns reveal reveal-delay-3">
+          <a href={`${base}/assessment`} class="btn-primary btn-lg">
+            Start with Your AIQ Score →
+          </a>
+          <a href={NOTION_URL} class="btn-secondary btn-lg" target="_blank" rel="noopener">Join the Society</a>
+        </div>
+      </div>
+      <div class="cert-visual reveal">
+        <div class="cert-card glass">
+          <div class="cert-card-top">
+            <svg width="48" height="20" viewBox="0 0 72 28" fill="none">
+              <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#cv1)">AIQ</text>
+              <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#cv1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              <defs><linearGradient id="cv1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+            </svg>
+            <span class="cert-card-verified">VERIFIED</span>
+          </div>
+          <div class="cert-card-name">AI~Workflows Certificate</div>
+          <div class="cert-card-holder">Your Name Here</div>
+          <div class="cert-card-tier">
+            <span class="cert-tier-label">AIQ Tier</span>
+            <span class="cert-tier-val gradient-text">5 — Advanced</span>
+          </div>
+          <div class="cert-card-dims">
+            <div class="cert-dim"><span>Think</span><span class="cd-val">72</span></div>
+            <div class="cert-dim"><span>Apply</span><span class="cd-val">81</span></div>
+            <div class="cert-dim"><span>Lead</span><span class="cd-val">64</span></div>
+          </div>
+          <div class="cert-card-footer">
+            <span class="cert-issued">Issued via SociA|~ Society</span>
+            <span class="cert-id">AIQ-2025-XXXX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO EARN IT -->
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">How to Earn It</div>
+      <h2 class="section-title">Four steps to your AIQ Certificate.</h2>
+    </div>
+    <div class="steps-list">
+      {[
+        {step:'01', title:'Take the AIQ Assessment', desc:'Your score places you in one of the three course tracks. Free, no account required, takes 8 minutes.', link: base + '/assessment', linkText: 'Start Now →'},
+        {step:'02', title:'Join the SociA|~ Society', desc:'Get access to your tier-appropriate course track, live sessions, and the practitioner community.', link: NOTION_URL, linkText: 'Join Now →'},
+        {step:'03', title:'Complete Your Course Track', desc:'Work through all modules in AI~Foundations, AI~Workflows, or AI~Leadership — at your own pace.', link: base + '/society', linkText: 'View Tracks →'},
+        {step:'04', title:'Pass the Capstone Assessment', desc:'Demonstrate your skills through the track\'s capstone assessment. Your AIQ score updates and your certificate is issued.', link: null, linkText: null},
+      ].map(s => (
+        <div class="step-card glass reveal">
+          <div class="step-num">{s.step}</div>
+          <div class="step-body">
+            <h3 class="step-title">{s.title}</h3>
+            <p class="step-desc">{s.desc}</p>
+            {s.link && <a href={s.link} class="step-link">{s.linkText}</a>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT SIGNALS -->
+<section class="p-section cert-signals-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">What It Signals</div>
+      <h2 class="section-title">More than a certificate.</h2>
+      <p class="section-sub">The AIQ Certificate is a performance-based credential. It tells employers, collaborators, and clients exactly where you stand.</p>
+    </div>
+    <div class="signals-grid">
+      {[
+        {title:'Demonstrated Performance', desc:'Unlike attendance certificates, AIQ is earned through the assessment — which tests real decision-making, not recall.'},
+        {title:'Standardised Score', desc:'Your Think, Apply, and Lead scores provide a granular picture of where your AI fluency is strongest.'},
+        {title:'Independently Positioned', desc:'Grounded in peer-reviewed AIQ research (Ganuthula & Balaraman, 2025) and used by practitioners at KPMG, VCII, and ITPro.'},
+        {title:'Growth-Trackable', desc:'Retake every 90 days. Your certificate reflects your most recent score — so it grows with you.'},
+        {title:'LinkedIn-Ready', desc:'Share directly to LinkedIn with your tier, score, and track completion. Signals AI leadership to hiring managers.'},
+        {title:'Community-Backed', desc:'Certificate holders are part of the SociA|~ Society — a community that verifies the credential through shared standards.'},
+      ].map(s => (
+        <div class="signal-card glass reveal">
+          <h3 class="signal-title">{s.title}</h3>
+          <p class="signal-desc">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC CREDIBILITY -->
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">Academic Foundation</div>
+      <h2 class="section-title">Grounded in research.</h2>
+      <p class="section-sub">AIQ is not proprietary terminology — it's an emerging field with peer-reviewed academic backing.</p>
+    </div>
+    <div class="research-list">
+      {[
+        {author:'Ganuthula & Balaraman (2025)', title:'"AIQ Framework"', journal:'Springer Nature — peer-reviewed, open access', note:'Defines the multi-dimensional AIQ framework that informs this assessment.'},
+        {author:'Dr. Kai-Fu Lee', title:'"AI Superpowers" (2018)', journal:'Harper Business', note:'Coined the term AI Quotient — establishing AIQ as a measure of individual AI readiness.'},
+        {author:'GLAT (2025)', title:'Global AI Literacy Assessment Test', journal:'ScienceDirect — Computers and Education: Artificial Intelligence', note:'First validated performance-based AI literacy test, establishing gold-standard evaluation methodology.'},
+      ].map(r => (
+        <div class="research-card glass reveal">
+          <div class="research-author">{r.author}</div>
+          <div class="research-title">{r.title}</div>
+          <div class="research-journal">{r.journal}</div>
+          <div class="research-note">{r.note}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="p-section p-cta-section">
+  <div class="container">
+    <div class="glass cta-block reveal">
+      <div class="glow-blob" style="width:300px;height:300px;background:var(--cyan);top:-100px;left:-80px;opacity:0.08;"></div>
+      <div class="chip" style="margin-bottom:1.5rem">Start Today</div>
+      <h2 class="cta-block-h2">Your AIQ starts with a score.</h2>
+      <p class="cta-block-sub">Take the free assessment, find your tier, join the Society, and earn a credential that grows with your practice.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
+        <a href={`${base}/assessment`} class="btn-primary btn-lg">Take the Assessment →</a>
+        <a href={NOTION_URL} class="btn-secondary btn-lg" target="_blank" rel="noopener">Join the Society</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .p-nav{position:sticky;top:0;z-index:100;background:rgba(4,7,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,207,255,0.08);height:60px}
+  .p-nav-inner{max-width:1140px;margin:0 auto;height:100%;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between}
+  .p-nav-logo{display:flex;align-items:center;text-decoration:none}
+  .p-nav-cta{font-size:0.85rem;padding:0.55rem 1.25rem}
+
+  .cert-hero{padding:6rem 1.5rem 5rem;position:relative;overflow:hidden}
+  .cert-hero-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center}
+  @media(max-width:700px){.cert-hero-inner{grid-template-columns:1fr}}
+  .cert-h1{font-size:clamp(2.25rem,5vw,3.5rem);font-weight:800;font-family:'Space Grotesk',sans-serif;margin:1rem 0 1.25rem;line-height:1.15}
+  .cert-sub{color:var(--muted);font-size:1.05rem;line-height:1.75;max-width:500px;margin-bottom:2rem}
+  .cert-btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-lg{padding:1rem 2.25rem;font-size:1rem}
+
+  /* Certificate visual */
+  .cert-card{padding:1.75rem;min-width:240px;max-width:280px}
+  .cert-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+  .cert-card-verified{font-size:0.62rem;font-weight:800;letter-spacing:0.12em;color:var(--cyan);font-family:'Space Grotesk',sans-serif;border:1px solid rgba(0,207,255,0.3);padding:0.2rem 0.5rem;border-radius:4px}
+  .cert-card-name{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.35rem}
+  .cert-card-holder{font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem}
+  .cert-card-tier{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(0,207,255,0.1)}
+  .cert-tier-label{font-size:0.72rem;color:var(--muted);font-family:'Space Grotesk',sans-serif}
+  .cert-tier-val{font-size:0.9rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
+  .cert-card-dims{display:flex;gap:1rem;margin-bottom:1.25rem}
+  .cert-dim{display:flex;flex-direction:column;align-items:center;gap:0.2rem;flex:1}
+  .cert-dim span:first-child{font-size:0.65rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+  .cd-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--text)}
+  .cert-card-footer{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted)}
+  .cert-id{font-family:'JetBrains Mono',monospace}
+
+  .p-section{padding:5rem 1.5rem}
+  .p-section-head{margin-bottom:3rem}
+  .cert-signals-section{background:rgba(8,13,26,0.5)}
+
+  .steps-list{display:flex;flex-direction:column;gap:1rem;max-width:720px}
+  .step-card{display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem 1.75rem}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--cyan);opacity:0.5;flex-shrink:0;line-height:1}
+  .step-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.4rem}
+  .step-desc{font-size:0.9rem;color:var(--muted);line-height:1.65;margin-bottom:0.75rem}
+  .step-link{font-size:0.85rem;font-weight:600;color:var(--cyan);font-family:'Space Grotesk',sans-serif;text-decoration:none}
+  .step-link:hover{text-decoration:underline}
+
+  .signals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem}
+  .signal-card{padding:1.75rem}
+  .signal-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.6rem}
+  .signal-desc{font-size:0.9rem;color:var(--muted);line-height:1.65}
+
+  .research-list{display:flex;flex-direction:column;gap:1rem;max-width:760px}
+  .research-card{padding:1.5rem 1.75rem}
+  .research-author{font-family:'Space Grotesk',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.05em;color:var(--cyan);margin-bottom:0.3rem}
+  .research-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.25rem}
+  .research-journal{font-size:0.82rem;color:var(--muted);margin-bottom:0.6rem}
+  .research-note{font-size:0.87rem;color:var(--muted);line-height:1.6}
+
+  .p-cta-section{padding:4rem 1.5rem 7rem}
+  .cta-block{max-width:680px;margin:0 auto;padding:3.5rem;text-align:center;position:relative;overflow:hidden}
+  .cta-block-h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:800;margin-bottom:1rem}
+  .cta-block-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:480px;margin:0 auto}
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</Layout>

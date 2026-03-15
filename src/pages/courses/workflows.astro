@@ -1,0 +1,189 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+
+const modules = [
+  { num:'01', title:'From User to Practitioner', desc:'The mindset shift that separates occasional users from people who consistently get results.' },
+  { num:'02', title:'Advanced Prompt Engineering', desc:'Chain-of-thought, few-shot examples, role framing, and constraint-setting — the full toolkit.' },
+  { num:'03', title:'Designing AI Workflows', desc:'Map your tasks. Identify where AI adds leverage. Build repeatable systems, not one-off experiments.' },
+  { num:'04', title:'Prompt Libraries & Templates', desc:'Build a personal prompt library. Document what works and why. Share it with your team.' },
+  { num:'05', title:'AI for Strategic Research', desc:'Go beyond search. Use AI to synthesise, compare, and generate insights from complex information.' },
+  { num:'06', title:'Writing with AI at Pro Level', desc:'From first draft to final polish. How to keep your voice while multiplying your output.' },
+  { num:'07', title:'Data Analysis & AI', desc:'Turn raw data into clear narratives. AI-assisted analysis for non-data scientists.' },
+  { num:'08', title:'AI in Your Tech Stack', desc:'Integrations, automation, and how to connect AI to the tools you already use.' },
+  { num:'09', title:'Managing AI Quality', desc:'Review processes, error patterns, and building quality checks into your workflow.' },
+  { num:'10', title:'Team AI Adoption', desc:'Getting your immediate team using AI effectively — without mandates or resistance.' },
+  { num:'11', title:'Measuring AI Impact', desc:'How to know if AI is actually making a difference. Metrics that matter.' },
+  { num:'12', title:'AI for Creativity & Ideation', desc:'Brainstorming, concept development, and using AI as a thinking partner.' },
+  { num:'13', title:'Building with No-Code AI', desc:'Automate, create, and solve with AI tools that don\'t require programming.' },
+  { num:'14', title:'Workflow Automation Deep Dive', desc:'Zapier, Make, n8n — connecting AI to your business processes without developers.' },
+  { num:'15', title:'Personal AI Operating System', desc:'Design your own system. How to run your work with AI as an integrated co-pilot.' },
+  { num:'16', title:'Critical Thinking with AI', desc:'When to trust AI, when to push back, and how to spot the errors that look like good answers.' },
+  { num:'17', title:'AI Communication & Transparency', desc:'Attribution, disclosure, and professional integrity in an AI-assisted world.' },
+  { num:'18', title:'Domain-Specific AI Applications', desc:'Deep dives into AI for your specific field — business, creative, technical, and education.' },
+  { num:'19', title:'Staying Current', desc:'How to track AI developments without drowning in noise. A system for continuous learning.' },
+  { num:'20', title:'Workflows Assessment', desc:'Capstone project and AIQ reassessment. Demonstrate your Applied skills and unlock AI~Leadership.' },
+];
+---
+
+<Layout
+  title="AI~Workflows — AIQ Course Track"
+  description="Design repeatable AI systems and integrate AI into your daily work at a professional level. 10 hours, 20 modules, Tiers 3–6."
+>
+
+<nav class="p-nav">
+  <div class="p-nav-inner">
+    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#wn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#wn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="wn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">Take the Assessment →</a>
+  </div>
+</nav>
+
+<section class="course-hero grid-bg">
+  <div class="glow-blob" style="width:500px;height:400px;background:var(--violet);top:-120px;right:-80px;opacity:0.14;"></div>
+  <div class="container">
+    <div class="course-hero-inner">
+      <div>
+        <div class="tier-badge reveal">Tiers 3 – 6</div>
+        <h1 class="course-h1 reveal reveal-delay-1">AI<span class="tilde">~</span>Workflows</h1>
+        <p class="course-sub reveal reveal-delay-2">
+          Move from ad-hoc AI use to intentional, repeatable systems. Master advanced prompting, workflow design, and team adoption — and make AI a genuine multiplier on everything you do.
+        </p>
+        <div class="course-meta reveal reveal-delay-3">
+          <span class="meta-pill">10 hours</span>
+          <span class="meta-pill">20 modules</span>
+          <span class="meta-pill">Tiers 3–6</span>
+          <span class="meta-pill">Practitioner → Advanced</span>
+        </div>
+        <div class="course-btns reveal reveal-delay-4">
+          <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">
+            Enrol in AI~Workflows →
+          </a>
+          <a href={`${base}/assessment`} class="btn-secondary btn-lg">Check Your Tier First</a>
+        </div>
+      </div>
+      <div class="course-badge-wrap reveal">
+        <div class="course-badge glass">
+          <div class="cb-label">COURSE TRACK</div>
+          <div class="cb-name gradient-text">Workflows</div>
+          <div class="cb-tiers">Tier 3 → Tier 6</div>
+          <div class="cb-divider"></div>
+          <div class="cb-stat"><span>20</span> Modules</div>
+          <div class="cb-stat"><span>10</span> Hours</div>
+          <div class="cb-stat"><span>1</span> Certificate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">Who This Is For</div>
+      <h2 class="section-title">You belong here if…</h2>
+    </div>
+    <div class="for-grid">
+      {[
+        'You already use AI but your results are inconsistent',
+        'You want to build systems, not just write prompts',
+        'You\'re responsible for your own productivity and need AI to multiply it',
+        'You want to introduce AI to your team without forcing it',
+        'Your AIQ score placed you at Tier 3, 4, or 5',
+        'You completed AI~Foundations and are ready to go deeper',
+      ].map(item => (
+        <div class="for-item glass reveal"><span class="for-check">✓</span><span>{item}</span></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="p-section modules-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">20 Modules</div>
+      <h2 class="section-title">The complete curriculum.</h2>
+    </div>
+    <div class="modules-grid">
+      {modules.map((m, i) => (
+        <div class={`module-card glass reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}`}>
+          <div class="mod-num">{m.num}</div>
+          <div>
+            <div class="mod-title">{m.title}</div>
+            <div class="mod-desc">{m.desc}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="p-section p-cta-section">
+  <div class="container">
+    <div class="glass cta-block reveal">
+      <div class="chip" style="margin-bottom:1.5rem">Next Level</div>
+      <h2 class="cta-block-h2">From practitioner to system builder.</h2>
+      <p class="cta-block-sub">Join the SociA|~ Society and get immediate access to AI~Workflows — plus AI~Leadership when you're ready to scale.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
+        <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">Join & Enrol Now →</a>
+        <a href={`${base}/courses/leadership`} class="btn-secondary btn-lg">Next Track: AI~Leadership</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .p-nav{position:sticky;top:0;z-index:100;background:rgba(4,7,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,207,255,0.08);height:60px}
+  .p-nav-inner{max-width:1140px;margin:0 auto;height:100%;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between}
+  .p-nav-logo{display:flex;align-items:center;text-decoration:none}
+  .p-nav-cta{font-size:0.85rem;padding:0.55rem 1.25rem}
+  .course-hero{padding:6rem 1.5rem 5rem;position:relative;overflow:hidden}
+  .course-hero-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center}
+  @media(max-width:700px){.course-hero-inner{grid-template-columns:1fr}}
+  .tier-badge{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.1);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;color:#a855f7;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;margin-bottom:1rem}
+  .course-h1{font-size:clamp(2.5rem,5vw,3.75rem);font-weight:800;font-family:'Space Grotesk',sans-serif;margin-bottom:1.25rem;line-height:1.1}
+  .tilde{background:linear-gradient(135deg,#00CFFF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .course-sub{color:var(--muted);font-size:1.1rem;line-height:1.75;margin-bottom:2rem;max-width:520px}
+  .course-meta{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
+  .meta-pill{padding:0.35rem 0.85rem;border-radius:999px;border:1px solid rgba(0,207,255,0.15);background:rgba(0,207,255,0.05);font-size:0.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+  .course-btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-lg{padding:1rem 2.25rem;font-size:1rem}
+  .course-badge-wrap{flex-shrink:0}
+  .course-badge{padding:2rem;min-width:180px;text-align:center}
+  .cb-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Grotesk',sans-serif;margin-bottom:0.5rem}
+  .cb-name{font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;margin-bottom:0.25rem}
+  .cb-tiers{font-size:0.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:1.25rem}
+  .cb-divider{height:1px;background:rgba(0,207,255,0.1);margin-bottom:1.25rem}
+  .cb-stat{font-size:0.85rem;color:var(--muted);margin-bottom:0.4rem}
+  .cb-stat span{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.1rem;color:var(--cyan)}
+  .p-section{padding:5rem 1.5rem}
+  .p-section-head{margin-bottom:3rem}
+  .modules-section{background:rgba(8,13,26,0.5)}
+  .for-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .for-item{display:flex;align-items:flex-start;gap:0.75rem;padding:1.1rem 1.25rem;font-size:0.9rem;color:var(--muted)}
+  .for-check{color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+  .modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+  .module-card{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem 1.5rem}
+  .mod-num{font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;color:var(--cyan);opacity:0.7;flex-shrink:0;margin-top:2px}
+  .mod-title{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.35rem}
+  .mod-desc{font-size:0.83rem;color:var(--muted);line-height:1.5}
+  .p-cta-section{padding:4rem 1.5rem 7rem}
+  .cta-block{max-width:680px;margin:0 auto;padding:3.5rem;text-align:center;position:relative;overflow:hidden}
+  .cta-block-h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:800;margin-bottom:1rem}
+  .cta-block-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:480px;margin:0 auto}
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</Layout>

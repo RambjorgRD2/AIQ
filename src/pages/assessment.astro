@@ -1,0 +1,1132 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="AIQ Assessment — Discover Your AI Quotient"
+  description="22 questions. ~8 minutes. Find out how effectively you think, work, and lead with AI."
+>
+
+<!-- NAV -->
+<nav class="a-nav">
+  <div class="a-nav-inner">
+    <a href={`${import.meta.env.BASE_URL}`} class="a-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#g1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#g1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <span id="nav-progress" class="a-nav-prog"></span>
+  </div>
+</nav>
+
+<!-- ── STAGES ────────────────────────────────────────── -->
+<div id="aiq-app">
+
+  <!-- STAGE 1: WELCOME -->
+  <div id="s-welcome" class="stage">
+    <div class="stage-body center-body">
+      <div class="chip" style="margin-bottom:1.5rem">AI~Quotient Assessment</div>
+      <h1 class="welcome-h1">Know Your <span class="gradient-text">AIQ.</span></h1>
+      <p class="welcome-sub">Discover how effectively you think, work, and lead with AI — in under 10 minutes.</p>
+
+      <div class="welcome-meta">
+        <span>22 questions</span>
+        <span class="sep">·</span>
+        <span>~8 minutes</span>
+        <span class="sep">·</span>
+        <span>9 tiers</span>
+      </div>
+
+      <div class="dims-row">
+        <div class="dim-badge dim-think">
+          <span class="dim-name">THINK</span>
+          <span class="dim-pct">35%</span>
+        </div>
+        <div class="dim-badge dim-apply">
+          <span class="dim-name">APPLY</span>
+          <span class="dim-pct">45%</span>
+        </div>
+        <div class="dim-badge dim-lead">
+          <span class="dim-name">LEAD</span>
+          <span class="dim-pct">20%</span>
+        </div>
+      </div>
+
+      <button id="btn-start" class="btn-primary btn-lg">
+        Start Assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <p class="fine-print">Free · No account required · Results saved locally</p>
+    </div>
+  </div>
+
+  <!-- STAGE 2: CONTEXTUALISE -->
+  <div id="s-context" class="stage" style="display:none">
+    <div class="stage-body stage-narrow">
+      <div class="chip" style="margin-bottom:1rem">Step 1 of 2 — About You</div>
+      <h2 class="stage-h2">Personalise your results</h2>
+      <p class="stage-sub">Takes 30 seconds. Drives adaptive question routing and personalised insights.</p>
+
+      <div class="ctx-group" data-group="role">
+        <div class="ctx-label">Your Role</div>
+        <div class="ctx-chips">
+          <button class="ctx-chip" data-value="individual">Individual Contributor</button>
+          <button class="ctx-chip" data-value="manager">Manager</button>
+          <button class="ctx-chip" data-value="executive">Executive</button>
+          <button class="ctx-chip" data-value="student">Student / Learning</button>
+        </div>
+      </div>
+
+      <div class="ctx-group" data-group="domain">
+        <div class="ctx-label">Your Domain</div>
+        <div class="ctx-chips">
+          <button class="ctx-chip" data-value="business">Business</button>
+          <button class="ctx-chip" data-value="creative">Creative</button>
+          <button class="ctx-chip" data-value="technical">Technical</button>
+          <button class="ctx-chip" data-value="education">Education</button>
+          <button class="ctx-chip" data-value="healthcare">Healthcare</button>
+          <button class="ctx-chip" data-value="other">Other</button>
+        </div>
+      </div>
+
+      <div class="ctx-group" data-group="experience">
+        <div class="ctx-label">AI Experience</div>
+        <div class="ctx-chips">
+          <button class="ctx-chip" data-value="never">Never used AI tools</button>
+          <button class="ctx-chip" data-value="occasional">Occasional use</button>
+          <button class="ctx-chip" data-value="regular">Use AI regularly</button>
+          <button class="ctx-chip" data-value="build">Build with AI</button>
+        </div>
+      </div>
+
+      <div class="ctx-group" data-group="goal">
+        <div class="ctx-label">Primary Goal</div>
+        <div class="ctx-chips">
+          <button class="ctx-chip" data-value="productivity">Personal productivity</button>
+          <button class="ctx-chip" data-value="career">Career advancement</button>
+          <button class="ctx-chip" data-value="team">Team leadership</button>
+          <button class="ctx-chip" data-value="transformation">Business transformation</button>
+        </div>
+      </div>
+
+      <button id="btn-ctx-start" class="btn-primary btn-lg" disabled>
+        Begin Assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STAGE 3: QUESTION -->
+  <div id="s-question" class="stage" style="display:none">
+    <div class="stage-body stage-narrow">
+      <div class="q-top">
+        <span id="q-section-label" class="chip"></span>
+        <span id="q-num" class="q-num-text"></span>
+      </div>
+      <div class="q-progress-track">
+        <div id="q-progress-fill" class="q-progress-fill"></div>
+      </div>
+      <div id="q-content" class="q-content"></div>
+      <button id="btn-next" class="btn-primary btn-lg" disabled>
+        Next
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STAGE 4: CALCULATING -->
+  <div id="s-calc" class="stage" style="display:none">
+    <div class="stage-body center-body">
+      <div class="calc-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(0,207,255,0.15)" stroke-width="4"/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke="#00CFFF" stroke-width="4"
+            stroke-dasharray="213" stroke-dashoffset="213" stroke-linecap="round"
+            transform="rotate(-90 40 40)" id="calc-arc"/>
+        </svg>
+      </div>
+      <h2 class="calc-h2">Calculating your AIQ</h2>
+      <p class="calc-sub">Analysing Think · Apply · Lead dimensions</p>
+    </div>
+  </div>
+
+</div><!-- /aiq-app -->
+
+<style>
+  /* ── NAV ──────────────────────────────────────────── */
+  .a-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4, 7, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+    height: 60px;
+  }
+  .a-nav-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .a-nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .a-nav-prog {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── APP CONTAINER ──────────────────────────────── */
+  #aiq-app { min-height: calc(100vh - 60px); }
+
+  /* ── STAGE SYSTEM ───────────────────────────────── */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 60px);
+  }
+  .stage-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    width: 100%;
+  }
+  .stage-narrow { max-width: 620px; }
+  .center-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 5rem;
+  }
+
+  /* ── WELCOME STAGE ──────────────────────────────── */
+  .welcome-h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+  }
+  .welcome-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  .welcome-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .welcome-meta .sep { opacity: 0.4; }
+  .dims-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dim-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid;
+    min-width: 90px;
+  }
+  .dim-badge.dim-think { border-color: rgba(0,207,255,0.3); background: rgba(0,207,255,0.06); }
+  .dim-badge.dim-apply { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.08); }
+  .dim-badge.dim-lead  { border-color: rgba(0,207,255,0.2); background: rgba(0,207,255,0.04); }
+  .dim-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .dim-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00CFFF, #7C3AED);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .btn-lg { padding: 1rem 2.5rem; font-size: 1rem; }
+  .fine-print {
+    margin-top: 1.25rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  /* ── CONTEXT STAGE ──────────────────────────────── */
+  .stage-h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 0.75rem;
+  }
+  .stage-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.65;
+  }
+  .ctx-group { margin-bottom: 2rem; }
+  .ctx-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .ctx-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ctx-chip {
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0,207,255,0.18);
+    background: transparent;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ctx-chip:hover {
+    border-color: rgba(0,207,255,0.4);
+    background: rgba(0,207,255,0.05);
+  }
+  .ctx-chip.selected {
+    border-color: var(--cyan);
+    background: rgba(0,207,255,0.12);
+    color: var(--text);
+  }
+
+  /* ── QUESTION STAGE ─────────────────────────────── */
+  .q-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .q-num-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .q-progress-track {
+    height: 3px;
+    background: rgba(0,207,255,0.1);
+    border-radius: 999px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+  .q-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00CFFF, #7C3AED);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .q-content {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .q-scenario {
+    background: rgba(0,207,255,0.05);
+    border: 1px solid rgba(0,207,255,0.15);
+    border-left: 3px solid var(--cyan);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .q-scenario-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .q-scenario-body {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .q-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 1.75rem;
+    color: var(--text);
+  }
+  .q-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(10, 18, 40, 0.6);
+    border: 1px solid rgba(0,207,255,0.12);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .option-card:hover {
+    border-color: rgba(0,207,255,0.32);
+    background: rgba(0,207,255,0.04);
+  }
+  .option-card.selected {
+    border-color: var(--cyan);
+    background: rgba(0,207,255,0.09);
+    box-shadow: 0 0 20px rgba(0,207,255,0.1);
+  }
+  .option-letter {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,207,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .option-card.selected .option-letter {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    color: #04070F;
+  }
+  .option-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text);
+    padding-top: 3px;
+  }
+
+  /* ── CALCULATING STAGE ──────────────────────────── */
+  .calc-ring {
+    margin-bottom: 2rem;
+    animation: calcSpin 1.4s ease-in-out infinite;
+  }
+  @keyframes calcSpin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  #calc-arc {
+    animation: calcFill 2s ease-in-out infinite alternate;
+  }
+  @keyframes calcFill {
+    from { stroke-dashoffset: 180; }
+    to   { stroke-dashoffset: 40; }
+  }
+  .calc-h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .calc-sub { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── DISABLED BTN OVERRIDE ──────────────────────── */
+  .btn-primary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+</style>
+
+<script>
+(function () {
+  // ─────────────────────────────────────────────────────
+  //  QUESTION DATA
+  // ─────────────────────────────────────────────────────
+  // d = dimensions: t=think, a=apply, l=lead (weights, sum to 1)
+  // c = correct option index (0-based)
+  // ctx = optional scenario context (null if none)
+
+  const QA = [
+    {id:'A1', sl:'AI AWARENESS', d:{t:1},
+     q:'Which best describes how large language models (LLMs) generate text?',
+     ctx:null,
+     opts:['They search the internet in real time and synthesise the best answers',
+           'They predict the most likely next token based on patterns learned during training',
+           'They retrieve pre-written answers from a curated knowledge base',
+           'They simulate human reasoning by running logical inference rules'],
+     c:1},
+    {id:'A2', sl:'AI AWARENESS', d:{t:1},
+     q:'You ask AI to draft a legal contract. It produces a confident, well-formatted document. What\'s the most important next step?',
+     ctx:null,
+     opts:['Run it through a grammar and spell-checker',
+           'Ask the AI to review its own work for accuracy',
+           'Have a qualified lawyer review it for accuracy and legal compliance',
+           'Format it to match your company\'s standard template'],
+     c:2},
+    {id:'A3', sl:'AI AWARENESS', d:{t:1},
+     q:'What does "hallucination" mean in the context of AI language models?',
+     ctx:null,
+     opts:['The model creates visual imagery when processing complex text',
+           'The model generates confident-sounding but factually incorrect information',
+           'The model becomes confused when given contradictory instructions',
+           'The model starts repeating the same output in a loop'],
+     c:1},
+    {id:'A4', sl:'AI AWARENESS', d:{t:1},
+     q:'Which statement about AI model "context windows" is most accurate?',
+     ctx:null,
+     opts:['They determine how many users can access the model simultaneously',
+           'They set a daily usage limit that resets every 24 hours',
+           'They define the maximum amount of text (input + output) the model can process at once',
+           'They control the creativity and randomness of model responses'],
+     c:2},
+  ];
+
+  const QBe = [
+    {id:'B1e', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You want AI to summarise an article for your manager. Which prompt gets the best result?',
+     ctx:null,
+     opts:['"Summarise this."',
+           '"Please summarise this article for me, thanks."',
+           '"Summarise this article in 3 bullet points, focusing on the key business implications, for a non-technical manager."',
+           '"Article summary needed ASAP."'],
+     c:2},
+    {id:'B2e', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You ask AI a question and get a vague, generic response. What should you do first?',
+     ctx:null,
+     opts:['Accept the answer — AI is often vague on complex topics',
+           'Ask the exact same question again',
+           'Rephrase your question with more specific detail about what you actually need',
+           'Switch to a different AI tool'],
+     c:2},
+    {id:'B3e', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You want AI to write a job description. What information should you provide?',
+     ctx:null,
+     opts:['Just the job title',
+           'Ask AI to write a generic version for that role, then edit it',
+           'The job title, key responsibilities, required skills, team context, and preferred tone',
+           'Paste a competitor\'s job description and ask AI to rewrite it'],
+     c:2},
+    {id:'B4e', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'What is the most appropriate response to this AI output?',
+     ctx:'An AI states: "The global EV market will reach $800 billion by 2027." No sources are cited.',
+     opts:['Use the statistic — AI is usually accurate on market data',
+           'Ask AI to expand the analysis further',
+           'Verify this specific claim in a primary source before using it',
+           'Ask AI to add citations (it will generate accurate ones)'],
+     c:2},
+    {id:'B5e', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'What is the main issue with this AI response?',
+     ctx:'You ask: "What\'s the best marketing strategy?" AI responds: "The best marketing strategy depends on your goals, audience, and budget."',
+     opts:['It\'s too short to be useful',
+           'It\'s technically correct but gives no actionable guidance — the question needed more context',
+           'The AI is wrong — there is one universally best strategy',
+           'You should have used a marketing-specific AI tool'],
+     c:1},
+  ];
+
+  const QBs = [
+    {id:'B1s', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You need a 500-word blog introduction about remote work trends for HR managers. Which prompt gets the best result?',
+     ctx:null,
+     opts:['"Write a blog post about remote work."',
+           '"Write about remote work trends in 500 words."',
+           '"Write a compelling 500-word introduction for a blog post targeting HR managers about 3 emerging remote work trends in 2025. Tone: conversational but authoritative. End with a hook into the main article."',
+           '"You are a writer. Write about remote work trends. Make it good."'],
+     c:2},
+    {id:'B2s', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You\'re getting generic AI answers on a complex topic. Which technique most improves quality?',
+     ctx:null,
+     opts:['Ask the same question multiple times until you get a better response',
+           'Make the question shorter and simpler',
+           'Add role context, specify the output format, and provide an example of what "good" looks like',
+           'Add "please" and "thank you" to increase response quality'],
+     c:2},
+    {id:'B3s', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You need AI to categorise customer feedback. Which prompt approach works best?',
+     ctx:null,
+     opts:['"Analyse this customer feedback: [text]"',
+           '"Read this feedback and tell me what you think."',
+           '"Summarise this for me: [text]"',
+           '"You are a customer insights analyst. Categorise the following feedback into Positive/Negative/Neutral, then identify the top 3 themes. Format as a table. Feedback: [text]"'],
+     c:3},
+    {id:'B4s', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'What is the most significant weakness of this AI response?',
+     ctx:'An AI-generated market analysis states: "The global EV market will reach $800 billion by 2027, representing a 340% increase, as confirmed by multiple industry sources." No citations are provided.',
+     opts:['The writing style is too formal for a market analysis',
+           'The 340% figure seems unrealistically optimistic',
+           'Specific claims are stated with high confidence but no sources are cited — making them unverifiable',
+           'The analysis should have been longer'],
+     c:2},
+    {id:'B5s', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'Which prompt will consistently produce the most useful answer?',
+     ctx:'Task: "Explain blockchain to a non-technical executive."\n\nPrompt A: "Explain blockchain."\nPrompt B: "Explain blockchain simply."\nPrompt C: "Explain blockchain to a CFO with no technical background. Use a 2-sentence analogy, then explain business relevance in 3 bullet points. Avoid jargon."',
+     opts:['Prompt A — clean and open-ended',
+           'Prompt B — simple and direct',
+           'Prompt C — defines the audience, format, and constraints',
+           'All three will give similar results'],
+     c:2},
+  ];
+
+  const QBh = [
+    {id:'B1h', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You\'re prompting AI for competitive analysis and want depth beyond surface synthesis. Which technique most reliably improves it?',
+     ctx:null,
+     opts:['Asking the AI to "think step by step"',
+           'Increasing the model\'s temperature for more creative responses',
+           'Chain-of-thought prompting combined with explicit constraints on what NOT to include and a required output structure',
+           'Providing a longer system prompt with general background context'],
+     c:2},
+    {id:'B2h', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You\'re building a prompt for a recurring workflow used by 5 colleagues. The most important consideration is:',
+     ctx:null,
+     opts:['Making the prompt as detailed and comprehensive as possible',
+           'Keeping the prompt short so it\'s quick to use',
+           'Including few-shot examples of ideal output and explicit edge-case handling so results are consistent across users',
+           'Using markdown formatting to make the prompt readable'],
+     c:2},
+    {id:'B3h', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'Your AI model produces excellent output when you test it, but a colleague gets inconsistent results with the exact same prompt. The most likely cause is:',
+     ctx:null,
+     opts:['Their device doesn\'t have enough processing power',
+           'They\'re unknowingly using a different AI tool',
+           'Subtle variations in conversational context, prior session messages, or model version differences are affecting outputs',
+           'The AI has a daily usage limit that degrades quality over time'],
+     c:2},
+    {id:'B4h', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You\'re reviewing an AI-generated strategic analysis before presenting to the board. The most sophisticated quality check is:',
+     ctx:null,
+     opts:['Running it through a plagiarism checker',
+           'Fact-checking all cited statistics',
+           'Having a senior colleague do a read-through',
+           'Testing internal consistency of arguments, identifying unstated assumptions, and validating that conclusions logically follow from the evidence'],
+     c:3},
+    {id:'B5h', sl:'PROMPT MASTERY', d:{t:0.5,a:0.5},
+     q:'You want AI to take on a specific expert persona for a complex analysis. Which approach produces the most reliable results?',
+     ctx:null,
+     opts:['Simply write "Act as an expert in X"',
+           'Define the persona\'s expertise, decision-making framework, priorities, and what they\'d explicitly avoid — then give an example of how they\'d approach a similar problem',
+           'Use the system prompt for the persona and user messages for the task',
+           'Ask AI to describe how an expert in X would approach the problem, then use that description as a new prompt'],
+     c:1},
+  ];
+
+  const QCe = [
+    {id:'C1e', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You want to use AI to write a weekly update email to your team. What\'s the best approach?',
+     ctx:null,
+     opts:['Ask AI to write it without giving any context',
+           'Write the email yourself and use AI to check grammar',
+           'Give AI your key points and ask it to draft the email, then review and edit the output',
+           'Copy a previous email and ask AI to change the dates'],
+     c:2},
+    {id:'C2e', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You\'re new to using AI at work. What kind of task should you start with?',
+     ctx:null,
+     opts:['The most complex, highest-stakes project you have',
+           'Tasks involving sensitive or confidential information',
+           'Tasks where output is easy to verify and mistakes are low-risk',
+           'Tasks your manager has explicitly approved for AI use'],
+     c:2},
+    {id:'C3e', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'What does it mean to "iterate" with AI on a piece of work?',
+     ctx:null,
+     opts:['Running the same prompt repeatedly until you get the same answer twice',
+           'Providing follow-up feedback and instructions to refine the response toward what you need',
+           'Checking the AI\'s work for grammar and spelling errors',
+           'Translating the AI output into a different format'],
+     c:1},
+    {id:'C4e', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'What\'s the main risk of copy-pasting AI output directly into a client-facing document?',
+     ctx:null,
+     opts:['The formatting might appear differently in the client\'s system',
+           'The content may contain errors, outdated information, or miss the client\'s specific context',
+           'The file size will be too large',
+           'The client may notice it was AI-generated and lose trust'],
+     c:1},
+    {id:'C5e', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'Which is the best first step to automating a repetitive task with AI?',
+     ctx:null,
+     opts:['Hire a developer to build an AI-powered tool',
+           'Test 5 different AI tools and pick the best one',
+           'Find an AI tool specifically built for that task category',
+           'Document the task step-by-step so you can explain it clearly to AI'],
+     c:3},
+  ];
+
+  const QCs = [
+    {id:'C1s', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You need to process 200 customer support emails to identify the most common complaints. What\'s the most effective AI-assisted approach?',
+     ctx:null,
+     opts:['Read through all emails manually, then ask AI to write a summary',
+           'Paste all 200 emails into AI in one go and ask for a summary',
+           'Create a structured prompt that extracts complaint categories from batches of emails, then aggregate results',
+           'Ask AI to write an automation script before you\'ve defined what you\'re looking for'],
+     c:2},
+    {id:'C2s', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You\'re using AI to draft a client proposal. After the first draft, the tone feels too formal. What\'s the most efficient next step?',
+     ctx:null,
+     opts:['Start a completely new conversation and try a different prompt',
+           'Delete the draft and write it yourself',
+           'Give specific feedback: "This is too formal. Rewrite section 2 in a warmer, conversational tone — as if speaking directly to the client."',
+           'Ask AI to "make it better"'],
+     c:2},
+    {id:'C3s', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'Which of these represents the most mature AI workflow integration?',
+     ctx:null,
+     opts:['Using AI occasionally when stuck on a difficult task',
+           'Having AI draft everything, then publishing without review',
+           'Only using AI for tasks you already know how to do yourself',
+           'Building a repeatable process where AI handles defined tasks while you handle judgment, editing, and final decisions'],
+     c:3},
+    {id:'C4s', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You\'ve asked AI to research competitors and it\'s returned a detailed report. What\'s your most important next action?',
+     ctx:null,
+     opts:['Immediately share it with your team',
+           'Ask AI to make the report shorter and more digestible',
+           'Verify the key claims against primary sources before acting on them',
+           'Use it as-is — AI is faster than manual research and usually accurate'],
+     c:2},
+    {id:'C5s', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You want AI to speed up a weekly leadership report. The best first step is:',
+     ctx:null,
+     opts:['Ask AI to write the report from scratch with no input',
+           'Give AI all your raw data and ask for the final report',
+           'Document your current process step-by-step, then identify which specific steps AI can handle reliably',
+           'Buy a specialised AI reporting tool'],
+     c:2},
+  ];
+
+  const QCh = [
+    {id:'C1h', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You\'re designing an AI-assisted content production pipeline for your team. What\'s the most critical architectural decision?',
+     ctx:null,
+     opts:['Which AI model to use as the primary engine',
+           'How to automate as many steps as possible to maximise throughput',
+           'Where human judgment gates are placed — defining which outputs require review before proceeding',
+           'Whether to use one AI tool or multiple specialised tools'],
+     c:2},
+    {id:'C2h', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'Your team has used AI for 6 months, productivity is up, but output quality has become inconsistent. The most likely systemic cause is:',
+     ctx:null,
+     opts:['The AI model has degraded in quality since you started',
+           'You\'re hitting context window limits more frequently',
+           'Prompts have drifted organically — different team members prompt differently with no shared standard',
+           'You need a more advanced AI tool at this level of usage'],
+     c:2},
+    {id:'C3h', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'Which represents the highest-leverage use of AI in a knowledge work context?',
+     ctx:null,
+     opts:['Using AI to draft communications faster',
+           'Using AI to automate low-value repetitive tasks',
+           'Using AI to format and organise information consistently',
+           'Using AI as a thinking partner during complex analysis — to stress-test assumptions, generate alternatives, and identify blind spots'],
+     c:3},
+    {id:'C4h', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'You\'re implementing AI across a 50-person team. Which adoption strategy creates the most durable long-term capability?',
+     ctx:null,
+     opts:['Top-down mandate with required training for all staff',
+           'Identify 5 high-influence early adopters, develop their expertise deeply, and let them drive peer-to-peer knowledge transfer',
+           'Give everyone access and let organic adoption happen naturally',
+           'Hire a dedicated AI lead to manage all team AI usage'],
+     c:1},
+    {id:'C5h', sl:'WORKFLOW & APPLICATION', d:{a:1},
+     q:'Your team\'s AI outputs are high quality in isolation but aren\'t improving overall business outcomes. The root cause is most likely:',
+     ctx:null,
+     opts:['The AI tool isn\'t advanced enough for your use case',
+           'Team prompts need significant improvement',
+           'AI is being applied to tasks but not to the decisions and bottlenecks that actually drive the outcomes you\'re measuring',
+           'You need better tracking of AI usage across the team'],
+     c:2},
+  ];
+
+  const QD = [
+    {id:'D1', sl:'STRATEGIC LEADERSHIP', d:{l:1},
+     q:'Your CEO wants to deploy AI across all departments within 6 months. As project lead, your first action is:',
+     ctx:null,
+     opts:['Purchase the most advanced AI platform available and begin rollout',
+           'Train all employees on the most popular AI tools immediately',
+           'Run an organisation-wide AI readiness assessment to understand current capabilities, workflows, and risks',
+           'Identify the 3 highest-ROI use cases and build a phased rollout plan'],
+     c:2},
+    {id:'D2', sl:'STRATEGIC LEADERSHIP', d:{l:1},
+     q:'A senior team member is resistant to AI adoption, concerned it will replace their expertise. The most effective leadership response is:',
+     ctx:null,
+     opts:['Reassure them that AI will never replace human expertise',
+           'Mandate AI usage and track compliance',
+           'Give them extra time and space to adapt on their own timeline',
+           'Involve them in identifying how AI can amplify their specific expertise — making them an AI champion rather than a resistor'],
+     c:3},
+    {id:'D3', sl:'STRATEGIC LEADERSHIP', d:{l:1},
+     q:'You\'re evaluating two AI initiatives. Initiative A shows 15% productivity gain but creates a single point of failure. Initiative B shows 8% gain with full redundancy. Which is strategically sounder?',
+     ctx:null,
+     opts:['Initiative A — higher ROI always wins',
+           'Initiative B — lower risk is always preferable',
+           'Run both simultaneously and let performance decide',
+           'It depends on the reversibility of the failure mode and your risk tolerance — evaluate both against strategic priorities'],
+     c:3},
+    {id:'D4', sl:'STRATEGIC LEADERSHIP', d:{l:1},
+     q:'Your company wants to use AI to automate hiring screening. What should be the first governance question?',
+     ctx:null,
+     opts:['Which AI vendor offers the best screening accuracy?',
+           'How much time will this save the HR team?',
+           'Can we integrate this with our existing Applicant Tracking System?',
+           'What are the legal, ethical, and bias risks of automated screening, and how will we audit outcomes?'],
+     c:3},
+  ];
+
+  const QE = [
+    {id:'E1', sl:'ETHICS & CRITICAL THINKING', d:{t:0.5,l:0.5},
+     q:'An AI model produces a recommendation that perfectly aligns with your preferred outcome. Your most appropriate response is:',
+     ctx:null,
+     opts:['Implement it immediately — the AI has validated your thinking',
+           'Share it with stakeholders as objective third-party validation',
+           'Scrutinise it as carefully as any other recommendation — AI outputs can reflect and amplify human biases',
+           'Ask the AI to provide a second opinion on its own output'],
+     c:2},
+    {id:'E2', sl:'ETHICS & CRITICAL THINKING', d:{t:0.5,l:0.5},
+     q:'A colleague uses AI to generate a research report and presents it as their own original analysis to a client. What\'s the primary concern?',
+     ctx:null,
+     opts:['The AI may have made factual errors in the report',
+           'The client might find out it was AI-generated',
+           'This misrepresents the provenance of the work and may breach professional integrity standards',
+           'The AI tool used may not be company-approved'],
+     c:2},
+    {id:'E3', sl:'ETHICS & CRITICAL THINKING', d:{t:0.5,l:0.5},
+     q:'You notice an AI hiring tool consistently ranks candidates from one university higher than others, despite similar qualifications. This most likely indicates:',
+     ctx:null,
+     opts:['That university genuinely produces better-prepared candidates',
+           'The AI is correctly identifying a correlation with job performance',
+           'The training data contained historical hiring bias that the model has learned and amplified',
+           'The model needs more data to make accurate predictions'],
+     c:2},
+    {id:'E4', sl:'ETHICS & CRITICAL THINKING', d:{t:0.5,l:0.5},
+     q:'Your organisation wants to use customer data to fine-tune an internal AI model. What\'s the critical first step?',
+     ctx:null,
+     opts:['Check if competitors are doing the same thing',
+           'Test the model improvement on a small data batch first',
+           'Get sign-off from the technical team on feasibility',
+           'Ensure you have explicit consent, clear data governance, and compliance with relevant privacy regulations'],
+     c:3},
+  ];
+
+  // ─────────────────────────────────────────────────────
+  //  TIERS
+  // ─────────────────────────────────────────────────────
+  const TIERS = [
+    {tier:0, min:0,  max:15,  label:'Baseline',    desc:'AI is new territory — the opportunity ahead of you is massive.', track:'foundations'},
+    {tier:1, min:16, max:30,  label:'Aware',        desc:'You know AI matters. Now it\'s time to build real habits.', track:'foundations'},
+    {tier:2, min:31, max:45,  label:'Curious',      desc:'You\'re experimenting and learning fast. The fundamentals are clicking into place.', track:'foundations'},
+    {tier:3, min:46, max:55,  label:'Practitioner', desc:'You use AI regularly and get real results. You\'re ahead of most.', track:'workflows'},
+    {tier:4, min:56, max:65,  label:'Fluent',       desc:'AI is a natural part of your workflow. You think in systems, not just tools.', track:'workflows'},
+    {tier:5, min:66, max:75,  label:'Advanced',     desc:'You build systems, not just use them. You see possibilities others miss.', track:'workflows'},
+    {tier:6, min:76, max:84,  label:'Strategist',   desc:'You shape how teams and organisations use AI. Your leverage is multiplicative.', track:'leadership'},
+    {tier:7, min:85, max:92,  label:'Leader',       desc:'You drive AI transformation at scale. You\'re in the top 5% of practitioners.', track:'leadership'},
+    {tier:8, min:93, max:100, label:'Pioneer',      desc:'You define the field for others. The question now is what you build next.', track:'leadership'},
+  ];
+
+  function getTier(score) {
+    return TIERS.find(t => score >= t.min && score <= t.max) || TIERS[0];
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  SCORING
+  // ─────────────────────────────────────────────────────
+  function calculateScores(answers, questions) {
+    let tp=0, tm=0, ap=0, am=0, lp=0, lm=0;
+    for (const q of questions) {
+      const correct = answers[q.id] === q.c;
+      const pts = correct ? 100 : 0;
+      if (q.d.t) { tp += pts * q.d.t; tm += 100 * q.d.t; }
+      if (q.d.a) { ap += pts * q.d.a; am += 100 * q.d.a; }
+      if (q.d.l) { lp += pts * q.d.l; lm += 100 * q.d.l; }
+    }
+    const think = tm > 0 ? Math.round((tp / tm) * 100) : 50;
+    const apply = am > 0 ? Math.round((ap / am) * 100) : 50;
+    const lead  = lm > 0 ? Math.round((lp / lm) * 100) : 50;
+    const aiq   = Math.round(think * 0.35 + apply * 0.45 + lead * 0.20);
+    return { think, apply, lead, aiq };
+  }
+
+  function getSectionAScore(answers) {
+    const correct = QA.filter(q => answers[q.id] === q.c).length;
+    return (correct / QA.length) * 100;
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  INSIGHTS
+  // ─────────────────────────────────────────────────────
+  function getInsight(think, apply, lead) {
+    const dims = [
+      {k:'think', s:think, n:'Think'},
+      {k:'apply', s:apply, n:'Apply'},
+      {k:'lead',  s:lead,  n:'Lead'},
+    ].sort((a,b) => b.s - a.s);
+
+    const hi = dims[0], lo = dims[2];
+    const gap = hi.s - lo.s;
+
+    if (gap < 12) return 'Your three dimensions are remarkably balanced — a rare trait. The highest-leverage next move is deepening your Apply score to break into the next tier.';
+
+    const map = {
+      think_apply: `Your Think score is ${gap} pts above your Apply score. You have a strong conceptual foundation — the next unlock is translating that thinking into consistent daily practice.`,
+      think_lead:  `Your Think score is ${gap} pts above your Lead score. You understand AI deeply — the next level is using that clarity to guide others and shape strategy.`,
+      apply_think: `Your Apply score is ${gap} pts above your Think score. You\'re highly effective with AI tools. Strengthening your conceptual understanding will sharpen your instincts for when and how to use them.`,
+      apply_lead:  `Your Apply score is ${gap} pts above your Lead score. You\'re a hands-on practitioner ready to step into strategy. The next move is multiplying your skills through others.`,
+      lead_think:  `Your Lead score is ${gap} pts above your Think score. You have strong strategic instincts. Deepening your AI literacy will make those instincts sharper and harder to challenge.`,
+      lead_apply:  `Your Lead score is ${gap} pts above your Apply score. You think strategically about AI but there\'s untapped power in your own daily workflows. Bridging that gap compounds your leadership impact.`,
+    };
+
+    return map[`${hi.k}_${lo.k}`] || 'Your profile shows clear strengths and clear growth edges. Focus on your lowest dimension first — that\'s where the biggest lever is.';
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  STATE
+  // ─────────────────────────────────────────────────────
+  const state = {
+    context: {},
+    questionSet: [...QA],
+    currentIndex: 0,
+    answers: {},
+    routingDone: false,
+    difficulty: 'standard',
+    pendingAnswer: null,
+  };
+
+  const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const TOTAL_QUESTIONS = 22;
+
+  // ─────────────────────────────────────────────────────
+  //  STAGE MANAGEMENT
+  // ─────────────────────────────────────────────────────
+  function showStage(id) {
+    ['s-welcome','s-context','s-question','s-calc'].forEach(sid => {
+      const el = document.getElementById(sid);
+      if (el) el.style.display = 'none';
+    });
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.style.display = 'flex';
+    target.style.opacity = '0';
+    target.style.transform = 'translateY(16px)';
+    target.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      target.style.opacity = '1';
+      target.style.transform = 'translateY(0)';
+    }));
+  }
+
+  // ─────────────────────────────────────────────────────
+  //  WELCOME STAGE
+  // ─────────────────────────────────────────────────────
+  document.getElementById('btn-start').addEventListener('click', () => {
+    showStage('s-context');
+  });
+
+  // ─────────────────────────────────────────────────────
+  //  CONTEXT STAGE
+  // ─────────────────────────────────────────────────────
+  const contextSelections = {};
+
+  document.querySelectorAll('.ctx-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const group = chip.closest('[data-group]').dataset.group;
+      chip.closest('.ctx-chips').querySelectorAll('.ctx-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      contextSelections[group] = chip.dataset.value;
+      checkContextComplete();
+    });
+  });
+
+  function checkContextComplete() {
+    const required = ['role','domain','experience','goal'];
+    const done = required.every(k => contextSelections[k]);
+    document.getElementById('btn-ctx-start').disabled = !done;
+  }
+
+  document.getElementById('btn-ctx-start').addEventListener('click', () => {
+    state.context = { ...contextSelections };
+    startQuestions();
+  });
+
+  // ─────────────────────────────────────────────────────
+  //  QUESTION STAGE
+  // ─────────────────────────────────────────────────────
+  function startQuestions() {
+    showStage('s-question');
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = state.questionSet[state.currentIndex];
+    const idx = state.currentIndex;
+    const total = TOTAL_QUESTIONS;
+
+    // Update nav progress
+    document.getElementById('nav-progress').textContent = `${idx + 1} / ${total}`;
+
+    // Update header
+    document.getElementById('q-section-label').textContent = q.sl;
+    document.getElementById('q-num').textContent = `${idx + 1} / ${total}`;
+
+    // Update progress bar
+    document.getElementById('q-progress-fill').style.width = `${((idx + 1) / total) * 100}%`;
+
+    // Build question HTML
+    const letters = ['A','B','C','D'];
+    const ctxHtml = q.ctx
+      ? `<div class="q-scenario"><div class="q-scenario-label">SCENARIO</div><div class="q-scenario-body">${q.ctx.replace(/\n/g,'<br>')}</div></div>`
+      : '';
+
+    const optsHtml = q.opts.map((opt, i) =>
+      `<button class="option-card" data-idx="${i}" type="button">
+        <span class="option-letter">${letters[i]}</span>
+        <span class="option-text">${opt}</span>
+      </button>`
+    ).join('');
+
+    const content = document.getElementById('q-content');
+
+    // Fade out
+    content.style.opacity = '0';
+    content.style.transform = 'translateY(8px)';
+
+    setTimeout(() => {
+      content.innerHTML = `${ctxHtml}<p class="q-text">${q.q}</p><div class="q-options">${optsHtml}</div>`;
+      content.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        content.style.opacity = '1';
+        content.style.transform = 'translateY(0)';
+      }));
+
+      // Bind option clicks
+      content.querySelectorAll('.option-card').forEach(card => {
+        card.addEventListener('click', () => selectOption(parseInt(card.dataset.idx)));
+      });
+    }, 160);
+
+    // Reset next button
+    const nextBtn = document.getElementById('btn-next');
+    nextBtn.disabled = true;
+    state.pendingAnswer = null;
+
+    // Update next button label for last question
+    if (idx === total - 1) {
+      nextBtn.innerHTML = `See My Results <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    } else {
+      nextBtn.innerHTML = `Next <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    }
+  }
+
+  function selectOption(idx) {
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.option-card')[idx]?.classList.add('selected');
+    state.pendingAnswer = idx;
+    document.getElementById('btn-next').disabled = false;
+  }
+
+  document.getElementById('btn-next').addEventListener('click', () => {
+    if (state.pendingAnswer === null) return;
+
+    const q = state.questionSet[state.currentIndex];
+    state.answers[q.id] = state.pendingAnswer;
+
+    // Adaptive routing: after Section A (index 3), build full question set
+    if (state.currentIndex === 3 && !state.routingDone) {
+      state.routingDone = true;
+      const aScore = getSectionAScore(state.answers);
+
+      let bSet, cSet;
+      if (aScore < 40) {
+        bSet = QBe; cSet = QCe; state.difficulty = 'easy';
+      } else if (aScore > 70) {
+        bSet = QBh; cSet = QCh; state.difficulty = 'hard';
+      } else {
+        bSet = QBs; cSet = QCs; state.difficulty = 'standard';
+      }
+
+      state.questionSet = [...QA, ...bSet, ...cSet, ...QD, ...QE];
+    }
+
+    state.currentIndex++;
+
+    if (state.currentIndex >= state.questionSet.length) {
+      finishAssessment();
+    } else {
+      renderQuestion();
+    }
+  });
+
+  // ─────────────────────────────────────────────────────
+  //  FINISH & SAVE
+  // ─────────────────────────────────────────────────────
+  function finishAssessment() {
+    showStage('s-calc');
+
+    const scores = calculateScores(state.answers, state.questionSet);
+    const tier = getTier(scores.aiq);
+    const insight = getInsight(scores.think, scores.apply, scores.lead);
+
+    const result = {
+      context: state.context,
+      scores,
+      tier,
+      insight,
+      difficulty: state.difficulty,
+      completedAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem('aiq_latest_result', JSON.stringify(result));
+
+    setTimeout(() => {
+      window.location.href = BASE + '/results';
+    }, 2400);
+  }
+
+  // Restore welcome stage visibility
+  document.getElementById('s-welcome').style.display = 'flex';
+
+})();
+</script>
+
+</Layout>

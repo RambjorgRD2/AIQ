@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+---
+
+<Layout
+  title="SociA|~ Society — AIQ Community & Courses"
+  description="Join the SociA|~ Society. Learn, grow, and lead with AI through courses, live sessions, and a community of practitioners."
+>
+
+<nav class="p-nav">
+  <div class="p-nav-inner">
+    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#pn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#pn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="pn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">
+      Take the Assessment
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="p-hero grid-bg">
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--violet);top:-150px;left:-150px;"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:var(--cyan);top:-100px;right:-100px;"></div>
+  <div class="container p-hero-inner">
+    <div class="chip reveal">SociA|~ Society</div>
+    <h1 class="p-hero-h1 reveal reveal-delay-1">
+      Learn. Grow. Lead with AI.
+    </h1>
+    <p class="p-hero-sub reveal reveal-delay-2">
+      The SociA|~ Society is the learning community for people serious about raising their AIQ — through structured courses, live sessions, and a community of practitioners at every tier.
+    </p>
+    <div class="p-hero-btns reveal reveal-delay-3">
+      <a href={NOTION_URL} class="btn-primary btn-hero" target="_blank" rel="noopener">
+        Join the Society
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href={`${base}/assessment`} class="btn-secondary btn-hero">Discover Your AIQ First →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">What's Included</div>
+      <h2 class="section-title">Everything you need to raise your AIQ.</h2>
+      <p class="section-sub">One membership. Three course tracks. Ongoing live sessions.</p>
+    </div>
+    <div class="features-grid">
+      {[
+        {icon:'📚', title:'Three Course Tracks', desc:'AI~Foundations, AI~Workflows, and AI~Leadership — each mapped to your AIQ tier so you start exactly where you are.'},
+        {icon:'🎯', title:'Personalised Learning Path', desc:'Your AIQ score routes you to the right track automatically. No guessing, no wasted time on content that\'s above or below your level.'},
+        {icon:'⚡', title:'Live Sessions', desc:'Regular live events including the brAInstorm series — from intimate workshops to large-scale gatherings.'},
+        {icon:'🌐', title:'Practitioner Community', desc:'Connect with members at your tier and one tier ahead. Learn from people who are doing the work, not just teaching it.'},
+        {icon:'🏆', title:'Verified AIQ Certificate', desc:'Complete your track and earn a verified AIQ credential — shareable on LinkedIn and meaningful to employers who understand AI fluency.'},
+        {icon:'🔄', title:'Retake Every 90 Days', desc:'Track your growth. Retake the assessment quarterly to see how your Think, Apply, and Lead scores move with your practice.'},
+      ].map(f => (
+        <div class="feature-card glass reveal">
+          <div class="feat-icon-lg">{f.icon}</div>
+          <h3 class="feat-title">{f.title}</h3>
+          <p class="feat-desc">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- COURSE TRACKS -->
+<section class="p-section p-tracks-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">Course Tracks</div>
+      <h2 class="section-title">Three tracks. One clear path.</h2>
+      <p class="section-sub">Each track builds on the previous. Start where your AIQ score places you.</p>
+    </div>
+    <div class="tracks-list">
+      <a href={`${base}/courses/foundations`} class="track-card glass reveal">
+        <div class="track-tier-range">Tiers 0–3</div>
+        <h3 class="track-name gradient-text">AI~Foundations</h3>
+        <p class="track-desc">Build the mental models and vocabulary to use AI confidently. Go from uncertain to competent.</p>
+        <div class="track-meta">6 hrs · 12 modules</div>
+        <span class="track-link">Explore course →</span>
+      </a>
+      <a href={`${base}/courses/workflows`} class="track-card glass reveal reveal-delay-1">
+        <div class="track-tier-range">Tiers 3–6</div>
+        <h3 class="track-name gradient-text">AI~Workflows</h3>
+        <p class="track-desc">Design repeatable systems, master advanced prompting, and integrate AI into your daily work at a professional level.</p>
+        <div class="track-meta">10 hrs · 20 modules</div>
+        <span class="track-link">Explore course →</span>
+      </a>
+      <a href={`${base}/courses/leadership`} class="track-card glass reveal reveal-delay-2">
+        <div class="track-tier-range">Tiers 6–8</div>
+        <h3 class="track-name gradient-text">AI~Leadership</h3>
+        <p class="track-desc">Lead AI transformation at scale. Drive strategy, build culture, and position yourself at the frontier of the field.</p>
+        <div class="track-meta">8 hrs · 16 modules</div>
+        <span class="track-link">Explore course →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section class="p-section p-cta-section">
+  <div class="container">
+    <div class="glass cta-block reveal">
+      <div class="glow-blob" style="width:300px;height:300px;background:var(--cyan);top:-100px;left:-80px;opacity:0.08;"></div>
+      <div class="chip" style="margin-bottom:1.5rem">Ready to raise your AIQ?</div>
+      <h2 class="cta-block-h2">Start with your score. Then go further.</h2>
+      <p class="cta-block-sub">Take the free assessment first. Your results will route you to the right track and show you exactly where to focus.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
+        <a href={`${base}/assessment`} class="btn-primary btn-lg">
+          Take the Assessment →
+        </a>
+        <a href={NOTION_URL} class="btn-secondary btn-lg" target="_blank" rel="noopener">Join the Society</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .p-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(4,7,15,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,207,255,0.08); height: 60px;
+  }
+  .p-nav-inner {
+    max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .p-nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .p-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; }
+
+  .p-hero {
+    padding: 7rem 1.5rem 6rem; position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .p-hero-inner { max-width: 720px; margin: 0 auto; }
+  .p-hero-h1 {
+    font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, #E8F0FF, #00CFFF);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin: 1rem 0 1.5rem;
+  }
+  .p-hero-sub { color: var(--muted); font-size: 1.1rem; line-height: 1.75; margin-bottom: 2.5rem; }
+  .p-hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-hero { padding: 1rem 2.25rem; font-size: 1rem; }
+
+  .p-section { padding: 5rem 1.5rem; }
+  .p-section-head { margin-bottom: 3.5rem; }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;
+  }
+  .feature-card { padding: 1.75rem; }
+  .feat-icon-lg { font-size: 2rem; margin-bottom: 1rem; }
+  .feat-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem;
+    font-weight: 700; margin-bottom: 0.6rem;
+  }
+  .feat-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
+
+  .p-tracks-section { background: rgba(8,13,26,0.5); }
+  .tracks-list {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;
+  }
+  .track-card {
+    padding: 2rem; text-decoration: none; display: flex;
+    flex-direction: column; gap: 0.5rem; transition: all 0.3s;
+  }
+  .track-card:hover { border-color: rgba(0,207,255,0.35); transform: translateY(-3px); }
+  .track-tier-range {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .track-name { font-size: 1.35rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif; margin-top: 0.25rem; }
+  .track-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; flex: 1; margin-top: 0.25rem; }
+  .track-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--muted);
+    margin-top: 0.75rem;
+  }
+  .track-link {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem;
+    font-weight: 600; color: var(--cyan);
+  }
+
+  .p-cta-section { padding: 4rem 1.5rem 7rem; }
+  .cta-block {
+    max-width: 680px; margin: 0 auto; padding: 3.5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-block-h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem,3.5vw,2.25rem);
+    font-weight: 800; margin-bottom: 1rem;
+  }
+  .cta-block-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+  .btn-lg { padding: 1rem 2.5rem; font-size: 1rem; }
+</style>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</Layout>

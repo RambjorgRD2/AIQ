@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// UPDATE THIS: Link to your Notion intake form
 const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ASSESSMENT_URL = `${BASE}/assessment`;
 ---
 
 <Layout title="AIQ — Know Your AI Quotient">
@@ -27,10 +28,11 @@ const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacb
         <li><a href="#about">About</a></li>
         <li><a href="#society">Society</a></li>
         <li><a href="#how">How It Works</a></li>
+        <li><a href={ASSESSMENT_URL}>Assessment</a></li>
       </ul>
 
-      <a href={NOTION_FORM_URL} class="btn-primary nav-cta" target="_blank" rel="noopener">
-        Join the Society
+      <a href={ASSESSMENT_URL} class="btn-primary nav-cta">
+        Take the Assessment
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
 
@@ -45,7 +47,8 @@ const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacb
     <a href="#about" class="mobile-link">About</a>
     <a href="#society" class="mobile-link">Society</a>
     <a href="#how" class="mobile-link">How It Works</a>
-    <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener" style="margin-top:0.5rem">Join the Society</a>
+    <a href={ASSESSMENT_URL} class="mobile-link">Assessment</a>
+    <a href={ASSESSMENT_URL} class="btn-primary" style="margin-top:0.5rem">Take the Assessment</a>
   </div>
 
   <!-- ─── HERO ─────────────────────────────────────────── -->
@@ -69,8 +72,8 @@ const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacb
           think, work, and lead with artificial intelligence.
         </p>
         <div class="hero-ctas">
-          <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener">
-            Take the Assessment
+          <a href={ASSESSMENT_URL} class="btn-primary">
+            Know Your AIQ
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="#society" class="btn-secondary">

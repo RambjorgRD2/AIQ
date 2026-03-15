@@ -311,22 +311,29 @@ import Layout from '../layouts/Layout.astro';
   .ctx-chip {
     padding: 0.55rem 1.1rem;
     border-radius: 999px;
-    border: 1px solid rgba(0,207,255,0.18);
+    border: 1px solid rgba(0,207,255,0.35);
     background: transparent;
     color: var(--text);
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   .ctx-chip:hover {
-    border-color: rgba(0,207,255,0.4);
-    background: rgba(0,207,255,0.05);
+    border-color: rgba(0,207,255,0.55);
+    background: rgba(0,207,255,0.07);
+  }
+  .ctx-chip:active {
+    background: rgba(0,207,255,0.15);
+    border-color: var(--cyan);
+    transform: scale(0.97);
   }
   .ctx-chip.selected {
     border-color: var(--cyan);
-    background: rgba(0,207,255,0.12);
+    background: rgba(0,207,255,0.18);
     color: var(--text);
+    box-shadow: 0 0 12px rgba(0,207,255,0.15);
   }
 
   /* ── QUESTION STAGE ─────────────────────────────── */
@@ -401,42 +408,53 @@ import Layout from '../layouts/Layout.astro';
     gap: 1rem;
     padding: 1rem 1.25rem;
     background: rgba(10, 18, 40, 0.6);
-    border: 1px solid rgba(0,207,255,0.12);
+    border: 1px solid rgba(0,207,255,0.28);
     border-radius: 12px;
     cursor: pointer;
     text-align: left;
     width: 100%;
     transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
   .option-card:hover {
-    border-color: rgba(0,207,255,0.32);
-    background: rgba(0,207,255,0.04);
+    border-color: rgba(0,207,255,0.5);
+    background: rgba(0,207,255,0.05);
+  }
+  .option-card:active {
+    background: rgba(0,207,255,0.12);
+    border-color: var(--cyan);
+    transform: scale(0.99);
   }
   .option-card.selected {
     border-color: var(--cyan);
-    background: rgba(0,207,255,0.09);
-    box-shadow: 0 0 20px rgba(0,207,255,0.1);
+    background: rgba(0,207,255,0.13);
+    box-shadow: 0 0 0 1px rgba(0,207,255,0.4), 0 0 20px rgba(0,207,255,0.15);
   }
   .option-letter {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,207,255,0.3);
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,207,255,0.4);
+    background: rgba(0,207,255,0.07);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    color: var(--muted);
+    color: var(--cyan);
     transition: all 0.2s;
   }
+  .option-card:hover .option-letter {
+    border-color: rgba(0,207,255,0.65);
+    background: rgba(0,207,255,0.12);
+  }
   .option-card.selected .option-letter {
-    background: var(--cyan);
-    border-color: var(--cyan);
-    color: #04070F;
+    background: linear-gradient(135deg, #00CFFF, #7C3AED);
+    border-color: transparent;
+    color: #fff;
   }
   .option-text {
     font-size: 0.95rem;

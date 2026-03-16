@@ -431,30 +431,34 @@ import Layout from '../layouts/Layout.astro';
     background: rgba(0,207,255,0.13);
     box-shadow: 0 0 0 1px rgba(0,207,255,0.4), 0 0 20px rgba(0,207,255,0.15);
   }
-  .option-letter {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,207,255,0.4);
-    background: rgba(0,207,255,0.07);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--cyan);
-    transition: all 0.2s;
+  .option-toggle {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,207,255,0.4);
+    background: transparent;
+    position: relative;
+    margin-top: 2px;
+    transition: border-color 0.2s;
   }
-  .option-card:hover .option-letter {
-    border-color: rgba(0,207,255,0.65);
-    background: rgba(0,207,255,0.12);
-  }
-  .option-card.selected .option-letter {
+  .option-toggle::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
     background: linear-gradient(135deg, #00CFFF, #7C3AED);
-    border-color: transparent;
-    color: #fff;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .option-card:hover .option-toggle {
+    border-color: rgba(0,207,255,0.65);
+  }
+  .option-card.selected .option-toggle {
+    border-color: var(--cyan);
+  }
+  .option-card.selected .option-toggle::after {
+    opacity: 1;
   }
   .option-text {
     font-size: 0.95rem;
@@ -1031,14 +1035,13 @@ import Layout from '../layouts/Layout.astro';
     document.getElementById('q-progress-fill').style.width = `${((idx + 1) / total) * 100}%`;
 
     // Build question HTML
-    const letters = ['A','B','C','D'];
     const ctxHtml = q.ctx
       ? `<div class="q-scenario"><div class="q-scenario-label">SCENARIO</div><div class="q-scenario-body">${q.ctx.replace(/\n/g,'<br>')}</div></div>`
       : '';
 
     const optsHtml = q.opts.map((opt, i) =>
       `<button class="option-card" data-idx="${i}" type="button">
-        <span class="option-letter">${letters[i]}</span>
+        <span class="option-toggle"></span>
         <span class="option-text">${opt}</span>
       </button>`
     ).join('');

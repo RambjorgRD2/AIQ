@@ -159,7 +159,7 @@ import Layout from '../layouts/Layout.astro';
 
 </div><!-- /aiq-app -->
 
-<style>
+<style is:global>
   /* ── NAV ──────────────────────────────────────────── */
   .a-nav {
     position: sticky;
@@ -405,11 +405,11 @@ import Layout from '../layouts/Layout.astro';
   }
   .option-card {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
     padding: 1rem 1.25rem;
-    background: rgba(10, 18, 40, 0.6);
-    border: 1px solid rgba(0,207,255,0.28);
+    background: rgba(10, 18, 40, 0.7);
+    border: 1px solid rgba(0,207,255,0.3);
     border-radius: 12px;
     cursor: pointer;
     text-align: left;
@@ -419,57 +419,55 @@ import Layout from '../layouts/Layout.astro';
     -webkit-tap-highlight-color: transparent;
   }
   .option-card:hover {
-    border-color: rgba(0,207,255,0.5);
-    background: rgba(0,207,255,0.05);
+    border-color: rgba(0,207,255,0.55);
+    background: rgba(0,207,255,0.06);
   }
   .option-card:active {
     background: rgba(0,207,255,0.12);
     border-color: var(--cyan);
-    transform: scale(0.99);
   }
   .option-card.selected {
-    border-color: var(--cyan);
-    background: rgba(0,207,255,0.13);
-    box-shadow: 0 0 0 1px rgba(0,207,255,0.4), 0 0 20px rgba(0,207,255,0.15);
+    border-color: #00CFFF;
+    background: rgba(0,207,255,0.12);
+    box-shadow: 0 0 0 1px rgba(0,207,255,0.35), 0 0 24px rgba(0,207,255,0.12);
   }
-  .option-toggle {
-    display: block;
+  .option-radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 22px;
     height: 22px;
     min-width: 22px;
+    flex-shrink: 0;
     border-radius: 50%;
     border: 2px solid rgba(0,207,255,0.45);
     background: transparent;
-    position: relative;
-    margin-top: 1px;
     transition: border-color 0.2s;
   }
-  .option-toggle::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    bottom: 3px;
-    left: 3px;
+  .option-radio-dot {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: linear-gradient(135deg, #00CFFF, #7C3AED);
     opacity: 0;
-    transition: opacity 0.2s;
+    transform: scale(0.5);
+    transition: opacity 0.18s ease, transform 0.18s ease;
   }
-  .option-card:hover .option-toggle {
+  .option-card:hover .option-radio {
     border-color: rgba(0,207,255,0.7);
   }
-  .option-card.selected .option-toggle {
-    border-color: var(--cyan);
+  .option-card.selected .option-radio {
+    border-color: #00CFFF;
   }
-  .option-card.selected .option-toggle::after {
+  .option-card.selected .option-radio-dot {
     opacity: 1;
+    transform: scale(1);
   }
   .option-text {
     font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--text);
-    padding-top: 3px;
+    line-height: 1.55;
+    color: #e8f0ff;
+    flex-grow: 1;
   }
 
   /* ── CALCULATING STAGE ──────────────────────────── */
@@ -1046,7 +1044,7 @@ import Layout from '../layouts/Layout.astro';
 
     const optsHtml = q.opts.map((opt, i) =>
       `<button class="option-card" data-idx="${i}" type="button">
-        <span class="option-toggle"></span>
+        <span class="option-radio"><span class="option-radio-dot"></span></span>
         <span class="option-text">${opt}</span>
       </button>`
     ).join('');

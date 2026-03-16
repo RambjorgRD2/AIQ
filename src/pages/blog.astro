@@ -101,7 +101,7 @@ const articles = [
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg>
                 {article.readTime}
               </span>
-              <a href="#" class="blog-read-more">Read more →</a>
+              <span class="blog-coming-soon">Coming soon</span>
             </div>
           </div>
         </article>
@@ -393,17 +393,17 @@ const articles = [
     color: #6B7A99;
   }
 
-  .blog-read-more {
+  .blog-coming-soon {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #00CFFF;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .blog-read-more:hover {
-    color: #E8F0FF;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6B7A99;
+    background: rgba(107, 122, 153, 0.1);
+    border: 1px solid rgba(107, 122, 153, 0.2);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
   }
 
   /* ── CTA SECTION ──────────────────────────────────── */

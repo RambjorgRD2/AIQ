@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Your AIQ Results"
-  description="Your personalised AI Quotient score — Think, Apply, and Lead dimensions with your course recommendation."
+  title="Your AI~Quotient Results"
+  description="Your personalised AI~Quotient score across Think, Apply, and Lead dimensions. Know before you Grow."
 >
 
 <!-- NAV -->
@@ -97,6 +97,37 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- ── TIER IDENTITY CARD ──────────────────────────── -->
+  <section class="r-section r-tier-id-section">
+    <div class="container">
+      <div class="tier-id-card">
+        <div class="tier-id-bg"></div>
+        <div class="tier-id-inner">
+          <div class="tier-id-top">
+            <span class="tier-id-brand">AI~Quotient</span>
+            <span class="tier-id-score-label">Score: <span id="tid-score" class="tier-id-score-val">—</span></span>
+          </div>
+          <div class="tier-id-main">
+            <span class="tier-id-you">You are a</span>
+            <span id="tid-label" class="tier-id-name gradient-text">—</span>
+          </div>
+          <div class="tier-id-dims">
+            <span>Think <span id="tid-think" class="tid-dim-val">—</span></span>
+            <span class="tid-sep">·</span>
+            <span>Apply <span id="tid-apply" class="tid-dim-val">—</span></span>
+            <span class="tid-sep">·</span>
+            <span>Lead <span id="tid-lead" class="tid-dim-val">—</span></span>
+          </div>
+          <div class="tier-id-footer">
+            <span class="tier-id-url">rambjorgrd2.github.io/AIQ</span>
+            <span class="tier-id-tagline">Know before you Grow.</span>
+          </div>
+        </div>
+      </div>
+      <p class="tier-id-hint">Screenshot this card to share your tier.</p>
+    </div>
+  </section>
+
   <!-- ── RADAR CHART ────────────────────────────────── -->
   <section class="r-section">
     <div class="container r-two-col">
@@ -162,6 +193,22 @@ import Layout from '../layouts/Layout.astro';
             <span id="copy-label">Copy Score</span>
           </button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RETAKE CALLOUT ────────────────────────────── -->
+  <section class="r-section r-retake-section">
+    <div class="container">
+      <div class="retake-band glass">
+        <div class="retake-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 14a10 10 0 1 0 1.5-5.3" stroke="url(#retGrad)" stroke-width="1.8" stroke-linecap="round"/><path d="M4 5v5h5" stroke="url(#retGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="retGrad" x1="2" y1="2" x2="26" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+        </div>
+        <div class="retake-text">
+          <strong>Retake in 90 days. Track your growth.</strong>
+          <span>Your AIQ is a live measure — not a one-time label. As you learn and apply, it grows.</span>
+        </div>
+        <a id="btn-retake-band" href="#" class="btn-secondary retake-cta">Retake Assessment</a>
       </div>
     </div>
   </section>
@@ -355,6 +402,145 @@ import Layout from '../layouts/Layout.astro';
   .share-copy { border-color: rgba(0,207,255,0.25); color: var(--cyan); background: rgba(0,207,255,0.06); }
   .share-copy:hover { background: rgba(0,207,255,0.12); }
 
+  /* ── TIER IDENTITY CARD ──────────────────────────── */
+  .r-tier-id-section { padding: 0 1.5rem 2rem; }
+  .tier-id-card {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid rgba(0,207,255,0.25);
+    background: rgba(8,13,26,0.9);
+    overflow: hidden;
+    padding: 2rem 2.5rem;
+  }
+  .tier-id-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 500px 300px at 80% 50%, rgba(124,58,237,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 300px 200px at 10% 20%, rgba(0,207,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .tier-id-inner { position: relative; z-index: 1; }
+  .tier-id-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.75rem;
+  }
+  .tier-id-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+  .tier-id-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .tier-id-score-val {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .tier-id-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    border-top: 1px solid rgba(0,207,255,0.12);
+    border-bottom: 1px solid rgba(0,207,255,0.12);
+    padding: 1.25rem 0;
+  }
+  .tier-id-you {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tier-id-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .tier-id-dims {
+    display: flex;
+    gap: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .tid-dim-val { color: var(--text); font-weight: 700; }
+  .tid-sep { opacity: 0.4; }
+  .tier-id-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tier-id-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(107,122,153,0.6);
+  }
+  .tier-id-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(0,207,255,0.5);
+    text-transform: uppercase;
+  }
+  .tier-id-hint {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.85rem;
+    opacity: 0.7;
+  }
+
+  /* ── RETAKE BAND ──────────────────────────────────── */
+  .r-retake-section { padding: 0 1.5rem 3rem; }
+  .retake-band {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 1.75rem;
+    flex-wrap: wrap;
+  }
+  .retake-icon { flex-shrink: 0; }
+  .retake-text {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .retake-text strong {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .retake-text span {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .retake-cta {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.5rem;
+    white-space: nowrap;
+  }
+
   /* CTA section */
   .r-cta-section { padding: 3rem 1.5rem 6rem; }
   .r-cta-card {
@@ -429,6 +615,22 @@ import Layout from '../layouts/Layout.astro';
   document.getElementById('score-think').textContent = scores.think;
   document.getElementById('score-apply').textContent = scores.apply;
   document.getElementById('score-lead').textContent = scores.lead;
+
+  // Populate tier identity card
+  const tidScore = document.getElementById('tid-score');
+  const tidLabel = document.getElementById('tid-label');
+  const tidThink = document.getElementById('tid-think');
+  const tidApply = document.getElementById('tid-apply');
+  const tidLead  = document.getElementById('tid-lead');
+  if (tidScore) tidScore.textContent = result.scores.aiq;
+  if (tidLabel) tidLabel.textContent = result.tier.label;
+  if (tidThink) tidThink.textContent = result.scores.think;
+  if (tidApply) tidApply.textContent = result.scores.apply;
+  if (tidLead)  tidLead.textContent  = result.scores.lead;
+
+  // Wire retake band button
+  const retakeBandBtn = document.getElementById('btn-retake-band');
+  if (retakeBandBtn) retakeBandBtn.href = BASE + '/assessment';
 
   // ── Dim bar fills ─────────────────────────────────────
   setTimeout(() => {
@@ -524,10 +726,11 @@ import Layout from '../layouts/Layout.astro';
 
   // ── Share ─────────────────────────────────────────────
   const shareUrl = 'https://rambjorgrd2.github.io/AIQ/assessment';
-  const shareText = `My AIQ Score: ${scores.aiq} — ${tier.label} (Tier ${tier.tier})\nThink: ${scores.think} · Apply: ${scores.apply} · Lead: ${scores.lead}\n\n"The Question is Mightier than the Model" — find your AIQ:`;
+  const linkedInShareText = `I just discovered my AI~Quotient. I'm a ${tier.label} — AIQ score: ${scores.aiq}. Know before you Grow. Discover yours: ${shareUrl}`;
 
   document.getElementById('share-linkedin').addEventListener('click', () => {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+    const liUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&summary=${encodeURIComponent(linkedInShareText)}`;
+    window.open(liUrl, '_blank');
   });
 
   document.getElementById('share-x').addEventListener('click', () => {

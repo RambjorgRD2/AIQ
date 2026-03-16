@@ -1,0 +1,510 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const ASSESSMENT_URL = `${BASE}/assessment`;
+
+const articles = [
+  {
+    category: 'Foundation',
+    categoryColor: 'cyan',
+    title: 'Know Before You Grow: Why Your AIQ Baseline Changes Everything',
+    excerpt: 'Most people skip the diagnosis and jump straight to learning. That\'s why most AI training doesn\'t stick. Here\'s what measuring your starting point actually unlocks.',
+    readTime: '5 min read',
+  },
+  {
+    category: 'Framework',
+    categoryColor: 'violet',
+    title: 'The 3 Dimensions of AI Intelligence: Think, Apply, Lead',
+    excerpt: 'AIQ isn\'t one number — it\'s three. How you reason about AI, how you deploy it, and how you lead with it are distinct skills that compound differently.',
+    readTime: '7 min read',
+  },
+  {
+    category: 'Mindset',
+    categoryColor: 'pink',
+    title: 'What Separates AI-Fluent Professionals from AI-Curious Ones',
+    excerpt: 'Curiosity opens the door. Fluency walks through it. The difference comes down to one habit that most people never develop.',
+    readTime: '6 min read',
+  },
+  {
+    category: 'Tier Deep-Dive',
+    categoryColor: 'violet',
+    title: 'The Pioneer Mindset: What the Top AIQ Tier Actually Looks Like',
+    excerpt: 'Pioneers don\'t just use AI — they define how others use it. We break down what separates Tier 8 from everyone else.',
+    readTime: '8 min read',
+  },
+  {
+    category: 'Practical',
+    categoryColor: 'cyan',
+    title: 'How to Raise Your AIQ: A Practitioner\'s Field Guide',
+    excerpt: 'Scores don\'t raise themselves. This is the structured approach that moves people from Practitioner to Fluent — and from Fluent to Strategist.',
+    readTime: '9 min read',
+  },
+];
+---
+
+<Layout
+  title="AI~Quotient Blog — Know before you Grow"
+  description="Thinking clearly about AI — how it works, where it's going, and how to raise your AIQ. Insights and ideas from the AI~Quotient community."
+>
+
+<!-- NAV -->
+<nav class="blog-nav">
+  <div class="blog-nav-inner">
+    <a href={BASE} class="blog-nav-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#blogNavGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#blogNavGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="blogNavGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <a href={ASSESSMENT_URL} class="btn-primary blog-nav-cta">
+      Discover your AIQ
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="blog-glow-1"></div>
+  <div class="blog-glow-2"></div>
+  <div class="blog-container">
+    <div class="chip blog-hero-chip">
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#00CFFF"/></svg>
+      Insights &middot; Ideas &middot; Intelligence
+    </div>
+    <h1 class="blog-hero-title">Know before you <span class="gradient-text">Grow.</span></h1>
+    <p class="blog-hero-sub">Thinking clearly about AI — how it works, where it's going, and how to raise your AIQ.</p>
+  </div>
+</section>
+
+<!-- BLOG GRID -->
+<section class="blog-grid-section">
+  <div class="blog-container">
+    <div class="blog-grid">
+      {articles.map((article) => (
+        <article class={`blog-card glass blog-card--${article.categoryColor}`}>
+          <div class="blog-card-strip"></div>
+          <div class="blog-card-body">
+            <span class={`blog-category-chip blog-chip--${article.categoryColor}`}>{article.category}</span>
+            <h2 class="blog-card-title">{article.title}</h2>
+            <p class="blog-card-excerpt">{article.excerpt}</p>
+            <div class="blog-card-footer">
+              <span class="blog-read-time">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg>
+                {article.readTime}
+              </span>
+              <a href="#" class="blog-read-more">Read more →</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON / NEWSLETTER -->
+<section class="blog-cta-section">
+  <div class="blog-glow-3"></div>
+  <div class="blog-container">
+    <div class="blog-cta-box glass">
+      <div class="chip" style="justify-content:center;margin-bottom:1.5rem">
+        <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#00CFFF"/></svg>
+        Coming Soon
+      </div>
+      <h2 class="blog-cta-title">More articles dropping soon.</h2>
+      <p class="blog-cta-sub">Join the Society to get them first.</p>
+      <a href={NOTION_FORM_URL} class="btn-primary blog-cta-btn" target="_blank" rel="noopener">
+        Join the Society →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="blog-footer">
+  <div class="blog-container blog-footer-inner">
+    <a href={BASE} class="blog-footer-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#blogFootGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#blogFootGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="blogFootGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <p class="blog-footer-tagline">Know before you Grow. Your AIQ belongs to you.</p>
+    <nav class="blog-footer-nav">
+      <a href={BASE}>Home</a>
+      <a href={`${BASE}/#about`}>About</a>
+      <a href={`${BASE}/#society`}>Society</a>
+      <a href={ASSESSMENT_URL}>Assessment</a>
+      <a href={`${BASE}/blog`}>Blog</a>
+      <a href={NOTION_FORM_URL} target="_blank" rel="noopener">Join</a>
+    </nav>
+    <p class="blog-footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
+  </div>
+</footer>
+
+</Layout>
+
+<style is:global>
+  /* ── NAV ──────────────────────────────────────────── */
+  .blog-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4, 7, 15, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+    height: 68px;
+  }
+
+  .blog-nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .blog-nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .blog-nav-cta {
+    font-size: 0.88rem;
+    padding: 0.55rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  .blog-hero {
+    position: relative;
+    padding: 5rem 1.5rem 4rem;
+    overflow: hidden;
+    background: radial-gradient(ellipse 800px 400px at 50% 0%, rgba(0,207,255,0.05) 0%, transparent 70%);
+  }
+
+  .blog-glow-1 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: var(--cyan, #00CFFF);
+    top: -150px;
+    left: -100px;
+    opacity: 0.07;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .blog-glow-2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: var(--violet, #7C3AED);
+    top: -80px;
+    right: -80px;
+    opacity: 0.1;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .blog-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .blog-hero-chip {
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .blog-hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.08;
+    margin-bottom: 1.25rem;
+    color: #E8F0FF;
+    letter-spacing: -0.02em;
+  }
+
+  .blog-hero-sub {
+    font-size: 1.15rem;
+    color: #6B7A99;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ── GRID ─────────────────────────────────────────── */
+  .blog-grid-section {
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 580px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── BLOG CARD ────────────────────────────────────── */
+  .blog-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-card-strip {
+    height: 3px;
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .blog-card--cyan .blog-card-strip {
+    background: linear-gradient(90deg, #00CFFF, #7C3AED);
+  }
+
+  .blog-card--violet .blog-card-strip {
+    background: linear-gradient(90deg, #7C3AED, #a855f7);
+  }
+
+  .blog-card--pink .blog-card-strip {
+    background: linear-gradient(90deg, #EC4899, #7C3AED);
+  }
+
+  .blog-card-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* ── CATEGORY CHIPS ───────────────────────────────── */
+  .blog-category-chip {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .blog-chip--cyan {
+    background: rgba(0, 207, 255, 0.1);
+    border: 1px solid rgba(0, 207, 255, 0.3);
+    color: #00CFFF;
+  }
+
+  .blog-chip--violet {
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.35);
+    color: #a855f7;
+  }
+
+  .blog-chip--pink {
+    background: rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    color: #EC4899;
+  }
+
+  /* ── CARD CONTENT ─────────────────────────────────── */
+  .blog-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #E8F0FF;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-card-excerpt {
+    font-size: 0.88rem;
+    color: #6B7A99;
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  .blog-read-time {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #6B7A99;
+  }
+
+  .blog-read-more {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #00CFFF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .blog-read-more:hover {
+    color: #E8F0FF;
+  }
+
+  /* ── CTA SECTION ──────────────────────────────────── */
+  .blog-cta-section {
+    position: relative;
+    padding: 4rem 1.5rem 5rem;
+    overflow: hidden;
+  }
+
+  .blog-glow-3 {
+    position: absolute;
+    width: 600px;
+    height: 400px;
+    background: var(--violet, #7C3AED);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .blog-cta-box {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .blog-cta-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #E8F0FF;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-cta-sub {
+    font-size: 1.05rem;
+    color: #6B7A99;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .blog-cta-btn {
+    font-size: 1rem;
+    padding: 0.9rem 2.25rem;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  .blog-footer {
+    padding: 3rem 1.5rem;
+    border-top: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  .blog-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .blog-footer-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .blog-footer-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7A99;
+    letter-spacing: 0.05em;
+  }
+
+  .blog-footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .blog-footer-nav a {
+    color: #6B7A99;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .blog-footer-nav a:hover {
+    color: #E8F0FF;
+  }
+
+  .blog-footer-copy {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.5);
+    margin-top: 0.5rem;
+  }
+</style>

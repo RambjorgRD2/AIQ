@@ -18,6 +18,10 @@ const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f82
         <defs><linearGradient id="pn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
       </svg>
     </a>
+    <div class="p-nav-links">
+      <a href={`${base}/forum`} class="p-nav-link">Forum</a>
+      <a href={`${base}/blog`} class="p-nav-link">Blog</a>
+    </div>
     <a href={`${base}/assessment`} class="btn-primary p-nav-cta">
       Take the Assessment
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -108,6 +112,39 @@ const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f82
   </div>
 </section>
 
+<!-- FORUM TEASER -->
+<section class="p-section p-forum-section">
+  <div class="container">
+    <div class="p-forum-inner glass reveal">
+      <div class="glow-blob" style="width:280px;height:280px;background:var(--cyan);top:-80px;right:-80px;opacity:0.06;"></div>
+      <div class="p-forum-text">
+        <div class="chip" style="margin-bottom:1rem">Sosial AI Forum</div>
+        <h2 class="p-forum-h2">Live sessions. Real practice.</h2>
+        <p class="p-forum-sub">The Forum is where the community comes together — workshops, webinars, and roundtables built around practitioners, not presentations. Free to attend. Hands-on by design.</p>
+        <a href={`${base}/forum`} class="btn-primary p-forum-btn">
+          See upcoming events
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="p-forum-formats">
+        {[
+          { icon: '🛠️', label: 'Workshop', sub: 'Hands-on, ≤30 people' },
+          { icon: '📡', label: 'Webinar', sub: 'Structured deep dives' },
+          { icon: '🔵', label: 'Roundtable', sub: 'Peer conversation' },
+        ].map(f => (
+          <div class="p-forum-format-pill glass">
+            <span class="p-ff-icon">{f.icon}</span>
+            <div>
+              <div class="p-ff-label">{f.label}</div>
+              <div class="p-ff-sub">{f.sub}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- JOIN CTA -->
 <section class="p-section p-cta-section">
   <div class="container">
@@ -134,10 +171,16 @@ const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f82
   }
   .p-nav-inner {
     max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 1.5rem;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; gap: 2rem;
   }
-  .p-nav-logo { display: flex; align-items: center; text-decoration: none; }
-  .p-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; }
+  .p-nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+  .p-nav-links { display: flex; align-items: center; gap: 1.5rem; flex: 1; }
+  .p-nav-link {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 500;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .p-nav-link:hover { color: var(--text); }
+  .p-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; margin-left: auto; flex-shrink: 0; }
 
   .p-hero {
     padding: 7rem 1.5rem 6rem; position: relative; overflow: hidden;
@@ -192,6 +235,32 @@ const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f82
   .track-link {
     font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem;
     font-weight: 600; color: var(--cyan);
+  }
+
+  /* FORUM TEASER */
+  .p-forum-section { padding: 3rem 1.5rem; }
+  .p-forum-inner {
+    padding: 3rem; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+  }
+  .p-forum-h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 800; margin-bottom: 0.75rem;
+  }
+  .p-forum-sub { color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 520px; margin-bottom: 1.75rem; }
+  .p-forum-btn { font-size: 0.9rem; padding: 0.75rem 1.75rem; }
+  .p-forum-formats { display: flex; flex-direction: column; gap: 0.75rem; flex-shrink: 0; }
+  .p-forum-format-pill {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1.25rem; border-radius: 12px; min-width: 200px;
+  }
+  .p-ff-icon { font-size: 1.25rem; }
+  .p-ff-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 700; }
+  .p-ff-sub { font-size: 0.75rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.1rem; }
+  @media (max-width: 768px) {
+    .p-forum-inner { grid-template-columns: 1fr; }
+    .p-forum-formats { flex-direction: row; flex-wrap: wrap; }
+    .p-forum-format-pill { min-width: 0; flex: 1; min-width: 160px; }
   }
 
   .p-cta-section { padding: 4rem 1.5rem 7rem; }

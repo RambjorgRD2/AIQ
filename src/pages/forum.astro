@@ -1,0 +1,545 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+
+// ─── EVENT DATA ──────────────────────────────────────────────────────────────
+// To add an event:
+//   1. Create the event on Luma (lu.ma) under the Sosial AI Forum calendar
+//   2. Open the event → More → "Embed Registration Button"
+//   3. Copy the data-luma-event-id value (looks like "evt-xxxxxxxx")
+//   4. Add a new object to the `events` array below
+//   5. Commit & push — GitHub Actions will redeploy automatically
+//
+// Format options: 'Workshop' | 'Webinar' | 'Roundtable' | 'Q&A' | 'Meetup'
+// Status options: 'upcoming' | 'past'
+// ─────────────────────────────────────────────────────────────────────────────
+
+const events = [
+  {
+    lumaEventId: 'evt-ksh9sNL7qgWZWup',   // ← Replace with real Luma event ID
+    title: 'brAInstorm #01 — Prompting for Professionals',
+    date: '2026-04-10',
+    time: '18:00',
+    timezone: 'CET',
+    format: 'Workshop',
+    location: 'Online — Zoom',
+    description: 'A hands-on workshop exploring advanced prompting strategies for real work scenarios. We\'ll cover chain-of-thought, role framing, and output structuring — with live exercises you can apply the same day.',
+    tierRecommended: 'Tiers 2–5',
+    host: 'Sosial AI Forum',
+    capacity: 30,
+    status: 'upcoming',
+  },
+  {
+    lumaEventId: 'evt-PLACEHOLDER-2',   // ← Replace with real Luma event ID
+    title: 'AI~Workflows Deep Dive: Automating Your Weekly Review',
+    date: '2026-04-24',
+    time: '17:30',
+    timezone: 'CET',
+    format: 'Webinar',
+    location: 'Online — Zoom',
+    description: 'Walk through a complete AI-assisted weekly review system — from inbox triage to project status summaries. Bring your own workflow; we\'ll build on it together.',
+    tierRecommended: 'Tiers 3–6',
+    host: 'Sosial AI Forum',
+    capacity: 50,
+    status: 'upcoming',
+  },
+  {
+    lumaEventId: 'evt-PLACEHOLDER-3',   // ← Replace with real Luma event ID
+    title: 'Forum Roundtable: What\'s Actually Working in AI Leadership?',
+    date: '2026-05-08',
+    time: '18:00',
+    timezone: 'CET',
+    format: 'Roundtable',
+    location: 'Online — Zoom',
+    description: 'An open conversation among practitioners at Tiers 5–8. Share what\'s working, what\'s overhyped, and how you\'re navigating AI adoption at an organisational level. No slides — just real talk.',
+    tierRecommended: 'Tiers 5–8',
+    host: 'Sosial AI Forum',
+    capacity: 20,
+    status: 'upcoming',
+  },
+];
+
+const upcomingEvents = events.filter(e => e.status === 'upcoming');
+const pastEvents = events.filter(e => e.status === 'past');
+
+// Format date for display
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return {
+    day: d.toLocaleDateString('en-GB', { day: 'numeric' }),
+    month: d.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase(),
+    weekday: d.toLocaleDateString('en-GB', { weekday: 'long' }),
+    full: d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+  };
+}
+
+const formatColors: Record<string, string> = {
+  Workshop:   'rgba(0,207,255,0.12)',
+  Webinar:    'rgba(124,58,237,0.15)',
+  Roundtable: 'rgba(168,85,247,0.12)',
+  'Q&A':      'rgba(0,207,255,0.08)',
+  Meetup:     'rgba(236,72,153,0.12)',
+};
+const formatTextColors: Record<string, string> = {
+  Workshop:   '#00CFFF',
+  Webinar:    '#a78bfa',
+  Roundtable: '#c084fc',
+  'Q&A':      '#67e8f9',
+  Meetup:     '#f472b6',
+};
+---
+
+<Layout
+  title="Sosial AI Forum — Events & Workshops"
+  description="Join the Sosial AI Forum. Live workshops, webinars, and roundtables for AI practitioners at every tier. Register for upcoming events."
+>
+
+<!-- NAV -->
+<nav class="f-nav">
+  <div class="f-nav-inner">
+    <a href={`${base}/`} class="f-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#fn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#fn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="fn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <div class="f-nav-links">
+      <a href={`${base}/society`} class="f-nav-link">Society</a>
+      <a href={`${base}/forum`} class="f-nav-link f-nav-link--active">Forum</a>
+      <a href={`${base}/blog`} class="f-nav-link">Blog</a>
+    </div>
+    <a href={`${base}/assessment`} class="btn-primary f-nav-cta">
+      Take the Assessment
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="f-hero grid-bg">
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--violet);top:-180px;left:-180px;"></div>
+  <div class="glow-blob" style="width:350px;height:350px;background:var(--cyan);top:-80px;right:-120px;"></div>
+  <div class="container f-hero-inner">
+    <div class="chip reveal">Sosial AI Forum</div>
+    <h1 class="f-hero-h1 reveal reveal-delay-1">
+      Live events for people<br/>serious about AI.
+    </h1>
+    <p class="f-hero-sub reveal reveal-delay-2">
+      Workshops, webinars, and roundtables — built around practitioners, not presentations.
+      Every session is hands-on, tier-aware, and designed to move your AIQ forward.
+    </p>
+    <div class="f-hero-meta reveal reveal-delay-3">
+      <span class="f-meta-pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Monthly sessions
+      </span>
+      <span class="f-meta-pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7a5 5 0 1 0 10 0A5 5 0 0 0 2 7z" stroke="currentColor" stroke-width="1.4"/><path d="M7 4v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Online — open to all
+      </span>
+      <span class="f-meta-pill">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11l2.5-2.5M9.5 3l2.5 2.5-5 5L4.5 8l5-5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Free to attend
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING EVENTS -->
+<section class="f-section">
+  <div class="container">
+    <div class="f-section-head reveal">
+      <div class="chip">Upcoming</div>
+      <h2 class="section-title">What's on</h2>
+      <p class="section-sub">Register for free. Spots are limited for workshops — reserve yours early.</p>
+    </div>
+
+    {upcomingEvents.length === 0 ? (
+      <div class="f-empty glass reveal">
+        <div class="f-empty-icon">📅</div>
+        <h3 class="f-empty-title">No events scheduled yet</h3>
+        <p class="f-empty-sub">We're putting the next session together. Join the Society to be first to know when it drops.</p>
+        <a href={NOTION_URL} class="btn-primary" target="_blank" rel="noopener" style="margin-top:1.5rem">
+          Join for updates
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    ) : (
+      <div class="f-events-list">
+        {upcomingEvents.map((event, i) => {
+          const d = formatDate(event.date);
+          const bgColor = formatColors[event.format] ?? 'rgba(0,207,255,0.08)';
+          const txtColor = formatTextColors[event.format] ?? 'var(--cyan)';
+          return (
+            <div class={`f-event-card glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 5)}` : ''}`}>
+              <!-- Date badge -->
+              <div class="f-event-date">
+                <span class="f-event-day">{d.day}</span>
+                <span class="f-event-month">{d.month}</span>
+              </div>
+
+              <!-- Content -->
+              <div class="f-event-body">
+                <div class="f-event-tags">
+                  <span class="f-format-chip" style={`background:${bgColor};color:${txtColor};border-color:${txtColor}33`}>
+                    {event.format}
+                  </span>
+                  {event.tierRecommended && (
+                    <span class="f-tier-chip">{event.tierRecommended}</span>
+                  )}
+                </div>
+                <h3 class="f-event-title">{event.title}</h3>
+                <p class="f-event-desc">{event.description}</p>
+                <div class="f-event-meta">
+                  <span class="f-meta-item">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 3.5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    {event.time} {event.timezone}
+                  </span>
+                  <span class="f-meta-sep">·</span>
+                  <span class="f-meta-item">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5.5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 11c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    {event.capacity} spots
+                  </span>
+                  <span class="f-meta-sep">·</span>
+                  <span class="f-meta-item">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 11.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    {event.location}
+                  </span>
+                </div>
+              </div>
+
+              <!-- CTA -->
+              <div class="f-event-cta">
+                <p class="f-event-date-full">{d.weekday}, {d.full}</p>
+                <!-- Luma checkout button — replace data-luma-event-id with your real event ID -->
+                <button
+                  class="luma-checkout--button btn-primary f-register-btn"
+                  type="button"
+                  data-luma-action="checkout"
+                  data-luma-event-id={event.lumaEventId}
+                >
+                  Register — Free
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <p class="f-register-note">Opens Luma registration overlay</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section class="f-section f-expect-section">
+  <div class="container">
+    <div class="f-section-head reveal">
+      <div class="chip">Format</div>
+      <h2 class="section-title">How the Forum works</h2>
+      <p class="section-sub">Every session type has a purpose. Here's what to expect from each.</p>
+    </div>
+    <div class="f-formats-grid">
+      {[
+        {
+          icon: '🛠️',
+          label: 'Workshop',
+          color: '#00CFFF',
+          title: 'Hands-on practice',
+          desc: 'Small groups (≤30). You\'ll do things, not just watch them. Exercises, real prompts, live feedback. Expect to leave with something you can use the same day.',
+        },
+        {
+          icon: '📡',
+          label: 'Webinar',
+          color: '#a78bfa',
+          title: 'Structured deep dives',
+          desc: 'Larger audience, one focused topic. A practitioner walks through a system, method, or case study in depth. Q&A at the end.',
+        },
+        {
+          icon: '🔵',
+          label: 'Roundtable',
+          color: '#c084fc',
+          title: 'Peer conversation',
+          desc: 'Small groups of practitioners at similar tiers. No slides. Facilitated discussion around a prompt or shared challenge. Real talk, not rehearsed.',
+        },
+        {
+          icon: '⚡',
+          label: 'brAInstorm Series',
+          color: '#00CFFF',
+          title: 'The flagship event',
+          desc: 'Our recurring format — from intimate sessions to larger gatherings. Each brAInstorm focuses on one idea worth working through together, with the community.',
+        },
+      ].map(f => (
+        <div class="f-format-card glass reveal">
+          <div class="f-format-icon">{f.icon}</div>
+          <div class="f-format-label-chip" style={`color:${f.color};background:${f.color}18;border-color:${f.color}33`}>{f.label}</div>
+          <h3 class="f-format-title">{f.title}</h3>
+          <p class="f-format-desc">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- PAST EVENTS -->
+{pastEvents.length > 0 && (
+  <section class="f-section f-past-section">
+    <div class="container">
+      <div class="f-section-head reveal">
+        <div class="chip">Archive</div>
+        <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.25rem)">Past sessions</h2>
+      </div>
+      <div class="f-past-list">
+        {pastEvents.map((event, i) => {
+          const d = formatDate(event.date);
+          const txtColor = formatTextColors[event.format] ?? 'var(--muted)';
+          return (
+            <div class={`f-past-item glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 5)}` : ''}`}>
+              <div class="f-past-date">
+                <span class="f-past-day">{d.day}</span>
+                <span class="f-past-month">{d.month}</span>
+              </div>
+              <div class="f-past-body">
+                <span class="f-format-chip" style={`background:${formatColors[event.format] ?? 'rgba(0,207,255,0.05)'};color:${txtColor};border-color:${txtColor}33;font-size:0.7rem`}>{event.format}</span>
+                <h4 class="f-past-title">{event.title}</h4>
+                <p class="f-past-meta">{event.time} {event.timezone} · {event.location}</p>
+              </div>
+              <div class="f-past-badge">Completed</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- JOIN CTA -->
+<section class="f-section f-cta-section">
+  <div class="container">
+    <div class="glass f-cta-block reveal">
+      <div class="glow-blob" style="width:300px;height:300px;background:var(--cyan);top:-100px;left:-80px;opacity:0.07;"></div>
+      <div class="glow-blob" style="width:200px;height:200px;background:var(--violet);bottom:-60px;right:-60px;opacity:0.1;"></div>
+      <div class="chip" style="margin-bottom:1.5rem">Stay in the loop</div>
+      <h2 class="f-cta-h2">Don't miss the next session.</h2>
+      <p class="f-cta-sub">Society members get early access to registration and priority spots in limited-capacity workshops. Join free — no credit card required.</p>
+      <div class="f-cta-btns">
+        <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">
+          Join the Society — Free
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={`${base}/assessment`} class="btn-secondary btn-lg">Discover your AIQ →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Luma checkout script — loads once, handles all buttons on the page -->
+<script is:inline src="https://embed.lu.ma/checkout-button.js" id="luma-checkout"></script>
+
+<style>
+  /* NAV */
+  .f-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(4,7,15,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,207,255,0.08); height: 60px;
+  }
+  .f-nav-inner {
+    max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .f-nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+  .f-nav-links {
+    display: flex; align-items: center; gap: 1.5rem; flex: 1;
+  }
+  .f-nav-link {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 500;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .f-nav-link:hover { color: var(--text); }
+  .f-nav-link--active { color: var(--cyan); }
+  .f-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; margin-left: auto; flex-shrink: 0; }
+
+  /* HERO */
+  .f-hero {
+    padding: 7rem 1.5rem 5.5rem; position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .f-hero-inner { max-width: 760px; margin: 0 auto; }
+  .f-hero-h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem); font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, #E8F0FF 0%, #00CFFF 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin: 1rem 0 1.5rem; line-height: 1.1;
+  }
+  .f-hero-sub { color: var(--muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2.5rem; }
+  .f-hero-meta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .f-meta-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    color: var(--muted); padding: 0.3rem 0.9rem;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 999px;
+  }
+
+  /* SECTIONS */
+  .f-section { padding: 5rem 1.5rem; }
+  .f-section-head { margin-bottom: 3rem; }
+  .f-cta-section { padding: 3rem 1.5rem 7rem; }
+  .f-expect-section { background: rgba(8,13,26,0.5); }
+  .f-past-section { background: rgba(8,13,26,0.3); }
+
+  /* EVENT CARDS */
+  .f-events-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .f-event-card {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 2rem; padding: 2rem;
+    align-items: start;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+  .f-event-card:hover { transform: translateY(-2px); }
+
+  /* Date badge */
+  .f-event-date {
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+  }
+  .f-event-day {
+    font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800;
+    line-height: 1; color: var(--cyan);
+  }
+  .f-event-month {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; color: var(--muted); margin-top: 0.15rem;
+  }
+
+  /* Body */
+  .f-event-body { flex: 1; min-width: 0; }
+  .f-event-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .f-format-chip {
+    display: inline-flex; align-items: center;
+    padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid;
+  }
+  .f-tier-chip {
+    display: inline-flex; align-items: center;
+    padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+    color: var(--muted); background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .f-event-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem;
+    font-weight: 700; margin-bottom: 0.6rem; line-height: 1.3;
+  }
+  .f-event-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+  .f-event-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .f-meta-item {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted);
+  }
+  .f-meta-sep { color: rgba(107,122,153,0.4); font-size: 0.75rem; }
+
+  /* CTA column */
+  .f-event-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; flex-shrink: 0; }
+  .f-event-date-full {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted);
+    text-align: right; white-space: nowrap;
+  }
+  .f-register-btn { white-space: nowrap; padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+  .f-register-note { font-size: 0.68rem; color: rgba(107,122,153,0.6); text-align: right; }
+
+  /* Empty state */
+  .f-empty {
+    max-width: 480px; margin: 0 auto; padding: 3.5rem 2.5rem;
+    text-align: center;
+  }
+  .f-empty-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .f-empty-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .f-empty-sub { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
+  /* FORMAT CARDS */
+  .f-formats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;
+  }
+  .f-format-card { padding: 1.75rem; }
+  .f-format-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  .f-format-label-chip {
+    display: inline-flex; padding: 0.18rem 0.6rem; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
+    margin-bottom: 0.75rem;
+  }
+  .f-format-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem;
+    font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .f-format-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+  /* PAST EVENTS */
+  .f-past-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .f-past-item {
+    display: grid; grid-template-columns: 48px 1fr auto;
+    gap: 1.5rem; padding: 1.25rem 1.75rem; align-items: center;
+  }
+  .f-past-date { display: flex; flex-direction: column; align-items: center; }
+  .f-past-day { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--muted); line-height: 1; }
+  .f-past-month { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); opacity: 0.6; margin-top: 0.1rem; letter-spacing: 0.1em; }
+  .f-past-body { display: flex; flex-direction: column; gap: 0.35rem; }
+  .f-past-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; }
+  .f-past-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .f-past-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 600;
+    color: var(--muted); padding: 0.2rem 0.65rem; border-radius: 999px;
+    background: rgba(107,122,153,0.1); border: 1px solid rgba(107,122,153,0.2);
+    white-space: nowrap;
+  }
+
+  /* CTA BLOCK */
+  .f-cta-block {
+    max-width: 680px; margin: 0 auto; padding: 3.5rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .f-cta-h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem,3.5vw,2.25rem);
+    font-weight: 800; margin-bottom: 1rem;
+  }
+  .f-cta-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+  .f-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .btn-lg { padding: 1rem 2.5rem; font-size: 1rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .f-nav-links { display: none; }
+    .f-event-card {
+      grid-template-columns: 48px 1fr;
+      grid-template-rows: auto auto;
+    }
+    .f-event-cta {
+      grid-column: 1 / -1; align-items: flex-start;
+    }
+    .f-event-date-full { text-align: left; }
+    .f-register-note { text-align: left; }
+    .f-past-item {
+      grid-template-columns: 40px 1fr;
+    }
+    .f-past-badge { display: none; }
+    .f-cta-block { padding: 2.5rem 1.5rem; }
+  }
+</style>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</Layout>

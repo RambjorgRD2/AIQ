@@ -60,7 +60,7 @@ const events = [
   },
 ];
 
-const upcomingEvents = events.filter(e => e.status === 'upcoming' && e.format === 'Workshop');
+const upcomingEvents = events.filter(e => e.status === 'upcoming');
 const pastEvents = events.filter(e => e.status === 'past');
 
 // Format date for display
@@ -152,8 +152,19 @@ const formatTextColors: Record<string, string> = {
   <div class="container">
     <div class="f-section-head reveal">
       <div class="chip">Upcoming</div>
-      <h2 class="section-title">Upcoming Workshops</h2>
-      <p class="section-sub">Register for free. Spots are limited — reserve yours early. All other events are in the calendar below.</p>
+      <h2 class="section-title">What's on</h2>
+      <p class="section-sub">Register for free. Spots are limited for workshops — reserve yours early.</p>
+    </div>
+
+    <!-- FORMAT FILTER -->
+    <div class="f-filter-bar reveal" id="eventFilterBar">
+      {['All', 'Workshop', 'Webinar', 'Roundtable', 'brAInstorm'].map((f, i) => (
+        <button
+          class={`f-filter-btn${i === 0 ? ' f-filter-btn--active' : ''}`}
+          data-filter={f}
+          type="button"
+        >{f}</button>
+      ))}
     </div>
 
     {upcomingEvents.length === 0 ? (
@@ -173,7 +184,7 @@ const formatTextColors: Record<string, string> = {
           const bgColor = formatColors[event.format] ?? 'rgba(0,207,255,0.08)';
           const txtColor = formatTextColors[event.format] ?? 'var(--cyan)';
           return (
-            <div class={`f-event-card glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 5)}` : ''}`}>
+            <div class={`f-event-card glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 5)}` : ''}`} data-format={event.format} data-title={event.title}>
               <!-- Date badge -->
               <div class="f-event-date">
                 <span class="f-event-day">{d.day}</span>
@@ -415,6 +426,23 @@ const formatTextColors: Record<string, string> = {
   .f-expect-section { background: rgba(8,13,26,0.5); }
   .f-past-section { background: rgba(8,13,26,0.3); }
 
+  /* FORMAT FILTER BAR */
+  .f-filter-bar {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .f-filter-btn {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 999px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.03); color: var(--muted);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .f-filter-btn:hover { color: var(--text); border-color: rgba(0,207,255,0.25); }
+  .f-filter-btn--active {
+    background: rgba(0,207,255,0.1); color: var(--cyan);
+    border-color: rgba(0,207,255,0.35);
+  }
+
   /* EVENT CARDS */
   .f-events-list { display: flex; flex-direction: column; gap: 1.25rem; }
   .f-event-card {
@@ -575,6 +603,23 @@ const formatTextColors: Record<string, string> = {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Event format filter
+  const filterBtns = document.querySelectorAll('.f-filter-btn');
+  const eventCards = document.querySelectorAll<HTMLElement>('.f-event-card[data-format]');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('f-filter-btn--active'));
+      btn.classList.add('f-filter-btn--active');
+      const filter = (btn as HTMLElement).dataset.filter ?? 'All';
+      eventCards.forEach(card => {
+        const fmt = card.dataset.format ?? '';
+        const show = filter === 'All' || fmt === filter || (filter === 'brAInstorm' && fmt === 'Workshop' && card.dataset.title?.includes('brAInstorm'));
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
 </script>
 
 </Layout>

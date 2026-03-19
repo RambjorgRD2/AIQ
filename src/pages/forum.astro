@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const FORUM_URL = `${base}/forum`;
 
 // ─── EVENT DATA ──────────────────────────────────────────────────────────────
 // To add an event:
@@ -18,7 +18,7 @@ const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f82
 const events = [
   {
     lumaEventId: 'evt-ksh9sNL7qgWZWup',
-    title: 'Sosial AI Forum — Første samling i Førde',
+    title: 'Sosial AI Forum — First Gathering in Førde',
     date: '2026-04-08',
     time: '12:00',
     timezone: 'CET',
@@ -144,7 +144,7 @@ const formatTextColors: Record<string, string> = {
         <div class="f-empty-icon">📅</div>
         <h3 class="f-empty-title">No events scheduled yet</h3>
         <p class="f-empty-sub">We're putting the next session together. Join the Society to be first to know when it drops.</p>
-        <a href={NOTION_URL} class="btn-primary" target="_blank" rel="noopener" style="margin-top:1.5rem">
+        <a href={FORUM_URL} class="btn-primary" style="margin-top:1.5rem">
           Join for updates
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -332,7 +332,7 @@ const formatTextColors: Record<string, string> = {
       <h2 class="f-cta-h2">Don't miss the next session.</h2>
       <p class="f-cta-sub">Society members get early access to registration and priority spots in limited-capacity workshops. Join free — no credit card required.</p>
       <div class="f-cta-btns">
-        <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">
+        <a href={FORUM_URL} class="btn-primary btn-lg">
           Join the Society — Free
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>

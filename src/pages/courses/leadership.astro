@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const FORUM_URL = `${base}/forum`;
 
 const modules = [
   { num:'01', title:'The AI Leader\'s Mindset', desc:'What separates AI leaders from AI users. The principles behind transformative adoption.' },
@@ -59,7 +59,7 @@ const modules = [
           <span class="meta-pill">Strategist → Pioneer</span>
         </div>
         <div class="course-btns reveal reveal-delay-4">
-          <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">
+          <a href={FORUM_URL} class="btn-primary btn-lg">
             Join the Society for Access →
           </a>
           <a href={`${base}/assessment`} class="btn-secondary btn-lg">Verify Your Tier</a>
@@ -128,7 +128,7 @@ const modules = [
       <h2 class="cta-block-h2">Define the field for others.</h2>
       <p class="cta-block-sub">AI~Leadership is for the people who see further and build what comes next. Join the Sosial AI Society and claim your place at the frontier.</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
-        <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">Join the Society for Access →</a>
+        <a href={FORUM_URL} class="btn-primary btn-lg">Join the Society for Access →</a>
         <a href={`${base}/certification`} class="btn-secondary btn-lg">View Certification →</a>
       </div>
     </div>

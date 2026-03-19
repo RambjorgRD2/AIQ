@@ -566,12 +566,10 @@ import Layout from '../layouts/Layout.astro';
 <script>
 (function () {
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-  const SOCIETY_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
-
   // Wire up retake / take links
   document.getElementById('btn-retake').href = BASE + '/assessment';
   document.getElementById('btn-take') && (document.getElementById('btn-take').href = BASE + '/assessment');
-  document.getElementById('btn-join-society').href = SOCIETY_URL;
+  document.getElementById('btn-join-society').href = BASE + '/forum';
 
   // ── Load result from localStorage ────────────────────
   let result;

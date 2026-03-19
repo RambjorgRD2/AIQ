@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const NOTION_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const FORUM_URL = `${base}/forum`;
 
 const modules = [
   { num:'01', title:'From User to Practitioner', desc:'The mindset shift that separates occasional users from people who consistently get results.' },
@@ -62,7 +62,7 @@ const modules = [
           <span class="meta-pill">Practitioner → Advanced</span>
         </div>
         <div class="course-btns reveal reveal-delay-4">
-          <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">
+          <a href={FORUM_URL} class="btn-primary btn-lg">
             Join the Society for Access →
           </a>
           <a href={`${base}/assessment`} class="btn-secondary btn-lg">Check Your Tier First</a>
@@ -131,7 +131,7 @@ const modules = [
       <h2 class="cta-block-h2">From practitioner to system builder.</h2>
       <p class="cta-block-sub">Join the Sosial AI Society and get immediate access to AI~Workflows — plus AI~Leadership when you're ready to scale.</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
-        <a href={NOTION_URL} class="btn-primary btn-lg" target="_blank" rel="noopener">Join the Society for Access →</a>
+        <a href={FORUM_URL} class="btn-primary btn-lg">Join the Society for Access →</a>
         <a href={`${base}/courses/leadership`} class="btn-secondary btn-lg">Next Track: AI~Leadership</a>
       </div>
     </div>

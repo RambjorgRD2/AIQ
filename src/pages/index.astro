@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const NOTION_FORM_URL = 'https://walnut-sea-abb.notion.site/3213f9fc4e588013bacbe0f823a2ae09?pvs=105';
+const FORUM_URL = `${BASE}/forum`;
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ASSESSMENT_URL = `${BASE}/assessment`;
 ---
@@ -82,11 +82,11 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
             Discover your AIQ
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href={NOTION_FORM_URL} class="btn-secondary" target="_blank" rel="noopener">
+          <a href={FORUM_URL} class="btn-secondary">
             Join the Society
           </a>
         </div>
-        <p class="hero-dual-path">Discover your AIQ. <a href={NOTION_FORM_URL} target="_blank" rel="noopener">Join the Society.</a></p>
+        <p class="hero-dual-path">Discover your AIQ. <a href={FORUM_URL}>Upcoming Events →</a></p>
         <p class="hero-note">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1a5.5 5.5 0 100 11A5.5 5.5 0 006.5 1zm0 5v3m0-5v1" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
           Free to join &mdash; no credit card required
@@ -264,7 +264,7 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
               AIQ certification upon completion
             </li>
           </ul>
-          <a href={NOTION_FORM_URL} class="btn-primary" target="_blank" rel="noopener">
+          <a href={FORUM_URL} class="btn-primary">
             Join the Society
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -443,7 +443,7 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
             Discover your AIQ
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href={NOTION_FORM_URL} class="btn-secondary" target="_blank" rel="noopener" style="font-size:1.05rem;padding:1rem 2.5rem">
+          <a href={FORUM_URL} class="btn-secondary" style="font-size:1.05rem;padding:1rem 2.5rem">
             Join the Society — Free
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -478,7 +478,7 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
         <a href="#how">How It Works</a>
         <a href={`${BASE}/blog`}>Blog</a>
         <a href={ASSESSMENT_URL}>Assessment</a>
-        <a href={NOTION_FORM_URL} target="_blank" rel="noopener">Join</a>
+        <a href={FORUM_URL}>Events</a>
       </nav>
       <p class="footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
     </div>

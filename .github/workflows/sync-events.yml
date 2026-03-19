@@ -1,0 +1,43 @@
+name: Sync Luma Events
+
+on:
+  schedule:
+    # Every Monday at 07:00 UTC — keeps the calendar fresh each week
+    - cron: '0 7 * * 1'
+  workflow_dispatch: # allow manual trigger from the GitHub Actions UI
+
+permissions:
+  contents: write # needed to commit changes back to main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch events from Luma and update forum.astro
+        run: node .github/scripts/sync-luma-events.mjs
+        env:
+          # Optional — only needed if Luma starts requiring auth for public calendars.
+          # Add as a repo secret: Settings → Secrets → Actions → LUMA_API_KEY
+          LUMA_API_KEY: ${{ secrets.LUMA_API_KEY }}
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes — nothing to commit."
+          else
+            git add src/pages/forum.astro
+            git commit -m "chore: sync Luma events $(date -u +%Y-%m-%d)"
+            git push
+            echo "Pushed updated events. Deploy workflow will pick this up automatically."
+          fi

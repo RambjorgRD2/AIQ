@@ -1,0 +1,590 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { articles } from '../../data/articles';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ASSESSMENT_URL = `${BASE}/assessment`;
+const BLOG_URL = `${BASE}/blog`;
+
+// Format date nicely
+const dateObj = new Date(article.date);
+const formattedDate = dateObj.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const chipColorClass = `article-chip--${article.categoryColor}`;
+---
+
+<Layout
+  title={`${article.title} — AIQ Blog`}
+  description={article.excerpt}
+>
+
+<!-- NAV -->
+<nav class="art-nav">
+  <div class="art-nav-inner">
+    <a href={BASE} class="art-nav-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#artNavGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#artNavGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="artNavGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <div class="art-nav-links">
+      <a href={BLOG_URL} class="art-nav-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All articles
+      </a>
+      <a href={ASSESSMENT_URL} class="btn-primary art-nav-cta">
+        Take the assessment
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<header class="art-hero">
+  <div class="art-glow-1"></div>
+  <div class="art-glow-2"></div>
+  <div class="art-container">
+    <div class="art-hero-meta">
+      <span class={`art-category-chip ${chipColorClass}`}>{article.category}</span>
+      <span class="art-hero-date">{formattedDate}</span>
+      <span class="art-hero-read">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg>
+        {article.readTime}
+      </span>
+    </div>
+    <h1 class="art-hero-title">{article.title}</h1>
+    <p class="art-hero-excerpt">{article.excerpt}</p>
+  </div>
+</header>
+
+<!-- ARTICLE BODY -->
+<div class="art-body-wrap">
+  <div class="art-container">
+    <div class="art-layout">
+      <!-- MAIN CONTENT -->
+      <article class="art-content" set:html={article.content} />
+
+      <!-- SIDEBAR -->
+      <aside class="art-sidebar">
+        <div class="art-sidebar-card glass">
+          <p class="art-sidebar-label">Know your score</p>
+          <h3 class="art-sidebar-heading">What's your AIQ?</h3>
+          <p class="art-sidebar-body">8 minutes. 3 dimensions. 9 tiers. Find out exactly where you stand — and what to do next.</p>
+          <a href={ASSESSMENT_URL} class="btn-primary art-sidebar-btn">
+            Take the assessment
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="art-sidebar-card glass art-sidebar-more">
+          <p class="art-sidebar-label">More articles</p>
+          {articles.filter(a => a.slug !== article.slug).slice(0, 3).map(a => (
+            <a href={`${BLOG_URL}/${a.slug}`} class="art-sidebar-article-link">
+              <span class={`art-sidebar-dot art-dot--${a.categoryColor}`}></span>
+              <span class="art-sidebar-article-title">{a.title}</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<section class="art-bottom-cta">
+  <div class="art-glow-3"></div>
+  <div class="art-container">
+    <div class="art-cta-box glass">
+      <p class="art-cta-eyebrow">Ready to measure yours?</p>
+      <h2 class="art-cta-title">Discover your <span class="gradient-text">AIQ~</span></h2>
+      <p class="art-cta-sub">Take the 8-minute assessment and get your personalised score across Think, Apply, and Lead.</p>
+      <a href={ASSESSMENT_URL} class="btn-primary art-cta-btn">
+        Start the assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="art-footer">
+  <div class="art-container art-footer-inner">
+    <a href={BASE} class="art-footer-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#artFootGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#artFootGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="artFootGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <p class="art-footer-tagline">Know before you Grow. Your AIQ belongs to you.</p>
+    <nav class="art-footer-nav">
+      <a href={BASE}>Home</a>
+      <a href={`${BASE}/#about`}>About</a>
+      <a href={BLOG_URL}>Blog</a>
+      <a href={ASSESSMENT_URL}>Assessment</a>
+      <a href={`${BASE}/forum`}>Join</a>
+    </nav>
+    <p class="art-footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
+  </div>
+</footer>
+
+</Layout>
+
+<style is:global>
+  /* ── NAV ───────────────────────────────────────────── */
+  .art-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4, 7, 15, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+    height: 68px;
+  }
+
+  .art-nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .art-nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+
+  .art-nav-links { display: flex; align-items: center; gap: 1.25rem; }
+
+  .art-nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7A99;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .art-nav-back:hover { color: #E8F0FF; }
+
+  .art-nav-cta {
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── CONTAINER ──────────────────────────────────────── */
+  .art-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .art-hero {
+    position: relative;
+    padding: 4.5rem 1.5rem 3.5rem;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0, 207, 255, 0.07);
+  }
+
+  .art-glow-1 {
+    position: absolute;
+    width: 600px; height: 400px;
+    background: #00CFFF;
+    top: -200px; left: -100px;
+    opacity: 0.05;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .art-glow-2 {
+    position: absolute;
+    width: 500px; height: 400px;
+    background: #7C3AED;
+    top: -100px; right: -80px;
+    opacity: 0.08;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .art-hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .art-category-chip {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .art-chip--cyan {
+    background: rgba(0, 207, 255, 0.1);
+    border: 1px solid rgba(0, 207, 255, 0.3);
+    color: #00CFFF;
+  }
+
+  .art-chip--violet {
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.35);
+    color: #a855f7;
+  }
+
+  .art-chip--pink {
+    background: rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    color: #EC4899;
+  }
+
+  .art-hero-date, .art-hero-read {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #6B7A99;
+  }
+
+  .art-hero-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .art-hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.9rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #E8F0FF;
+    margin-bottom: 1.25rem;
+    max-width: 820px;
+  }
+
+  .art-hero-excerpt {
+    font-size: 1.15rem;
+    color: #6B7A99;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+
+  /* ── LAYOUT: CONTENT + SIDEBAR ──────────────────────── */
+  .art-body-wrap {
+    padding: 3.5rem 1.5rem 4rem;
+  }
+
+  .art-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .art-layout {
+      grid-template-columns: 1fr;
+    }
+    .art-sidebar {
+      order: -1;
+    }
+  }
+
+  /* ── ARTICLE CONTENT TYPOGRAPHY ─────────────────────── */
+  .art-content {
+    font-size: 1.06rem;
+    line-height: 1.8;
+    color: #C8D4F0;
+    max-width: 68ch;
+  }
+
+  .art-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .art-content h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.35rem, 3vw, 1.65rem);
+    font-weight: 700;
+    color: #E8F0FF;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .art-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #00CFFF;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
+  }
+
+  .art-content strong {
+    color: #E8F0FF;
+    font-weight: 600;
+  }
+
+  .art-content em {
+    color: #a0b0d0;
+    font-style: italic;
+  }
+
+  .art-content a {
+    color: #00CFFF;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(0, 207, 255, 0.35);
+    transition: text-decoration-color 0.2s;
+  }
+
+  .art-content a:hover {
+    text-decoration-color: #00CFFF;
+  }
+
+  /* ── SIDEBAR ────────────────────────────────────────── */
+  .art-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: sticky;
+    top: 88px;
+  }
+
+  .art-sidebar-card {
+    padding: 1.75rem;
+    border-radius: 16px;
+  }
+
+  .art-sidebar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6B7A99;
+    margin-bottom: 0.5rem;
+  }
+
+  .art-sidebar-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #E8F0FF;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .art-sidebar-body {
+    font-size: 0.88rem;
+    color: #6B7A99;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .art-sidebar-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.88rem;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .art-sidebar-more .art-sidebar-label {
+    margin-bottom: 1rem;
+  }
+
+  .art-sidebar-article-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    text-decoration: none;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0, 207, 255, 0.06);
+  }
+
+  .art-sidebar-article-link:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .art-sidebar-dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 0.45rem;
+  }
+
+  .art-dot--cyan { background: #00CFFF; }
+  .art-dot--violet { background: #7C3AED; }
+  .art-dot--pink { background: #EC4899; }
+
+  .art-sidebar-article-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7A99;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+
+  .art-sidebar-article-link:hover .art-sidebar-article-title {
+    color: #E8F0FF;
+  }
+
+  /* ── BOTTOM CTA ─────────────────────────────────────── */
+  .art-bottom-cta {
+    position: relative;
+    padding: 4rem 1.5rem 5rem;
+    overflow: hidden;
+  }
+
+  .art-glow-3 {
+    position: absolute;
+    width: 700px; height: 400px;
+    background: #7C3AED;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.07;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  .art-cta-box {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border-radius: 20px;
+  }
+
+  .art-cta-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6B7A99;
+    margin-bottom: 0.75rem;
+  }
+
+  .art-cta-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+    font-weight: 800;
+    color: #E8F0FF;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .art-cta-sub {
+    font-size: 1.05rem;
+    color: #6B7A99;
+    line-height: 1.65;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+
+  .art-cta-btn {
+    font-size: 1rem;
+    padding: 0.9rem 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  .art-footer {
+    padding: 3rem 1.5rem;
+    border-top: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  .art-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .art-footer-logo { display: flex; align-items: center; text-decoration: none; }
+
+  .art-footer-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7A99;
+    letter-spacing: 0.05em;
+  }
+
+  .art-footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .art-footer-nav a {
+    color: #6B7A99;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .art-footer-nav a:hover { color: #E8F0FF; }
+
+  .art-footer-copy {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.5);
+    margin-top: 0.5rem;
+  }
+</style>

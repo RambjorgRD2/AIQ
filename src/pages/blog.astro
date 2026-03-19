@@ -1,47 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { articles } from '../data/articles';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${BASE}/forum`;
 const ASSESSMENT_URL = `${BASE}/assessment`;
-
-const articles = [
-  {
-    category: 'Foundation',
-    categoryColor: 'cyan',
-    title: 'Know Before You Grow: Why Your AIQ Baseline Changes Everything',
-    excerpt: 'Most people skip the diagnosis and jump straight to learning. That\'s why most AI training doesn\'t stick. Here\'s what measuring your starting point actually unlocks.',
-    readTime: '5 min read',
-  },
-  {
-    category: 'Framework',
-    categoryColor: 'violet',
-    title: 'The 3 Dimensions of AI Intelligence: Think, Apply, Lead',
-    excerpt: 'AIQ isn\'t one number — it\'s three. How you reason about AI, how you deploy it, and how you lead with it are distinct skills that compound differently.',
-    readTime: '7 min read',
-  },
-  {
-    category: 'Mindset',
-    categoryColor: 'pink',
-    title: 'What Separates AI-Fluent Professionals from AI-Curious Ones',
-    excerpt: 'Curiosity opens the door. Fluency walks through it. The difference comes down to one habit that most people never develop.',
-    readTime: '6 min read',
-  },
-  {
-    category: 'Tier Deep-Dive',
-    categoryColor: 'violet',
-    title: 'The Pioneer Mindset: What the Top AIQ Tier Actually Looks Like',
-    excerpt: 'Pioneers don\'t just use AI — they define how others use it. We break down what separates Tier 8 from everyone else.',
-    readTime: '8 min read',
-  },
-  {
-    category: 'Practical',
-    categoryColor: 'cyan',
-    title: 'How to Raise Your AIQ: A Practitioner\'s Field Guide',
-    excerpt: 'Scores don\'t raise themselves. This is the structured approach that moves people from Practitioner to Fluent — and from Fluent to Strategist.',
-    readTime: '9 min read',
-  },
-];
 ---
 
 <Layout
@@ -90,7 +53,7 @@ const articles = [
   <div class="blog-container">
     <div class="blog-grid">
       {articles.map((article) => (
-        <article class={`blog-card glass blog-card--${article.categoryColor}`}>
+        <a href={`${BASE}/blog/${article.slug}`} class={`blog-card glass blog-card--${article.categoryColor}`} style="text-decoration:none;">
           <div class="blog-card-strip"></div>
           <div class="blog-card-body">
             <span class={`blog-category-chip blog-chip--${article.categoryColor}`}>{article.category}</span>
@@ -101,10 +64,10 @@ const articles = [
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg>
                 {article.readTime}
               </span>
-              <span class="blog-coming-soon">Coming soon</span>
+              <span class="blog-read-link">Read article →</span>
             </div>
           </div>
-        </article>
+        </a>
       ))}
     </div>
   </div>
@@ -393,17 +356,17 @@ const articles = [
     color: #6B7A99;
   }
 
-  .blog-coming-soon {
+  .blog-read-link {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #6B7A99;
-    background: rgba(107, 122, 153, 0.1);
-    border: 1px solid rgba(107, 122, 153, 0.2);
-    border-radius: 999px;
-    padding: 0.2rem 0.65rem;
+    color: #00CFFF;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+
+  .blog-card:hover .blog-read-link {
+    opacity: 0.8;
   }
 
   /* ── CTA SECTION ──────────────────────────────────── */

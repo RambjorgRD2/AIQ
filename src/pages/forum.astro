@@ -60,7 +60,7 @@ const events = [
   },
 ];
 
-const upcomingEvents = events.filter(e => e.status === 'upcoming');
+const upcomingEvents = events.filter(e => e.status === 'upcoming' && e.format === 'Workshop');
 const pastEvents = events.filter(e => e.status === 'past');
 
 // Format date for display
@@ -152,8 +152,8 @@ const formatTextColors: Record<string, string> = {
   <div class="container">
     <div class="f-section-head reveal">
       <div class="chip">Upcoming</div>
-      <h2 class="section-title">What's on</h2>
-      <p class="section-sub">Register for free. Spots are limited for workshops — reserve yours early.</p>
+      <h2 class="section-title">Upcoming Workshops</h2>
+      <p class="section-sub">Register for free. Spots are limited — reserve yours early. All other events are in the calendar below.</p>
     </div>
 
     {upcomingEvents.length === 0 ? (

@@ -241,13 +241,13 @@ const formatTextColors: Record<string, string> = {
       <h2 class="section-title">All Sosial AI events on Luma</h2>
       <p class="section-sub">Browse and register directly from the embedded calendar below, or <a href="https://luma.com/SosiAI" target="_blank" rel="noopener" class="f-luma-link">open it on Luma ↗</a></p>
     </div>
-    <div class="f-luma-embed-wrap reveal">
+    <div class="f-luma-embed-wrap glass reveal">
       <iframe
-        src="https://luma.com/embed/calendar/cal-CvikyKmsIwGWlEz/events?lt=dark"
+        src="https://luma.com/embed/calendar/cal-CvikyKmsIwGWlEz/events"
         width="100%"
         height="600"
         frameborder="0"
-        style="border:none;border-radius:10px;display:block;"
+        style="border:1px solid rgba(0,207,255,0.12);border-radius:12px;"
         allowfullscreen=""
         aria-hidden="false"
         tabindex="0"
@@ -491,10 +491,8 @@ const formatTextColors: Record<string, string> = {
   /* LUMA CALENDAR EMBED */
   .f-calendar-section { padding-top: 0; }
   .f-luma-embed-wrap {
-    padding: 1rem;
+    padding: 1.25rem;
     overflow: hidden;
-    background: #00CFFF;
-    border-radius: 14px;
   }
   .f-luma-link {
     color: var(--cyan); text-decoration: none; font-weight: 500;

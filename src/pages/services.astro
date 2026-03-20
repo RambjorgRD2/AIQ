@@ -1,0 +1,444 @@
+---
+import Layout from '../layouts/Layout.astro';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ASSESSMENT_URL = `${BASE}/assessment`;
+const FORUM_URL = `${BASE}/forum`;
+---
+
+<Layout
+  title="Services — Optimal AI"
+  description="AI & Automation services for teams and organisations. Team AIQ assessments, AI strategy consulting, automation implementation, and structured AI literacy programmes — powered by the AIQ framework."
+>
+
+<!-- NAV -->
+<nav class="sv-nav">
+  <div class="sv-nav-inner">
+    <a href={`${BASE}/`} class="sv-nav-logo" aria-label="Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#svn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#svn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="svn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <div class="sv-nav-links">
+      <a href={FORUM_URL} class="sv-nav-link">Forum</a>
+      <a href={ASSESSMENT_URL} class="sv-nav-link">Assessment</a>
+      <a href={`${BASE}/society`} class="sv-nav-link">Society</a>
+      <a href={`${BASE}/blog`} class="sv-nav-link">Blog</a>
+      <a href={`${BASE}/services`} class="sv-nav-link sv-nav-link--active">Services</a>
+    </div>
+    <a href={ASSESSMENT_URL} class="btn-primary sv-nav-cta">
+      Take the Assessment
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="sv-hero grid-bg">
+  <div class="glow-blob" style="width:600px;height:600px;background:var(--cyan);top:-200px;left:-200px;opacity:0.08;"></div>
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--violet);bottom:-100px;right:-150px;opacity:0.1;"></div>
+  <div class="container sv-hero-inner">
+    <div class="chip reveal">Optimal AI</div>
+    <h1 class="sv-hero-h1 reveal reveal-delay-1">
+      AI fluency,<br/><span class="gradient-text">at scale.</span>
+    </h1>
+    <p class="sv-hero-sub reveal reveal-delay-2">
+      We build what we teach — AI strategy, automation implementation, and structured team upskilling powered by the AIQ framework. From a single assessment to a full organisational transformation.
+    </p>
+    <div class="sv-hero-btns reveal reveal-delay-3">
+      <a href="mailto:hello@optimalai.no" class="btn-primary sv-btn-lg">
+        Book a discovery call
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href={ASSESSMENT_URL} class="btn-secondary sv-btn-lg">
+        Start with a free AIQ →
+      </a>
+    </div>
+    <div class="sv-hero-meta reveal reveal-delay-4">
+      <span class="sv-meta-pill">Team Assessments</span>
+      <span class="sv-meta-pill">AI Strategy</span>
+      <span class="sv-meta-pill">Automation Builds</span>
+      <span class="sv-meta-pill">AI~Literacy Programmes</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section class="sv-section">
+  <div class="container">
+    <div class="sv-section-head reveal">
+      <div class="chip">What We Do</div>
+      <h2 class="section-title">Four ways we work with teams</h2>
+      <p class="section-sub">Every engagement starts with an honest assessment of where you are. Everything else follows from that.</p>
+    </div>
+
+    <div class="sv-grid">
+      {[
+        {
+          icon: '📊',
+          label: 'Assessment',
+          labelColor: '#00CFFF',
+          title: 'Team AIQ Assessment',
+          desc: 'Baseline your team\'s AI fluency across Think, Apply, and Lead. Identify gaps, benchmark against industry, and build a targeted development plan grounded in actual capability — not assumptions.',
+          points: [
+            'Individual scores + team aggregate view',
+            'Gap analysis across Think / Apply / Lead',
+            'Tier-mapped development recommendations',
+            'Repeatable — track progress every 90 days',
+          ],
+        },
+        {
+          icon: '🗺️',
+          label: 'Strategy',
+          labelColor: '#a78bfa',
+          title: 'AI Strategy Consulting',
+          desc: 'From AI opportunity mapping to use-case prioritisation — we help organisations make clear, grounded decisions about where and how to integrate AI for real impact.',
+          points: [
+            'AI readiness audit',
+            'Use-case prioritisation framework',
+            'Build vs. buy vs. integrate analysis',
+            'Governance and risk considerations',
+          ],
+        },
+        {
+          icon: '⚙️',
+          label: 'Implementation',
+          labelColor: '#00CFFF',
+          title: 'Automation Implementation',
+          desc: 'We build AI-powered workflows that actually run. From simple automations to complex multi-step systems — production-ready, documented, and designed to keep working.',
+          points: [
+            'n8n / Make / API-based workflows',
+            'Custom AI pipeline design',
+            'Documentation and handover',
+            'Ongoing support available',
+          ],
+        },
+        {
+          icon: '📚',
+          label: 'Learning',
+          labelColor: '#c084fc',
+          title: 'AI~Literacy Programmes',
+          desc: 'Structured team upskilling tied to AIQ tiers. Everyone starts from their actual baseline — no one gets bored, no one gets left behind. Ends with verifiable AIQ certification.',
+          points: [
+            'Team-wide or role-specific programmes',
+            'Calibrated to actual AIQ baseline',
+            'Three tracks: Foundations / Workflows / Leadership',
+            'AIQ certification included',
+          ],
+        },
+      ].map((s, i) => (
+        <div class={`sv-card glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 4)}` : ''}`}>
+          <div class="sv-card-icon">{s.icon}</div>
+          <div class="sv-card-label" style={`color:${s.labelColor};background:${s.labelColor}18;border-color:${s.labelColor}33`}>{s.label}</div>
+          <h3 class="sv-card-title">{s.title}</h3>
+          <p class="sv-card-desc">{s.desc}</p>
+          <ul class="sv-card-points">
+            {s.points.map(pt => (
+              <li class="sv-point">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3.5 3.5L11.5 4" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {pt}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sv-section sv-process-section grid-bg">
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--violet);top:50%;left:-100px;transform:translateY(-50%);opacity:0.06;"></div>
+  <div class="container">
+    <div class="sv-section-head reveal" style="text-align:center;margin:0 auto 4rem">
+      <div class="chip" style="justify-content:center">Process</div>
+      <h2 class="section-title">How we work with you</h2>
+      <p class="section-sub" style="margin:0 auto">Every engagement follows the same four-stage logic — assess first, then move.</p>
+    </div>
+
+    <div class="sv-steps">
+      {[
+        { num: '01', icon: '🎯', title: 'Assess', desc: 'Team AIQ assessment to establish a genuine baseline. Individual scores, dimension breakdowns, and an aggregate team profile.' },
+        { num: '02', icon: '🗺️', title: 'Strategise', desc: 'Gap analysis against your goals. We identify the highest-leverage opportunities and build a prioritised action plan.' },
+        { num: '03', icon: '⚙️', title: 'Implement', desc: 'Build the workflows, run the programmes, or deploy the automations. Whatever the strategy calls for — we do it or help your team do it.' },
+        { num: '04', icon: '🏆', title: 'Certify', desc: 'Team members earn verified AIQ credentials. Measurable progress, shareable proof, and a baseline to build the next cycle on.' },
+      ].map((s, i) => (
+        <div class={`sv-step glass reveal${i > 0 ? ` reveal-delay-${Math.min(i, 4)}` : ''}`}>
+          <div class="sv-step-num">{s.num}</div>
+          <div class="sv-step-icon">{s.icon}</div>
+          <h3 class="sv-step-title">{s.title}</h3>
+          <p class="sv-step-desc">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- WHY AIQ FRAMEWORK -->
+<section class="sv-section sv-why-section">
+  <div class="container">
+    <div class="sv-why-grid">
+      <div class="sv-why-left reveal">
+        <div class="chip">The AIQ Advantage</div>
+        <h2 class="section-title">Why the AIQ framework matters for teams</h2>
+        <p class="section-sub" style="margin-bottom:2rem">
+          Generic AI training produces generic results. When the content doesn't match where people actually are, the knowledge doesn't stick. The AIQ framework solves the calibration problem.
+        </p>
+        <a href={ASSESSMENT_URL} class="btn-secondary">
+          See the AIQ framework →
+        </a>
+      </div>
+      <div class="sv-why-right reveal reveal-delay-2">
+        {[
+          {
+            title: 'Precision over volume',
+            desc: 'Everyone starts from their real AIQ baseline. No wasted hours on content that\'s too basic or too advanced. Development is targeted from day one.',
+            color: '#00CFFF',
+          },
+          {
+            title: 'Measurable progression',
+            desc: 'Scores are retakeable every 90 days. You can see movement across Think, Apply, and Lead — not just attendance records.',
+            color: '#a78bfa',
+          },
+          {
+            title: 'Credible certification',
+            desc: 'AIQ credentials are performance-based, not attendance-based. They mean something — to the person who earned them and to the organisations that see them.',
+            color: '#c084fc',
+          },
+        ].map(w => (
+          <div class="sv-why-card glass">
+            <div class="sv-why-dot" style={`background:${w.color}`}></div>
+            <div>
+              <h4 class="sv-why-title">{w.title}</h4>
+              <p class="sv-why-desc">{w.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sv-section sv-cta-section">
+  <div class="glow-blob" style="width:500px;height:500px;background:var(--cyan);top:50%;left:25%;transform:translateY(-50%);opacity:0.07;"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:var(--violet);bottom:0;right:20%;opacity:0.08;"></div>
+  <div class="container">
+    <div class="glass sv-cta-block reveal">
+      <div class="chip" style="justify-content:center;margin-bottom:1.5rem">Let's talk</div>
+      <h2 class="sv-cta-h2">Ready to bring AI fluency<br/>to your team?</h2>
+      <p class="sv-cta-sub">Book a discovery call — we'll assess where you are and map out what makes sense next. No commitment, no pitch deck.</p>
+      <div class="sv-cta-btns">
+        <a href="mailto:hello@optimalai.no" class="btn-primary sv-btn-lg">
+          Book a discovery call
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={ASSESSMENT_URL} class="btn-secondary sv-btn-lg">Or start with a free AIQ →</a>
+      </div>
+      <p class="sv-cta-note">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1a5.5 5.5 0 100 11A5.5 5.5 0 006.5 1zm0 5v3m0-5v1" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Individual assessment is always free &mdash; no credit card required
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="sv-footer">
+  <div class="container sv-footer-inner">
+    <a href={`${BASE}/`} class="sv-footer-logo" aria-label="Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#svfg)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#svfg)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="svfg" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <p class="sv-footer-tagline">Know before you Grow.</p>
+    <p class="sv-footer-brand">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
+    <nav class="sv-footer-nav">
+      <a href={FORUM_URL}>Forum</a>
+      <a href={ASSESSMENT_URL}>Assessment</a>
+      <a href={`${BASE}/society`}>Society</a>
+      <a href={`${BASE}/blog`}>Blog</a>
+      <a href={`${BASE}/services`}>Services</a>
+      <a href={`${BASE}/certification`}>Certification</a>
+    </nav>
+    <p class="sv-footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  /* NAV */
+  .sv-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(4,7,15,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,207,255,0.08); height: 60px;
+  }
+  .sv-nav-inner {
+    max-width: 1140px; margin: 0 auto; height: 100%; padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .sv-nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+  .sv-nav-links { display: flex; align-items: center; gap: 1.5rem; flex: 1; }
+  .sv-nav-link {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; font-weight: 500;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .sv-nav-link:hover { color: var(--text); }
+  .sv-nav-link--active { color: var(--cyan); }
+  .sv-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; margin-left: auto; flex-shrink: 0; }
+
+  /* HERO */
+  .sv-hero {
+    padding: 7rem 1.5rem 5.5rem; position: relative; overflow: hidden; text-align: center;
+  }
+  .sv-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+  .sv-hero-h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif; line-height: 1.08;
+    margin: 1rem 0 1.5rem;
+  }
+  .sv-hero-sub {
+    color: var(--muted); font-size: 1.1rem; line-height: 1.8;
+    max-width: 620px; margin: 0 auto 2.5rem;
+  }
+  .sv-hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .sv-btn-lg { padding: 1rem 2.5rem; font-size: 1rem; }
+  .sv-hero-meta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .sv-meta-pill {
+    display: inline-flex; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: var(--muted); padding: 0.3rem 0.9rem;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 999px;
+  }
+
+  /* SECTIONS */
+  .sv-section { padding: 5rem 1.5rem; }
+  .sv-section-head { margin-bottom: 3.5rem; }
+  .sv-process-section { background: rgba(8,13,26,0.5); overflow: hidden; }
+  .sv-why-section { background: rgba(8,13,26,0.3); }
+  .sv-cta-section { padding: 3rem 1.5rem 7rem; overflow: hidden; position: relative; }
+
+  /* SERVICES GRID */
+  .sv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .sv-card { padding: 2rem; }
+  .sv-card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .sv-card-label {
+    display: inline-flex; padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid;
+    margin-bottom: 0.85rem;
+  }
+  .sv-card-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem;
+    font-weight: 700; margin-bottom: 0.75rem;
+  }
+  .sv-card-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.25rem; }
+  .sv-card-points { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .sv-point {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: 0.88rem; color: var(--text);
+  }
+  .sv-point svg { flex-shrink: 0; margin-top: 2px; }
+
+  /* HOW IT WORKS STEPS */
+  .sv-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    position: relative; z-index: 1;
+  }
+  .sv-step { padding: 1.75rem; text-align: center; }
+  .sv-step-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700;
+    color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 0.75rem;
+  }
+  .sv-step-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  .sv-step-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem;
+    font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .sv-step-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+  /* WHY SECTION */
+  .sv-why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .sv-why-right { display: flex; flex-direction: column; gap: 1rem; }
+  .sv-why-card {
+    display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem;
+  }
+  .sv-why-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+  }
+  .sv-why-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1rem;
+    font-weight: 700; margin-bottom: 0.4rem;
+  }
+  .sv-why-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+
+  /* CTA BLOCK */
+  .sv-cta-block {
+    max-width: 680px; margin: 0 auto; padding: 4rem 3rem;
+    text-align: center; position: relative; z-index: 1;
+  }
+  .sv-cta-h2 {
+    font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.75rem,4vw,2.75rem);
+    font-weight: 800; margin-bottom: 1rem;
+  }
+  .sv-cta-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+  .sv-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .sv-cta-note {
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    font-size: 0.82rem; color: var(--muted); margin-top: 1.5rem;
+  }
+
+  /* FOOTER */
+  .sv-footer { padding: 3rem 1.5rem; border-top: 1px solid var(--border); }
+  .sv-footer-inner {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0.75rem; text-align: center;
+  }
+  .sv-footer-logo { display: flex; align-items: center; text-decoration: none; }
+  .sv-footer-tagline {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem;
+    font-weight: 600; color: var(--muted); letter-spacing: 0.05em;
+  }
+  .sv-footer-brand { font-size: 0.78rem; color: rgba(107,122,153,0.6); }
+  .sv-footer-nav { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+  .sv-footer-nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+  }
+  .sv-footer-nav a:hover { color: var(--text); }
+  .sv-footer-copy { font-size: 0.78rem; color: rgba(107,122,153,0.5); margin-top: 0.5rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .sv-nav-links { display: none; }
+    .sv-grid { grid-template-columns: 1fr; }
+    .sv-steps { grid-template-columns: repeat(2, 1fr); }
+    .sv-why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 580px) {
+    .sv-steps { grid-template-columns: 1fr; }
+    .sv-cta-block { padding: 2.5rem 1.5rem; }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</Layout>

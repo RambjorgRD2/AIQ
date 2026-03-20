@@ -1,65 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { events, formatColors, formatTextColors, formatDate } from '../data/events';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${base}/forum`;
-
-// ─── EVENT DATA ──────────────────────────────────────────────────────────────
-// To add an event:
-//   1. Create the event on Luma (lu.ma) under the Sosial AI Forum calendar
-//   2. Open the event → More → "Embed Registration Button"
-//   3. Copy the data-luma-event-id value (looks like "evt-xxxxxxxx")
-//   4. Add a new object to the `events` array below
-//   5. Commit & push — GitHub Actions will redeploy automatically
-//
-// Format options: 'Workshop' | 'Webinar' | 'Roundtable' | 'Q&A' | 'Meetup'
-// Status options: 'upcoming' | 'past'
-// ─────────────────────────────────────────────────────────────────────────────
-
-const events = [
-  {
-    lumaEventId: 'evt-ksh9sNL7qgWZWup',
-    title: 'Sosial AI Forum — First Gathering in Førde',
-    date: '2026-04-08',
-    time: '12:00',
-    timezone: 'CET',
-    format: 'Meetup',
-    location: 'PEAK Sunnfjord, Førde',
-    description: 'A social gathering of AI enthusiasts and like-minded individuals. Challenge thoughts and uses of AI in daily life, and find a workshop that appeals to your level and field of interest. In-person — Førde, Vestland.',
-    tierRecommended: 'All tiers',
-    host: 'Sosial AI Forum',
-    capacity: 50,
-    status: 'upcoming',
-  },
-];
+const SERVICES_URL = `${base}/services`;
 
 const upcomingEvents = events.filter(e => e.status === 'upcoming');
 const pastEvents = events.filter(e => e.status === 'past');
-
-// Format date for display
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return {
-    day: d.toLocaleDateString('en-GB', { day: 'numeric' }),
-    month: d.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase(),
-    weekday: d.toLocaleDateString('en-GB', { weekday: 'long' }),
-    full: d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-  };
-}
-
-const formatColors: Record<string, string> = {
-  Workshop:   'rgba(0,207,255,0.12)',
-  Webinar:    'rgba(124,58,237,0.15)',
-  Roundtable: 'rgba(168,85,247,0.12)',
-  'Q&A':      'rgba(0,207,255,0.08)',
-  Meetup:     'rgba(236,72,153,0.12)',
-};
-const formatTextColors: Record<string, string> = {
-  Workshop:   '#00CFFF',
-  Webinar:    '#a78bfa',
-  Roundtable: '#c084fc',
-  'Q&A':      '#67e8f9',
-  Meetup:     '#f472b6',
-};
 ---
 
 <Layout
@@ -78,9 +25,11 @@ const formatTextColors: Record<string, string> = {
       </svg>
     </a>
     <div class="f-nav-links">
-      <a href={`${base}/society`} class="f-nav-link">Society</a>
       <a href={`${base}/forum`} class="f-nav-link f-nav-link--active">Forum</a>
+      <a href={`${base}/assessment`} class="f-nav-link">Assessment</a>
+      <a href={`${base}/society`} class="f-nav-link">Society</a>
       <a href={`${base}/blog`} class="f-nav-link">Blog</a>
+      <a href={SERVICES_URL} class="f-nav-link">Services</a>
     </div>
     <a href={`${base}/assessment`} class="btn-primary f-nav-cta">
       Take the Assessment
@@ -332,7 +281,7 @@ const formatTextColors: Record<string, string> = {
       <h2 class="f-cta-h2">Don't miss the next session.</h2>
       <p class="f-cta-sub">Society members get early access to registration and priority spots in limited-capacity workshops. Join free — no credit card required.</p>
       <div class="f-cta-btns">
-        <a href={FORUM_URL} class="btn-primary btn-lg">
+        <a href={`${base}/society`} class="btn-primary btn-lg">
           Join the Society — Free
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>

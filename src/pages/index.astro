@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { events, formatColors, formatTextColors, formatDate } from '../data/events';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ASSESSMENT_URL = `${BASE}/assessment`;
 const FORUM_URL = `${BASE}/forum`;
+const SERVICES_URL = `${BASE}/services`;
+
+const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
 ---
 
-<Layout title="AI~Quotient — Know Your AIQ" description="Discover your AI Quotient. Know before you Grow. The AI~Quotient assessment measures how you think, work, and lead with AI across 9 tiers.">
+<Layout title="Sosial AI Forum — by Optimal AI" description="Sosial AI Forum — live events, peer learning, and structured AI upskilling for practitioners at every level. Discover your AIQ and join the community. Powered by Optimal AI.">
 
   <!-- ─── NAV ──────────────────────────────────────────── -->
   <nav id="nav">
@@ -25,12 +29,11 @@ const FORUM_URL = `${BASE}/forum`;
       </a>
 
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#society">Society</a></li>
-        <li><a href="#how">How It Works</a></li>
+        <li><a href={FORUM_URL}>Forum</a></li>
         <li><a href={ASSESSMENT_URL}>Assessment</a></li>
-        <li><a href={`${BASE}/forum`}>Forum</a></li>
+        <li><a href={`${BASE}/society`}>Society</a></li>
         <li><a href={`${BASE}/blog`}>Blog</a></li>
+        <li><a href={SERVICES_URL}>Services</a></li>
       </ul>
 
       <a href={ASSESSMENT_URL} class="btn-primary nav-cta">
@@ -46,12 +49,11 @@ const FORUM_URL = `${BASE}/forum`;
 
   <!-- Mobile menu -->
   <div class="mobile-menu glass" id="mobileMenu">
-    <a href="#about" class="mobile-link">About</a>
-    <a href="#society" class="mobile-link">Society</a>
-    <a href="#how" class="mobile-link">How It Works</a>
+    <a href={FORUM_URL} class="mobile-link">Forum</a>
     <a href={ASSESSMENT_URL} class="mobile-link">Assessment</a>
-    <a href={`${BASE}/forum`} class="mobile-link">Forum</a>
+    <a href={`${BASE}/society`} class="mobile-link">Society</a>
     <a href={`${BASE}/blog`} class="mobile-link">Blog</a>
+    <a href={SERVICES_URL} class="mobile-link">Services</a>
     <a href={ASSESSMENT_URL} class="btn-primary" style="margin-top:0.5rem">Discover your AIQ</a>
   </div>
 
@@ -65,28 +67,28 @@ const FORUM_URL = `${BASE}/forum`;
       <div class="hero-content">
         <div class="chip">
           <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#00CFFF"/></svg>
-          AI~Quotient
+          Sosial AI Forum
         </div>
-        <p class="hero-philosophy">Know before you Grow.</p>
+        <p class="hero-philosophy">Where AI~fluent people gather.</p>
         <h1 class="hero-headline">
-          Know Your<br />
-          <span class="gradient-text">AIQ.</span>
+          Think. Apply.<br />
+          <span class="gradient-text">Lead.</span>
         </h1>
         <p class="hero-sub">
-          Your AI Quotient — the measure of how effectively you<br class="hero-br" />
-          think, work, and lead with artificial intelligence.
+          Live events, structured learning, and peer community —<br class="hero-br" />
+          and a free assessment to show you exactly where you stand.
         </p>
-        <p class="hero-ownership">Your AIQ belongs to you — not a platform, not a company.</p>
+        <p class="hero-ownership">Powered by Optimal AI. Built for practitioners at every tier.</p>
         <div class="hero-ctas">
-          <a href={ASSESSMENT_URL} class="btn-primary">
-            Discover your AIQ
+          <a href={FORUM_URL} class="btn-primary">
+            Browse Upcoming Events
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href={FORUM_URL} class="btn-secondary">
-            Join the Society
+          <a href={ASSESSMENT_URL} class="btn-secondary">
+            Discover your AIQ →
           </a>
         </div>
-        <p class="hero-dual-path">Discover your AIQ. <a href={FORUM_URL}>Upcoming Events →</a></p>
+        <p class="hero-dual-path">For organisations: <a href={SERVICES_URL}>Optimal AI Services →</a></p>
         <p class="hero-note">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1a5.5 5.5 0 100 11A5.5 5.5 0 006.5 1zm0 5v3m0-5v1" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
           Free to join &mdash; no credit card required
@@ -169,16 +171,79 @@ const FORUM_URL = `${BASE}/forum`;
     </div>
   </section>
 
+  <!-- ─── UPCOMING EVENTS PREVIEW ─────────────────────── -->
+  <section id="events" class="events-preview-section">
+    <div class="container">
+      <div class="ep-head reveal">
+        <div class="ep-head-left">
+          <div class="chip">Sosial AI Forum</div>
+          <h2 class="section-title" style="margin-bottom:0.5rem">What's on next</h2>
+          <p class="section-sub">Live sessions, workshops, and roundtables — hands-on by design.</p>
+        </div>
+        <a href={FORUM_URL} class="btn-secondary ep-view-all">View all events →</a>
+      </div>
+
+      {nextEvent ? (
+        <div class="ep-card glass reveal">
+          <div class="ep-date-badge">
+            <span class="ep-day">{formatDate(nextEvent.date).day}</span>
+            <span class="ep-month">{formatDate(nextEvent.date).month}</span>
+          </div>
+          <div class="ep-body">
+            <div class="ep-tags">
+              <span class="ep-format-chip" style={`background:${formatColors[nextEvent.format] ?? 'rgba(0,207,255,0.08)'};color:${formatTextColors[nextEvent.format] ?? 'var(--cyan)'};border-color:${(formatTextColors[nextEvent.format] ?? '#00CFFF')}33;border:1px solid`}>
+                {nextEvent.format}
+              </span>
+              <span class="ep-tier-chip">{nextEvent.tierRecommended}</span>
+            </div>
+            <h3 class="ep-title">{nextEvent.title}</h3>
+            <p class="ep-desc">{nextEvent.description}</p>
+            <div class="ep-meta">
+              <span class="ep-meta-item">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 3.5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                {nextEvent.time} {nextEvent.timezone}
+              </span>
+              <span class="ep-sep">·</span>
+              <span class="ep-meta-item">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 11.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                {nextEvent.capacity} spots
+              </span>
+              <span class="ep-sep">·</span>
+              <span class="ep-meta-item">{nextEvent.location}</span>
+            </div>
+          </div>
+          <div class="ep-cta">
+            <p class="ep-date-full">{formatDate(nextEvent.date).weekday}, {formatDate(nextEvent.date).full}</p>
+            <button
+              class="luma-checkout--button btn-primary ep-register-btn"
+              type="button"
+              data-luma-action="checkout"
+              data-luma-event-id={nextEvent.lumaEventId}
+            >
+              Register — Free
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="ep-register-note">Opens Luma registration</p>
+          </div>
+        </div>
+      ) : (
+        <div class="ep-empty glass reveal">
+          <p>No upcoming events scheduled. <a href={FORUM_URL} style="color:var(--cyan);text-decoration:none">See the full calendar →</a></p>
+        </div>
+      )}
+    </div>
+  </section>
+
   <!-- ─── ABOUT AIQ ─────────────────────────────────────── -->
   <section id="about">
     <div class="container">
       <div class="section-header reveal">
-        <div class="chip">What is AIQ?</div>
+        <div class="chip">The AIQ Framework</div>
         <h2 class="section-title">
-          Intelligence, <span class="gradient-text">Measured.</span>
+          Know where you <span class="gradient-text">stand.</span>
         </h2>
         <p class="section-sub">
-          AIQ is your AI Quotient — a composite measure of how fluently you think, apply, and lead with artificial intelligence across work, strategy, and life.
+          AIQ is the measurement framework at the heart of the Forum. Before you learn, know where you are — across three dimensions, nine tiers, and a score that belongs to you.
         </p>
         <div class="philosophy-callout reveal">
           <span class="philosophy-tilde">~</span>
@@ -318,9 +383,9 @@ const FORUM_URL = `${BASE}/forum`;
   <section id="features">
     <div class="container">
       <div class="section-header reveal" style="text-align:center;margin:0 auto 3.5rem">
-        <div class="chip" style="justify-content:center">Everything included</div>
-        <h2 class="section-title">Built for serious AI learners</h2>
-        <p class="section-sub" style="margin:0 auto">Everything you need to go from curious to capable — and from capable to leading.</p>
+        <div class="chip" style="justify-content:center">The Ecosystem</div>
+        <h2 class="section-title">Everything in the Forum ecosystem</h2>
+        <p class="section-sub" style="margin:0 auto">From free events to structured courses, verified certification to team upskilling — the full spectrum of AI development.</p>
       </div>
 
       <div class="features-grid">
@@ -360,8 +425,8 @@ const FORUM_URL = `${BASE}/forum`;
           <div class="feature-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2 6h6l-5 3.5 2 6L11 15l-5 3.5 2-6L3 9h6l2-6z" stroke="url(#fg5)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="fg5" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
           </div>
-          <h3>Live Sessions</h3>
-          <p>Regular workshops, office hours, and expert masterclasses you can join live or watch on demand.</p>
+          <h3>Sosial AI Forum</h3>
+          <p>Monthly workshops, roundtables, and the brAInstorm Series — live events where AI practitioners meet, build, and push each other forward.</p>
         </div>
 
         <div class="feature glass reveal reveal-delay-4">
@@ -425,6 +490,44 @@ const FORUM_URL = `${BASE}/forum`;
     </div>
   </section>
 
+  <!-- ─── FOR TEAMS / OPTIMAL AI ──────────────────────── -->
+  <section id="services" class="org-section grid-bg">
+    <div class="glow-blob org-glow"></div>
+    <div class="container">
+      <div class="org-grid">
+        <div class="org-left reveal">
+          <div class="chip">Optimal AI</div>
+          <h2 class="section-title">
+            AI & Automation<br /><span class="gradient-text">for your organisation</span>
+          </h2>
+          <p class="section-sub" style="margin-bottom:2rem">
+            Optimal AI is the company behind the Forum and the AIQ framework. We also implement what we teach — from team assessments and AI strategy to full automation buildouts.
+          </p>
+          <a href={SERVICES_URL} class="btn-primary">
+            Explore services for teams
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="org-right reveal reveal-delay-2">
+          {[
+            { icon: '📊', label: 'Team AIQ Assessment', desc: 'Baseline your team\'s AI fluency. Individual scores, dimension breakdowns, and a development plan grounded in actual capability.' },
+            { icon: '🗺️', label: 'AI Strategy Consulting', desc: 'Use-case prioritisation, AI roadmaps, and governance frameworks — grounded in what actually works.' },
+            { icon: '⚙️', label: 'Automation Implementation', desc: 'We build AI-powered workflows that run in production. n8n, Make, APIs, custom pipelines.' },
+            { icon: '📚', label: 'AI~Literacy Programmes', desc: 'Structured team upskilling tied to AIQ tiers — calibrated, measurable, and certified.' },
+          ].map(s => (
+            <div class="org-card glass">
+              <span class="org-card-icon">{s.icon}</span>
+              <div>
+                <h4 class="org-card-title">{s.label}</h4>
+                <p class="org-card-desc">{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── CTA ───────────────────────────────────────────── -->
   <section id="join" class="cta-section">
     <div class="glow-blob cta-glow-1"></div>
@@ -433,19 +536,18 @@ const FORUM_URL = `${BASE}/forum`;
       <div class="cta-box glass reveal">
         <div class="chip" style="justify-content:center">Ready?</div>
         <h2 class="section-title" style="font-size:clamp(2.2rem,5vw,3.5rem);text-align:center">
-          The future belongs to the<br /><span class="gradient-text">highest AIQ.</span>
+          The future belongs to the<br /><span class="gradient-text">most fluent.</span>
         </h2>
         <p style="color:var(--muted);font-size:1.1rem;max-width:520px;text-align:center;margin:0 auto 2.5rem">
-          Discover your AIQ. Join the Society. Know before you Grow.
+          Start with your score. Show up to the Forum. Raise your AIQ — and your impact.
         </p>
         <div class="cta-buttons">
-          <a href={ASSESSMENT_URL} class="btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem">
-            Discover your AIQ
+          <a href={FORUM_URL} class="btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem">
+            Join the Forum — Free
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href={FORUM_URL} class="btn-secondary" style="font-size:1.05rem;padding:1rem 2.5rem">
-            Join the Society — Free
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href={ASSESSMENT_URL} class="btn-secondary" style="font-size:1.05rem;padding:1rem 2.5rem">
+            Discover your AIQ →
           </a>
         </div>
         <p class="hero-note" style="justify-content:center;margin-top:1.25rem">
@@ -471,16 +573,17 @@ const FORUM_URL = `${BASE}/forum`;
           </defs>
         </svg>
       </a>
-      <p class="footer-tagline">Know before you Grow. Your AIQ belongs to you.</p>
+      <p class="footer-tagline">Know before you Grow.</p>
+      <p class="footer-brand-line">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
       <nav class="footer-nav">
-        <a href="#about">About</a>
-        <a href="#society">Society</a>
-        <a href="#how">How It Works</a>
-        <a href={`${BASE}/blog`}>Blog</a>
+        <a href={FORUM_URL}>Forum</a>
         <a href={ASSESSMENT_URL}>Assessment</a>
-        <a href={FORUM_URL}>Events</a>
+        <a href={`${BASE}/society`}>Society</a>
+        <a href={`${BASE}/blog`}>Blog</a>
+        <a href={SERVICES_URL}>Services</a>
+        <a href={`${BASE}/certification`}>Certification</a>
       </nav>
-      <p class="footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
+      <p class="footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
     </div>
   </footer>
 
@@ -1185,6 +1288,170 @@ const FORUM_URL = `${BASE}/forum`;
     margin-top: 0.5rem;
   }
 
+  .footer-brand-line {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.6);
+  }
+
+  /* ─── UPCOMING EVENTS PREVIEW ─────────────────────── */
+  .events-preview-section {
+    padding: 5rem 1.5rem;
+    background: rgba(8, 13, 26, 0.5);
+  }
+
+  .ep-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ep-head-left .chip { margin-bottom: 0.75rem; }
+
+  .ep-view-all {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.88rem;
+    padding: 0.6rem 1.4rem;
+  }
+
+  .ep-card {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 2rem;
+    padding: 2rem;
+    align-items: start;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+
+  .ep-card:hover { transform: translateY(-2px); }
+
+  .ep-date-badge {
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 0.25rem; flex-shrink: 0;
+  }
+
+  .ep-day {
+    font-family: 'Space Grotesk', sans-serif; font-size: 2rem;
+    font-weight: 800; line-height: 1; color: var(--cyan);
+  }
+
+  .ep-month {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    font-weight: 600; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.15rem;
+  }
+
+  .ep-body { flex: 1; min-width: 0; }
+
+  .ep-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+
+  .ep-format-chip {
+    display: inline-flex; align-items: center;
+    padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .ep-tier-chip {
+    display: inline-flex; align-items: center;
+    padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+    color: var(--muted); background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ep-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem;
+    font-weight: 700; margin-bottom: 0.6rem; line-height: 1.3;
+  }
+
+  .ep-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+
+  .ep-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+  .ep-meta-item {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted);
+  }
+
+  .ep-sep { color: rgba(107,122,153,0.4); font-size: 0.75rem; }
+
+  .ep-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; flex-shrink: 0; }
+
+  .ep-date-full {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); text-align: right; white-space: nowrap;
+  }
+
+  .ep-register-btn { white-space: nowrap; padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+
+  .ep-register-note { font-size: 0.68rem; color: rgba(107,122,153,0.6); text-align: right; }
+
+  .ep-empty {
+    padding: 2rem 1.5rem; text-align: center;
+    font-size: 0.92rem; color: var(--muted);
+  }
+
+  /* ─── FOR TEAMS / OPTIMAL AI ──────────────────────── */
+  .org-section { overflow: hidden; }
+
+  .org-glow {
+    width: 600px; height: 600px;
+    background: var(--cyan);
+    top: 50%; right: -200px;
+    transform: translateY(-50%);
+    opacity: 0.06;
+  }
+
+  .org-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .org-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .org-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.4rem;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .org-card:hover { transform: translateX(4px); }
+
+  .org-card-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+
+  .org-card-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem;
+    font-weight: 700; margin-bottom: 0.35rem;
+  }
+
+  .org-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* RESPONSIVE — new sections */
+  @media (max-width: 900px) {
+    .ep-card {
+      grid-template-columns: 48px 1fr;
+      grid-template-rows: auto auto;
+    }
+    .ep-cta { grid-column: 1 / -1; align-items: flex-start; }
+    .ep-date-full, .ep-register-note { text-align: left; }
+    .ep-head { align-items: flex-start; }
+    .ep-view-all { align-self: flex-start; }
+    .org-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
   /* Philosophy + ownership lines */
   .hero-philosophy {
     font-family: 'Space Grotesk', sans-serif;
@@ -1285,6 +1552,9 @@ const FORUM_URL = `${BASE}/forum`;
     .stat-pill { padding: 0.5rem 0.75rem; min-width: 54px; }
   }
 </style>
+
+<!-- Luma checkout script for event registration buttons -->
+<script is:inline src="https://embed.lu.ma/checkout-button.js" id="luma-checkout"></script>
 
 <!-- ─── SCRIPTS ─────────────────────────────────────────────── -->
 <script>

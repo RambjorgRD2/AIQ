@@ -6,6 +6,7 @@ export interface Article {
   excerpt: string;
   readTime: string;
   date: string;
+  aiqTierRange?: string;
   content: string;
 }
 
@@ -18,6 +19,7 @@ export const articles: Article[] = [
     excerpt: 'Most people skip the diagnosis and jump straight to learning. That\'s why most AI training doesn\'t stick. Here\'s what measuring your starting point actually unlocks.',
     readTime: '5 min read',
     date: '2026-03-01',
+    aiqTierRange: 'All tiers',
     content: `
 <p>There is a particular kind of frustration that comes from sitting through a training session you didn't need. You already know the material. The examples are too simple. You drift. You walk out having learned nothing and having wasted three hours of a Tuesday.</p>
 
@@ -75,6 +77,7 @@ export const articles: Article[] = [
     excerpt: 'AIQ isn\'t one number — it\'s three. How you reason about AI, how you deploy it, and how you lead with it are distinct skills that compound differently.',
     readTime: '7 min read',
     date: '2026-03-05',
+    aiqTierRange: 'Tiers 1–5',
     content: `
 <p>When someone says they're "good at AI," what do they actually mean? They might mean they've read widely and can hold a sophisticated conversation about language models. Or they might mean they've automated three workflows at work and saved their team twelve hours a week. Or they might mean they've led an organisation through a successful AI adoption programme, navigating the politics, ethics, and culture change that came with it.</p>
 
@@ -134,6 +137,7 @@ export const articles: Article[] = [
     excerpt: 'Curiosity opens the door. Fluency walks through it. The difference comes down to one habit that most people never develop.',
     readTime: '6 min read',
     date: '2026-03-10',
+    aiqTierRange: 'Tiers 2–5',
     content: `
 <p>Curiosity about AI is everywhere right now. Professionals across every industry are experimenting, reading, listening to podcasts, signing up for demos. The interest is genuine, and it's a good starting point. But most of it stalls there — at curiosity — and never converts into fluency.</p>
 
@@ -199,6 +203,7 @@ export const articles: Article[] = [
     excerpt: 'Pioneers don\'t just use AI — they define how others use it. We break down what separates Tier 8 from everyone else.',
     readTime: '8 min read',
     date: '2026-03-15',
+    aiqTierRange: 'Tiers 5–8',
     content: `
 <p>Tier 8 is the top of the AIQ framework. We call it Pioneer. And the first thing worth saying about Pioneers is that most of them would be uncomfortable with the label.</p>
 
@@ -274,6 +279,7 @@ export const articles: Article[] = [
     excerpt: 'Scores don\'t raise themselves. This is the structured approach that moves people from Practitioner to Fluent — and from Fluent to Strategist.',
     readTime: '9 min read',
     date: '2026-03-19',
+    aiqTierRange: 'Tiers 2–6',
     content: `
 <p>Taking the AIQ assessment gives you a map. But a map is only useful if you actually move. This is the practical guide to moving — specifically, to raising your score across all three dimensions in a way that actually changes how you work, not just how you test.</p>
 

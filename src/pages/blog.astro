@@ -5,6 +5,7 @@ import { articles } from '../data/articles';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${BASE}/forum`;
 const ASSESSMENT_URL = `${BASE}/assessment`;
+const SERVICES_URL = `${BASE}/services`;
 ---
 
 <Layout
@@ -27,6 +28,13 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
         </defs>
       </svg>
     </a>
+    <div class="blog-nav-links">
+      <a href={FORUM_URL} class="blog-nav-link">Forum</a>
+      <a href={ASSESSMENT_URL} class="blog-nav-link">Assessment</a>
+      <a href={`${BASE}/society`} class="blog-nav-link">Society</a>
+      <a href={`${BASE}/blog`} class="blog-nav-link blog-nav-link--active">Blog</a>
+      <a href={SERVICES_URL} class="blog-nav-link">Services</a>
+    </div>
     <a href={ASSESSMENT_URL} class="btn-primary blog-nav-cta">
       Discover your AIQ
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -56,7 +64,12 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
         <a href={`${BASE}/blog/${article.slug}`} class={`blog-card glass blog-card--${article.categoryColor}`} style="text-decoration:none;">
           <div class="blog-card-strip"></div>
           <div class="blog-card-body">
-            <span class={`blog-category-chip blog-chip--${article.categoryColor}`}>{article.category}</span>
+            <div class="blog-card-chips">
+              <span class={`blog-category-chip blog-chip--${article.categoryColor}`}>{article.category}</span>
+              {article.aiqTierRange && (
+                <span class="blog-tier-chip">{article.aiqTierRange}</span>
+              )}
+            </div>
             <h2 class="blog-card-title">{article.title}</h2>
             <p class="blog-card-excerpt">{article.excerpt}</p>
             <div class="blog-card-footer">
@@ -106,16 +119,17 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
         </defs>
       </svg>
     </a>
-    <p class="blog-footer-tagline">Know before you Grow. Your AIQ belongs to you.</p>
+    <p class="blog-footer-tagline">Know before you Grow.</p>
+    <p class="blog-footer-brand">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
     <nav class="blog-footer-nav">
-      <a href={BASE}>Home</a>
-      <a href={`${BASE}/#about`}>About</a>
-      <a href={`${BASE}/#society`}>Society</a>
+      <a href={FORUM_URL}>Forum</a>
       <a href={ASSESSMENT_URL}>Assessment</a>
+      <a href={`${BASE}/society`}>Society</a>
       <a href={`${BASE}/blog`}>Blog</a>
-      <a href={FORUM_URL}>Join</a>
+      <a href={SERVICES_URL}>Services</a>
+      <a href={`${BASE}/certification`}>Certification</a>
     </nav>
-    <p class="blog-footer-copy">&copy; {new Date().getFullYear()} AIQ — AI~Quotient. All rights reserved.</p>
+    <p class="blog-footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
   </div>
 </footer>
 
@@ -151,12 +165,37 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
     flex-shrink: 0;
   }
 
+  .blog-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    padding: 0 1rem;
+  }
+
+  .blog-nav-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #6B7A99;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .blog-nav-link:hover { color: #E8F0FF; }
+  .blog-nav-link--active { color: #00CFFF; }
+
   .blog-nav-cta {
     font-size: 0.88rem;
     padding: 0.55rem 1.25rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .blog-nav-links { display: none; }
   }
 
   /* ── HERO ─────────────────────────────────────────── */
@@ -330,6 +369,31 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
     margin-bottom: 0.75rem;
   }
 
+  .blog-card-chips {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .blog-category-chip {
+    margin-bottom: 0;
+  }
+
+  .blog-tier-chip {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    color: #6B7A99;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .blog-card-excerpt {
     font-size: 0.88rem;
     color: #6B7A99;
@@ -445,6 +509,11 @@ const ASSESSMENT_URL = `${BASE}/assessment`;
     font-weight: 600;
     color: #6B7A99;
     letter-spacing: 0.05em;
+  }
+
+  .blog-footer-brand {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.6);
   }
 
   .blog-footer-nav {

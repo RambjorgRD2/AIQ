@@ -28,13 +28,13 @@ export interface ForumEvent {
 export const events: ForumEvent[] = [
   {
     lumaEventId: 'evt-ksh9sNL7qgWZWup',
-    title: 'Sosial AI Forum — First Gathering in Førde',
+    title: 'Sosial AI Forum — Meetup',
     date: '2026-04-08',
     time: '12:00',
     timezone: 'CET',
     format: 'Meetup',
     location: 'PEAK Sunnfjord, Førde',
-    description: 'A social gathering of AI enthusiasts and like-minded individuals. Challenge thoughts and uses of AI in daily life, and find a workshop that appeals to your level and field of interest. In-person — Førde, Vestland.',
+    description: 'A social gathering of AI enthusiasts and like-minded individuals. Challenge thoughts and uses of AI in daily life, and find a workshop that appeals to your level and field of interest.',
     tierRecommended: 'All tiers',
     host: 'Sosial AI Forum',
     capacity: 50,

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${base}/forum`;
+const SERVICES_URL = `${base}/services`;
 ---
 
 <Layout
@@ -19,8 +20,11 @@ const FORUM_URL = `${base}/forum`;
       </svg>
     </a>
     <div class="p-nav-links">
-      <a href={`${base}/forum`} class="p-nav-link">Forum</a>
+      <a href={FORUM_URL} class="p-nav-link">Forum</a>
+      <a href={`${base}/assessment`} class="p-nav-link">Assessment</a>
+      <a href={`${base}/society`} class="p-nav-link p-nav-link--active">Society</a>
       <a href={`${base}/blog`} class="p-nav-link">Blog</a>
+      <a href={SERVICES_URL} class="p-nav-link">Services</a>
     </div>
     <a href={`${base}/assessment`} class="btn-primary p-nav-cta">
       Take the Assessment
@@ -180,6 +184,7 @@ const FORUM_URL = `${base}/forum`;
     color: var(--muted); text-decoration: none; transition: color 0.2s;
   }
   .p-nav-link:hover { color: var(--text); }
+  .p-nav-link--active { color: var(--cyan); }
   .p-nav-cta { font-size: 0.85rem; padding: 0.55rem 1.25rem; margin-left: auto; flex-shrink: 0; }
 
   .p-hero {

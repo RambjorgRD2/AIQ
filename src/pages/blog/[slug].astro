@@ -13,6 +13,8 @@ const { article } = Astro.props;
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ASSESSMENT_URL = `${BASE}/assessment`;
 const BLOG_URL = `${BASE}/blog`;
+const FORUM_URL = `${BASE}/forum`;
+const SERVICES_URL = `${BASE}/services`;
 
 // Format date nicely
 const dateObj = new Date(article.date);
@@ -50,11 +52,17 @@ const chipColorClass = `article-chip--${article.categoryColor}`;
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All articles
       </a>
-      <a href={ASSESSMENT_URL} class="btn-primary art-nav-cta">
-        Take the assessment
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <span class="art-nav-divider"></span>
+      <a href={FORUM_URL} class="art-nav-link">Forum</a>
+      <a href={ASSESSMENT_URL} class="art-nav-link">Assessment</a>
+      <a href={`${BASE}/society`} class="art-nav-link">Society</a>
+      <a href={BLOG_URL} class="art-nav-link art-nav-link--active">Blog</a>
+      <a href={SERVICES_URL} class="art-nav-link">Services</a>
     </div>
+    <a href={ASSESSMENT_URL} class="btn-primary art-nav-cta">
+      Take the assessment
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
   </div>
 </nav>
 
@@ -174,13 +182,12 @@ const chipColorClass = `article-chip--${article.categoryColor}`;
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 2rem;
   }
 
   .art-nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 
-  .art-nav-links { display: flex; align-items: center; gap: 1.25rem; }
+  .art-nav-links { display: flex; align-items: center; gap: 1.25rem; flex: 1; }
 
   .art-nav-back {
     display: inline-flex;
@@ -192,9 +199,29 @@ const chipColorClass = `article-chip--${article.categoryColor}`;
     color: #6B7A99;
     text-decoration: none;
     transition: color 0.2s;
+    flex-shrink: 0;
   }
 
   .art-nav-back:hover { color: #E8F0FF; }
+
+  .art-nav-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(107, 122, 153, 0.25);
+    flex-shrink: 0;
+  }
+
+  .art-nav-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #6B7A99;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .art-nav-link:hover { color: #E8F0FF; }
+  .art-nav-link--active { color: #00CFFF; }
 
   .art-nav-cta {
     font-size: 0.85rem;
@@ -202,6 +229,13 @@ const chipColorClass = `article-chip--${article.categoryColor}`;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    .art-nav-divider,
+    .art-nav-link { display: none; }
   }
 
   /* ── CONTAINER ──────────────────────────────────────── */

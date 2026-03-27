@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Signing in... — AIQ">
+  <div class="page-wrapper grid-bg">
+    <!-- Glow blobs -->
+    <div class="glow-blob" style="width:400px;height:400px;background:var(--cyan);top:-100px;left:-100px;opacity:0.08;"></div>
+    <div class="glow-blob" style="width:400px;height:400px;background:var(--violet);bottom:-100px;right:-100px;opacity:0.1;"></div>
+
+    <div class="callback-card glass">
+      <!-- Logo -->
+      <a href={`${BASE}/`} class="card-logo" aria-label="AIQ Home">
+        <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#callbackGrad)">AIQ</text>
+          <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#callbackGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <defs>
+            <linearGradient id="callbackGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00CFFF"/>
+              <stop offset="1" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+
+      <!-- Loading state -->
+      <div class="loading-state">
+        <div class="spinner-wrap">
+          <svg class="spinner" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="20" stroke="rgba(0,207,255,0.15)" stroke-width="3"/>
+            <path d="M24 4a20 20 0 0 1 20 20" stroke="url(#spinGrad)" stroke-width="3" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="spinGrad" x1="24" y1="4" x2="44" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00CFFF"/>
+                <stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="card-heading">Signing you in...</h1>
+        <p class="card-sub">Just a moment while we verify your magic link.</p>
+      </div>
+
+      <!-- Fallback link (shown after 10 second timeout) -->
+      <div id="callback-fallback" style="display:none" class="fallback-state">
+        <p class="card-sub">
+          If you're not redirected automatically,
+          <a href={`${BASE}/`} class="fallback-link">click here to continue</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { supabase } from '../../lib/supabase.ts'
+
+  // Supabase client auto-detects #access_token on init (detectSessionInUrl: true)
+  // Wait for the SIGNED_IN event, then redirect
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      const redirectTo = sessionStorage.getItem('auth_redirect') || '/AIQ/'
+      sessionStorage.removeItem('auth_redirect')
+      window.location.href = redirectTo
+    }
+  })
+
+  // Fallback: if already signed in (e.g., page refresh after auth)
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) {
+      const redirectTo = sessionStorage.getItem('auth_redirect') || '/AIQ/'
+      sessionStorage.removeItem('auth_redirect')
+      window.location.href = redirectTo
+    }
+  })
+
+  // Timeout fallback: if nothing happens after 10 seconds, show manual link
+  setTimeout(() => {
+    const fallback = document.getElementById('callback-fallback')
+    if (fallback) fallback.style.display = 'block'
+  }, 10000)
+</script>
+
+<style>
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .callback-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 2.5rem;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .card-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .card-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .spinner-wrap {
+    margin-bottom: 1.5rem;
+  }
+
+  .spinner {
+    animation: spin 1.2s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .fallback-state {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .fallback-link {
+    color: var(--cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .fallback-link:hover {
+    color: var(--text);
+  }
+</style>

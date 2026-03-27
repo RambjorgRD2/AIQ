@@ -39,6 +39,8 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     </a>
 
     <div class="l-breadcrumb">
+      <a href={`${BASE}/courses`} class="l-breadcrumb-link">Courses</a>
+      <span class="l-breadcrumb-sep">›</span>
       <a href={`${BASE}/courses/foundations`} class="l-breadcrumb-link">AI~Foundations</a>
       <span class="l-breadcrumb-sep">›</span>
       <span class="l-breadcrumb-current">Module {String(lesson.module).padStart(2,'0')}</span>

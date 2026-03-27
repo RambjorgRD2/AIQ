@@ -1,0 +1,354 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { foundations } from '../../data/foundations-course';
+import { workflows } from '../../data/workflows-course';
+import { leadership } from '../../data/leadership-course';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const FORUM_URL = `${BASE}/forum`;
+
+const TRACKS = [
+  {
+    slug: 'foundations',
+    name: 'AI~Foundations',
+    tagline: 'Build your mental model of AI from the ground up.',
+    tiers: 'Tiers 1 – 3',
+    tierRange: 'Aware → Practitioner',
+    modules: foundations.length,
+    hours: '~6',
+    freeModules: foundations.length,
+    color: 'cyan',
+    accent: '#00CFFF',
+    accentRgb: '0,207,255',
+    badge: 'All free',
+    badgeStyle: 'free',
+    firstSlug: foundations[0].slug,
+    description: 'No prior AI experience required. 12 lessons that build a rigorous mental model — how AI works, why it fails, what the tiers mean, and where you currently sit.',
+    includes: [
+      '12 fully unlocked modules',
+      'Concept + demo + exercise per lesson',
+      'Active recall and reflection',
+      'Tiers 1, 2, and 3 covered',
+    ],
+  },
+  {
+    slug: 'workflows',
+    name: 'AI~Workflows',
+    tagline: 'Move from ad-hoc AI use to intentional, repeatable systems.',
+    tiers: 'Tiers 4 – 6',
+    tierRange: 'Practitioner → Advanced',
+    modules: workflows.length,
+    hours: '~10',
+    freeModules: 5,
+    color: 'violet',
+    accent: '#a78bfa',
+    accentRgb: '167,139,250',
+    badge: '5 free · 15 with Society',
+    badgeStyle: 'partial',
+    firstSlug: workflows[0].slug,
+    description: 'Master advanced prompting, workflow design, and critical evaluation. Make AI a genuine multiplier on everything you do — not just a shortcut.',
+    includes: [
+      'Modules 1–5 free (no account needed)',
+      'Modules 6–20 require Society membership',
+      '20 modules across Tiers 4, 5, and 6',
+      'Workflow design, integration, evaluation',
+    ],
+  },
+  {
+    slug: 'leadership',
+    name: 'AI~Leadership',
+    tagline: 'Lead AI transformation at scale. Operate at the frontier.',
+    tiers: 'Tiers 7 – 9',
+    tierRange: 'Strategist → Pioneer',
+    modules: leadership.length,
+    hours: '~12',
+    freeModules: 1,
+    color: 'gold',
+    accent: '#fbbf24',
+    accentRgb: '251,191,36',
+    badge: '1 free · 19 with Society',
+    badgeStyle: 'locked',
+    firstSlug: leadership[0].slug,
+    description: 'For those who shape how teams, organisations, and industries adopt AI. Strategy, governance, ethics, change management, and Pioneer-tier practice.',
+    includes: [
+      'Module 1 free (preview)',
+      'Modules 2–20 require Society membership',
+      '20 modules across Tiers 7, 8, and 9',
+      'Capstone transformation plan',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Courses — AIQ Learning Tracks"
+  description="Three structured learning tracks covering all 9 AIQ tiers. Start free with AI~Foundations. Unlock the full curriculum with Society membership."
+>
+
+<nav class="c-nav">
+  <div class="c-nav-inner">
+    <a href={`${BASE}/`} class="c-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#cn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#cn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="cn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <div class="c-nav-links">
+      <a href={FORUM_URL} class="c-nav-link">Forum</a>
+      <a href={`${BASE}/assessment`} class="c-nav-link">Assessment</a>
+      <a href={`${BASE}/society`} class="c-nav-link">Society</a>
+      <a href={`${BASE}/blog`} class="c-nav-link">Blog</a>
+      <a href={`${BASE}/services`} class="c-nav-link">Services</a>
+    </div>
+    <a href={`${BASE}/assessment`} class="btn-primary c-nav-cta">Take the Assessment →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="c-hero grid-bg">
+  <div class="glow-blob" style="width:600px;height:500px;background:var(--cyan);top:-250px;left:-100px;opacity:0.07;"></div>
+  <div class="glow-blob" style="width:500px;height:400px;background:var(--violet);top:-150px;right:-100px;opacity:0.1;"></div>
+  <div class="container">
+    <div class="c-hero-inner">
+      <div class="chip reveal">All 3 Tracks</div>
+      <h1 class="c-hero-h1 reveal">52 lessons.<br /><span class="gradient-text">Start free.</span></h1>
+      <p class="c-hero-sub reveal">Three structured tracks covering all 9 AIQ tiers — from first contact with AI to leading organisation-wide transformation. AI~Foundations is completely free. Advanced tracks unlock with Society membership.</p>
+      <div class="c-hero-stats reveal">
+        <div class="c-stat glass">
+          <span class="c-stat-num gradient-text">52</span>
+          <span class="c-stat-label">Lessons</span>
+        </div>
+        <div class="c-stat glass">
+          <span class="c-stat-num gradient-text">9</span>
+          <span class="c-stat-label">Tiers</span>
+        </div>
+        <div class="c-stat glass">
+          <span class="c-stat-num gradient-text">~28</span>
+          <span class="c-stat-label">Hours</span>
+        </div>
+        <div class="c-stat glass">
+          <span class="c-stat-num gradient-text">18</span>
+          <span class="c-stat-label">Free modules</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section class="c-tracks-section">
+  <div class="container">
+    <div class="c-tracks">
+      {TRACKS.map((track, i) => (
+        <div class={`c-track-card glass reveal ${i === 1 ? 'reveal-delay-1' : i === 2 ? 'reveal-delay-2' : ''}`} style={`--accent:${track.accent};--accent-rgb:${track.accentRgb}`}>
+
+          <div class="c-track-header">
+            <div class="c-track-top">
+              <span class="c-track-tiers">{track.tiers}</span>
+              <span class={`c-track-badge badge-${track.badgeStyle}`}>{track.badge}</span>
+            </div>
+            <h2 class="c-track-name">
+              {track.name.split('~').map((part, j) => j === 0 ? part : <><span class="c-tilde">~</span>{part}</>)}
+            </h2>
+            <p class="c-track-tagline">{track.tagline}</p>
+          </div>
+
+          <div class="c-track-meta">
+            <span class="c-meta-pill">{track.modules} modules</span>
+            <span class="c-meta-pill">{track.hours} hours</span>
+            <span class="c-meta-pill">{track.tierRange}</span>
+          </div>
+
+          <p class="c-track-desc">{track.description}</p>
+
+          <ul class="c-track-includes">
+            {track.includes.map(item => (
+              <li>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div class="c-track-actions">
+            <a href={`${BASE}/courses/${track.slug}/${track.firstSlug}`} class="btn-primary c-track-cta">
+              {track.badgeStyle === 'free' ? 'Start free →' : 'Preview Module 01 →'}
+            </a>
+            <a href={`${BASE}/courses/${track.slug}`} class="c-track-link">
+              View all {track.modules} modules
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS / PRICING -->
+<section class="c-access-section">
+  <div class="container">
+    <div class="c-access-grid">
+
+      <div class="c-access-card glass reveal">
+        <div class="c-access-badge free-badge">Free</div>
+        <h3 class="c-access-title">Start learning today</h3>
+        <p class="c-access-sub">No account, no credit card, no friction.</p>
+        <ul class="c-access-list">
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#00CFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> All 12 AI~Foundations modules</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#00CFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> First 5 AI~Workflows modules</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#00CFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> AI~Leadership Module 01 preview</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#00CFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> AIQ Assessment (full)</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#00CFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Blog and articles</li>
+        </ul>
+        <a href={`${BASE}/courses/foundations`} class="btn-secondary c-access-btn">Start with Foundations →</a>
+      </div>
+
+      <div class="c-access-card glass reveal reveal-delay-1 c-access-featured">
+        <div class="c-access-badge society-badge">Society Membership</div>
+        <h3 class="c-access-title">Unlock the full curriculum</h3>
+        <p class="c-access-sub">Everything above, plus the complete advanced tracks.</p>
+        <ul class="c-access-list">
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> <strong>All 52 lessons</strong> across 3 tracks</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> AI~Workflows (20 modules, Tiers 4–6)</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> AI~Leadership (20 modules, Tiers 7–9)</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> SociA|~ Forum community access</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Live events and workshops</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> AIQ Certification upon completion</li>
+        </ul>
+        <a href={FORUM_URL} class="btn-primary c-access-btn">Join the Society →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING PATH -->
+<section class="c-path-section">
+  <div class="container">
+    <div class="c-path-head reveal">
+      <div class="chip">The Learning Path</div>
+      <h2 class="section-title">From first contact to frontier.</h2>
+      <p class="section-sub">Each track builds directly on the one before. The path is designed — but you can enter at the level your AIQ score places you.</p>
+    </div>
+    <div class="c-path">
+      <div class="c-path-item reveal">
+        <div class="c-path-dot" style="background:#00CFFF;box-shadow:0 0 12px rgba(0,207,255,0.4)"></div>
+        <div class="c-path-content glass">
+          <div class="c-path-tier">Tiers 1–3 · Free</div>
+          <div class="c-path-name">AI~Foundations</div>
+          <div class="c-path-desc">How AI works, why it fails, how to think clearly about it. 12 lessons.</div>
+        </div>
+      </div>
+      <div class="c-path-line"></div>
+      <div class="c-path-item reveal reveal-delay-1">
+        <div class="c-path-dot" style="background:#a78bfa;box-shadow:0 0 12px rgba(167,139,250,0.4)"></div>
+        <div class="c-path-content glass">
+          <div class="c-path-tier">Tiers 4–6 · 5 free + Society</div>
+          <div class="c-path-name">AI~Workflows</div>
+          <div class="c-path-desc">Systematic AI use, workflow design, and professional-grade outputs. 20 lessons.</div>
+        </div>
+      </div>
+      <div class="c-path-line"></div>
+      <div class="c-path-item reveal reveal-delay-2">
+        <div class="c-path-dot" style="background:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,0.4)"></div>
+        <div class="c-path-content glass">
+          <div class="c-path-tier">Tiers 7–9 · Society</div>
+          <div class="c-path-name">AI~Leadership</div>
+          <div class="c-path-desc">Organisational strategy, transformation leadership, Pioneer-tier practice. 20 lessons.</div>
+        </div>
+      </div>
+    </div>
+    <div class="c-path-cta reveal">
+      <p class="c-path-note">Not sure where you sit? The AIQ Assessment places you in the right track in 8 minutes.</p>
+      <a href={`${BASE}/assessment`} class="btn-primary">Take the Assessment →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .c-nav{position:sticky;top:0;z-index:100;background:rgba(4,7,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,207,255,0.08);height:60px}
+  .c-nav-inner{max-width:1140px;margin:0 auto;height:100%;padding:0 1.5rem;display:flex;align-items:center;gap:2rem}
+  .c-nav-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+  .c-nav-links{display:flex;align-items:center;gap:1.5rem;flex:1}
+  .c-nav-link{font-family:'Space Grotesk',sans-serif;font-size:0.88rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s}
+  .c-nav-link:hover{color:var(--text)}
+  .c-nav-cta{font-size:0.85rem;padding:0.55rem 1.25rem;margin-left:auto;flex-shrink:0}
+  @media(max-width:768px){.c-nav-links{display:none}}
+
+  .c-hero{padding:6rem 1.5rem 5rem;position:relative;overflow:hidden}
+  .c-hero-inner{max-width:760px}
+  .c-hero-h1{font-size:clamp(3rem,6vw,4.5rem);font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1.05;margin:1.25rem 0}
+  .c-hero-sub{color:var(--muted);font-size:1.1rem;line-height:1.8;max-width:580px;margin-bottom:2.5rem}
+  .c-hero-stats{display:flex;gap:1rem;flex-wrap:wrap}
+  .c-stat{padding:0.85rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;min-width:90px}
+  .c-stat-num{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700}
+  .c-stat-label{font-size:0.72rem;color:var(--muted);font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+
+  .c-tracks-section{padding:5rem 1.5rem}
+  .c-tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;align-items:start}
+
+  .c-track-card{padding:2rem;border-top:2px solid var(--accent);transition:box-shadow 0.2s,transform 0.2s}
+  .c-track-card:hover{box-shadow:0 8px 32px rgba(var(--accent-rgb),0.1);transform:translateY(-2px)}
+  .c-track-header{margin-bottom:1.25rem}
+  .c-track-top{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:0.75rem;flex-wrap:wrap}
+  .c-track-tiers{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted)}
+  .c-track-badge{font-size:0.7rem;font-weight:700;letter-spacing:0.05em;padding:0.25rem 0.7rem;border-radius:999px;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;white-space:nowrap}
+  .badge-free{background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.3);color:#00CFFF}
+  .badge-partial{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);color:#a78bfa}
+  .badge-locked{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24}
+  .c-track-name{font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:800;margin-bottom:0.5rem}
+  .c-tilde{color:var(--accent)}
+  .c-track-tagline{color:var(--muted);font-size:0.9rem;line-height:1.6}
+  .c-track-meta{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.25rem}
+  .c-meta-pill{font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:0.25rem 0.65rem;border-radius:999px;border:1px solid rgba(var(--accent-rgb),0.18);background:rgba(var(--accent-rgb),0.05);color:var(--muted)}
+  .c-track-desc{font-size:0.88rem;line-height:1.75;color:rgba(232,240,255,0.7);margin-bottom:1.5rem}
+  .c-track-includes{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem}
+  .c-track-includes li{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.85rem;color:var(--muted);line-height:1.5}
+  .c-track-includes svg{flex-shrink:0;color:var(--accent);margin-top:1px}
+  .c-track-actions{display:flex;flex-direction:column;gap:0.75rem}
+  .c-track-cta{text-align:center;justify-content:center}
+  .c-track-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--muted);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:600;transition:color 0.2s;justify-content:center}
+  .c-track-link:hover{color:var(--accent)}
+
+  .c-access-section{padding:5rem 1.5rem;background:rgba(8,13,26,0.5)}
+  .c-access-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:860px;margin:0 auto}
+  .c-access-card{padding:2.5rem;display:flex;flex-direction:column;gap:1rem}
+  .c-access-featured{border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.02)}
+  .c-access-badge{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:999px;width:fit-content;font-family:'Space Grotesk',sans-serif}
+  .free-badge{background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);color:#00CFFF}
+  .society-badge{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:#fbbf24}
+  .c-access-title{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:800}
+  .c-access-sub{color:var(--muted);font-size:0.9rem;line-height:1.6}
+  .c-access-list{list-style:none;display:flex;flex-direction:column;gap:0.65rem;flex:1}
+  .c-access-list li{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.88rem;color:var(--muted);line-height:1.5}
+  .c-access-list svg{flex-shrink:0;margin-top:1px}
+  .c-access-list strong{color:var(--text)}
+  .c-access-btn{justify-content:center;text-align:center;margin-top:0.5rem}
+
+  .c-path-section{padding:5rem 1.5rem 7rem}
+  .c-path-head{margin-bottom:3rem}
+  .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:800;margin-bottom:0.75rem}
+  .section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:540px}
+  .chip{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;border:1px solid rgba(0,207,255,0.2);background:rgba(0,207,255,0.07);font-size:0.75rem;font-weight:700;letter-spacing:0.06em;color:var(--cyan);font-family:'Space Grotesk',sans-serif;text-transform:uppercase;margin-bottom:1rem}
+  .c-path{display:flex;flex-direction:column;gap:0;max-width:600px}
+  .c-path-item{display:flex;align-items:flex-start;gap:1.25rem}
+  .c-path-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:1.2rem}
+  .c-path-content{padding:1.25rem 1.5rem;flex:1}
+  .c-path-tier{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:0.3rem}
+  .c-path-name{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.3rem}
+  .c-path-desc{font-size:0.85rem;color:var(--muted);line-height:1.5}
+  .c-path-line{width:1px;background:rgba(0,207,255,0.1);height:1rem;margin-left:6px}
+  .c-path-cta{margin-top:3rem;display:flex;flex-direction:column;gap:1rem;align-items:flex-start}
+  .c-path-note{font-size:0.9rem;color:var(--muted);line-height:1.6}
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</Layout>

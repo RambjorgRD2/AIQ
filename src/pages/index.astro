@@ -336,44 +336,47 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
         </div>
 
         <div class="society-right reveal reveal-delay-2">
-          <div class="course-card glass">
+          <a href={`${BASE}/courses/foundations`} class="course-card glass course-card-link">
             <div class="course-card-header">
-              <span class="course-tag">Foundations</span>
-              <span class="course-level">Aware → Practitioner</span>
+              <span class="course-tag">Tiers 1–3</span>
+              <span class="course-free-badge">Free</span>
             </div>
             <h4>AI~Foundations</h4>
             <p>Build your mental model of AI — what it is, how it thinks, and where to start.</p>
             <div class="course-meta">
-              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 6 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> ~6 hrs</span>
               <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 12 modules</span>
+              <span class="course-meta-start">Start free →</span>
             </div>
-          </div>
+          </a>
 
-          <div class="course-card glass">
+          <a href={`${BASE}/courses/workflows`} class="course-card glass course-card-link">
             <div class="course-card-header">
-              <span class="course-tag" style="background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.3);color:#A855F7">Advanced</span>
-              <span class="course-level">Practitioner → Advanced</span>
+              <span class="course-tag" style="background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.3);color:#A855F7">Tiers 4–6</span>
+              <span class="course-partial-badge">5 free</span>
             </div>
             <h4>AI~Workflows</h4>
             <p>Deploy AI into your actual work — automation, prompting, integrations, and systems thinking.</p>
             <div class="course-meta">
-              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 10 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> ~10 hrs</span>
               <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 20 modules</span>
+              <span class="course-meta-start">Preview →</span>
             </div>
-          </div>
+          </a>
 
-          <div class="course-card glass">
+          <a href={`${BASE}/courses/leadership`} class="course-card glass course-card-link">
             <div class="course-card-header">
-              <span class="course-tag" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);color:#EC4899">Pioneer</span>
-              <span class="course-level">Strategist → Pioneer</span>
+              <span class="course-tag" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);color:#fbbf24">Tiers 7–9</span>
+              <span class="course-society-badge">Society</span>
             </div>
             <h4>AI~Leadership</h4>
-            <p>Lead AI strategy, change management, and organizational transformation.</p>
+            <p>Lead AI strategy, transformation, and operate at the Pioneer tier of practice.</p>
             <div class="course-meta">
-              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> 8 hrs</span>
-              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 16 modules</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#6B7A99" stroke-width="1.2"/><path d="M6.5 4v3l2 1.5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round"/></svg> ~12 hrs</span>
+              <span><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 10l3-3 2 2 4-5" stroke="#6B7A99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> 20 modules</span>
+              <span class="course-meta-start">Preview →</span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -1051,7 +1054,13 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     transition: transform 0.2s ease;
   }
 
+  .course-card-link { text-decoration: none; color: inherit; display: block; }
   .course-card:hover { transform: translateX(4px); }
+  .course-free-badge,.course-partial-badge,.course-society-badge { font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:999px;font-family:'Space Grotesk',sans-serif; }
+  .course-free-badge { background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.25);color:#00CFFF; }
+  .course-partial-badge { background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:#a78bfa; }
+  .course-society-badge { background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);color:#fbbf24; }
+  .course-meta-start { margin-left:auto;color:var(--cyan);font-size:0.78rem;font-weight:600;font-family:'Space Grotesk',sans-serif; }
 
   .course-card-header {
     display: flex;

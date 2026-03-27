@@ -1,7 +1,38 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(node:*)",
+      "Bash(cd:*)",
+      "WebFetch(domain:www.skillement.ai)",
+      "Bash(grep -r \"NOTION\\\\|form\\\\|integration\\\\|API\" '/Users/jdm/Library/CloudStorage/Dropbox/Personlig [Stash]/Business/A.I. Adventures/Claude/AIQ' --include=*.json --include=*.mjs --include=*.ts)",
+      "WebSearch",
+      "WebFetch(domain:help.luma.com)",
+      "WebFetch(domain:luma-embed-examples.vercel.app)",
+      "WebFetch(domain:createtherules.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.luma.com)",
+      "WebFetch(domain:help.lu.ma)",
+      "WebFetch(domain:www.framer.community)",
+      "WebFetch(domain:checkoutpage.com)",
+      "Bash(bash -c 'source \"\"\"\"$HOME/.nvm/nvm.sh\"\"\"\" && nvm use 22 && npm run build 2>&1')",
+      "WebFetch(domain:api.lu.ma)",
+      "WebFetch(domain:lu.ma)",
+      "WebFetch(domain:luma.com)",
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(sed -i '' 's| target=\"\"_blank\"\" rel=\"\"noopener\"\"||g' \"$f\")",
+      "Bash(done)",
+      "Bash(gh run:*)",
+      "Bash(mkdir -p \"/Users/jdm/Library/CloudStorage/Dropbox/Personlig [Stash]/Business/A.I. Adventures/Claude/AIQ/src/data\")",
+      "Bash(mkdir -p \"/Users/jdm/Library/CloudStorage/Dropbox/Personlig [Stash]/Business/A.I. Adventures/Claude/AIQ/src/pages/blog\")",
+      "WebFetch(domain:www.deeplearning.ai)",
+      "Bash(python3 -c \":*)",
+      "Bash(grep -n \"hook: \\\\`\" \"/Users/jdm/Library/CloudStorage/Dropbox/Personlig [Stash]/Business/A.I. Adventures/Claude/AIQ/src/data/foundations-course.ts\")",
+      "Bash(curl -s \"http://localhost:4322/AIQ/courses/foundations/what-ai-actually-is/\")",
+      "Bash(pkill -f \"astro\")",
+      "Bash(rm:*)",
+      "Bash(grep:*)"
     ]
   }
 }

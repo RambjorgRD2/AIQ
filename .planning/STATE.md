@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Checkpoint: 01-03 Task 2 human-verify pending"
-last_updated: "2026-03-27T22:10:19.972Z"
+stopped_at: Completed 01-authentication-01-02-PLAN.md
+last_updated: "2026-03-27T22:11:26.189Z"
 last_activity: 2026-03-27
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 01 (authentication) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-03-27
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-authentication P01 | 2 | 2 tasks | 5 files |
 | Phase 01-authentication P03 | 10 | 1 tasks | 1 files |
+| Phase 01-authentication P02 | 2m | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,8 @@ Recent decisions affecting current work:
 - [Phase 01-authentication]: Supabase CI env vars scoped to Build with Astro step only (not job-level) — PUBLIC_ vars are baked into JS bundle at build time
 - [Phase 01-authentication]: Auth nav strip uses position:fixed overlay — does not disturb each page's own nav structure
 - [Phase 01-authentication]: Layout.astro script tag is not is:inline — Vite bundles it, enabling ES module import of supabase.ts
+- [Phase 01-authentication]: emailRedirectTo hardcoded to GitHub Pages callback URL — static site cannot use dynamic origin
+- [Phase 01-authentication]: shouldCreateUser: true enables auto-registration via magic link, removing need for separate signup flow
 
 ### Pending Todos
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T22:10:09.756Z
-Stopped at: Checkpoint: 01-03 Task 2 human-verify pending
+Last session: 2026-03-27T22:11:26.186Z
+Stopped at: Completed 01-authentication-01-02-PLAN.md
 Resume file: None

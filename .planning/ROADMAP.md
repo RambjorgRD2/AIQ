@@ -12,7 +12,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 
 ## Phases
 
-- [ ] **Phase 1: Authentication** - Users can create accounts and maintain authenticated sessions via Supabase magic link
+- [x] **Phase 1: Authentication** - Users can create accounts and maintain authenticated sessions via Supabase magic link (completed 2026-03-27)
 - [ ] **Phase 2: Payments & Content Gating** - Users can purchase Society membership via Stripe and locked content is enforced server-side
 - [ ] **Phase 3: Dashboard & Progress** - Authenticated users have a persistent learner dashboard with cross-device progress sync
 - [ ] **Phase 4: Identity Layer** - Assessment scores produce shareable score cards and eligible users receive verifiable certificates
@@ -33,7 +33,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 
 Plans:
 - [x] 01-01-PLAN.md — Install @supabase/supabase-js, create singleton client, document env vars, update CI deploy workflow
-- [ ] 01-02-PLAN.md — Sign-in page with magic link form and auth callback page
+- [x] 01-02-PLAN.md — Sign-in page with magic link form and auth callback page
 - [x] 01-03-PLAN.md — Global auth state listener in Layout.astro with nav Sign In/Sign Out toggle
 
 ### Phase 2: Payments & Content Gating
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Authentication | 2/3 | In Progress|  |
+| 1. Authentication | 3/3 | Complete   | 2026-03-27 |
 | 2. Payments & Content Gating | 0/4 | Not started | - |
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |

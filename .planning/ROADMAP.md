@@ -29,12 +29,12 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
   2. Clicking the magic link signs the user in and redirects them to their intended destination
   3. Authenticated session survives browser refresh and is present on a second device after login
   4. Sign-out link is reachable from every page and immediately terminates the session
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Supabase project setup — create project, configure auth settings, add `@supabase/supabase-js` to package.json, wire env vars for public anon key and project URL
-- [ ] 01-02: Auth UI — sign-in modal/page with email input, magic link send confirmation state, and error handling; sign-out button in nav for authenticated users
-- [ ] 01-03: Session plumbing — Supabase auth listener in Layout.astro, persist session to localStorage, expose `currentUser` to all pages, redirect guard for protected routes
+- [x] 01-01-PLAN.md — Install @supabase/supabase-js, create singleton client, document env vars, update CI deploy workflow
+- [ ] 01-02-PLAN.md — Sign-in page with magic link form and auth callback page
+- [ ] 01-03-PLAN.md — Global auth state listener in Layout.astro with nav Sign In/Sign Out toggle
 
 ### Phase 2: Payments & Content Gating
 **Goal**: Users can purchase Society membership via Stripe and all locked lesson content is enforced by server-side subscription verification.
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Authentication | 0/3 | Not started | - |
+| 1. Authentication | 1/3 | In Progress|  |
 | 2. Payments & Content Gating | 0/4 | Not started | - |
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |

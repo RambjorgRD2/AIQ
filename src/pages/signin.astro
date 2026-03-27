@@ -1,0 +1,260 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Sign In — AIQ">
+  <div class="page-wrapper grid-bg">
+    <!-- Glow blobs -->
+    <div class="glow-blob" style="width:400px;height:400px;background:var(--cyan);top:-100px;left:-100px;opacity:0.08;"></div>
+    <div class="glow-blob" style="width:400px;height:400px;background:var(--violet);bottom:-100px;right:-100px;opacity:0.1;"></div>
+
+    <div class="signin-card glass">
+      <!-- Logo -->
+      <a href={`${BASE}/`} class="card-logo" aria-label="AIQ Home">
+        <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#signinGrad)">AIQ</text>
+          <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#signinGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <defs>
+            <linearGradient id="signinGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00CFFF"/>
+              <stop offset="1" stop-color="#7C3AED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+
+      <!-- Form state -->
+      <div id="form-state">
+        <h1 class="card-heading">Sign in to AIQ</h1>
+        <p class="card-sub">Enter your email to receive a magic link — no password needed.</p>
+
+        <form id="signin-form">
+          <div class="field-group">
+            <label for="email-input" class="field-label">Email address</label>
+            <input
+              type="email"
+              id="email-input"
+              name="email"
+              required
+              placeholder="you@example.com"
+              autocomplete="email"
+              class="email-input"
+            />
+          </div>
+          <button type="submit" class="btn-primary submit-btn">Send Magic Link</button>
+        </form>
+      </div>
+
+      <!-- Success state -->
+      <div id="success-state" style="display:none">
+        <div class="state-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="23" stroke="var(--cyan)" stroke-width="2" opacity="0.3"/>
+            <path d="M8 24l6 4 8-10" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+            <rect x="10" y="16" width="28" height="20" rx="3" stroke="var(--cyan)" stroke-width="1.8" fill="none"/>
+            <path d="M10 20l14 9 14-9" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="card-heading">Check your email</h2>
+        <p class="card-sub">
+          We sent a magic link to <span id="sent-email" style="color:var(--cyan);font-weight:600;"></span>.
+          Click the link in your email to sign in.
+        </p>
+        <button class="btn-secondary reset-btn" data-reset-form style="margin-top:1.5rem;width:100%;justify-content:center;">
+          Back to sign in
+        </button>
+      </div>
+
+      <!-- Error state -->
+      <div id="error-state" style="display:none">
+        <div class="state-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="23" stroke="#ef4444" stroke-width="2" opacity="0.4"/>
+            <path d="M24 14v14M24 32v2" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 class="card-heading">Something went wrong</h2>
+        <p id="error-message" class="card-sub error-msg"></p>
+        <button class="btn-secondary reset-btn" data-reset-form style="margin-top:1.5rem;width:100%;justify-content:center;">
+          Try again
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { supabase } from '../lib/supabase.ts'
+
+  const form = document.getElementById('signin-form') as HTMLFormElement
+  const emailInput = document.getElementById('email-input') as HTMLInputElement
+  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+  const formState = document.getElementById('form-state')!
+  const successState = document.getElementById('success-state')!
+  const errorState = document.getElementById('error-state')!
+  const sentEmail = document.getElementById('sent-email')!
+  const errorMessage = document.getElementById('error-message')!
+
+  function showState(state: 'form' | 'success' | 'error') {
+    formState.style.display = state === 'form' ? 'block' : 'none'
+    successState.style.display = state === 'success' ? 'block' : 'none'
+    errorState.style.display = state === 'error' ? 'block' : 'none'
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email = emailInput.value.trim()
+    if (!email) return
+
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Sending...'
+
+    // Store intended redirect for after callback
+    sessionStorage.setItem('auth_redirect', document.referrer || '/AIQ/')
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: 'https://RambjorgRD2.github.io/AIQ/auth/callback',
+        shouldCreateUser: true,
+      },
+    })
+
+    if (error) {
+      errorMessage.textContent = error.message
+      showState('error')
+    } else {
+      sentEmail.textContent = email
+      showState('success')
+    }
+
+    submitBtn.disabled = false
+    submitBtn.textContent = 'Send Magic Link'
+  })
+
+  // "Try again" and "Back to sign in" reset to form
+  document.querySelectorAll('[data-reset-form]').forEach(el => {
+    el.addEventListener('click', () => showState('form'))
+  })
+</script>
+
+<style>
+  .page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .signin-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-logo {
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .card-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .field-group {
+    margin-bottom: 1rem;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .email-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(10, 18, 40, 0.75);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1.25rem;
+  }
+
+  .email-input::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .email-input:focus {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 0 3px rgba(0, 207, 255, 0.08);
+  }
+
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .state-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-msg {
+    color: #fca5a5;
+  }
+
+  .reset-btn {
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--border-hover);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reset-btn:hover {
+    background: rgba(0, 207, 255, 0.06);
+    border-color: var(--cyan);
+  }
+</style>

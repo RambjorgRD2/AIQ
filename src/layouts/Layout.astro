@@ -8,6 +8,8 @@ const {
   title,
   description = 'Sosial AI Forum — live events, peer learning, and structured AI upskilling for practitioners at every level. Discover your AIQ. Powered by Optimal AI.',
 } = Astro.props;
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -16,7 +18,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" href={`${BASE}/favicon.svg`} />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +28,54 @@ const {
     />
   </head>
   <body>
+    <!-- Auth nav strip — top-right of every page -->
+    <div id="auth-nav" style="position:fixed;top:0;right:0;z-index:9999;padding:0.75rem 1.5rem;display:flex;align-items:center;gap:0.75rem;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;">
+      <!-- Shown when NOT signed in -->
+      <a href={`${BASE}/signin`} data-auth-hide style="display:block;color:var(--cyan);text-decoration:none;padding:0.4rem 1rem;border:1px solid var(--border-hover);border-radius:999px;transition:background 0.2s;">
+        Sign In
+      </a>
+      <!-- Shown when signed in -->
+      <span data-auth-show style="display:none;color:var(--muted);" id="auth-user-email"></span>
+      <button data-auth-show data-sign-out style="display:none;color:var(--cyan);background:none;border:1px solid var(--border-hover);border-radius:999px;padding:0.4rem 1rem;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;transition:background 0.2s;">
+        Sign Out
+      </button>
+    </div>
+
     <slot />
+
+    <script>
+      import { supabase } from '../lib/supabase.ts'
+
+      // Subscribe to auth state changes — fires on page load and on sign in/out
+      supabase.auth.onAuthStateChange((_event, session) => {
+        const user = session?.user ?? null
+
+        // Toggle auth UI elements
+        document.querySelectorAll('[data-auth-show]').forEach(el => {
+          ;(el as HTMLElement).style.display = user ? '' : 'none'
+        })
+        document.querySelectorAll('[data-auth-hide]').forEach(el => {
+          ;(el as HTMLElement).style.display = user ? 'none' : ''
+        })
+
+        // Show user email
+        const emailEl = document.getElementById('auth-user-email')
+        if (emailEl && user) {
+          emailEl.textContent = user.email ?? ''
+        }
+
+        // Expose user globally for page-level scripts
+        ;(window as any).__supabaseUser = user
+      })
+
+      // Handle sign-out button(s)
+      document.querySelectorAll('[data-sign-out]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          await supabase.auth.signOut()
+          window.location.href = '/AIQ/'
+        })
+      })
+    </script>
   </body>
 </html>
 

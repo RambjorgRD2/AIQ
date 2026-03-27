@@ -1,0 +1,275 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { workflows } from '../../../data/workflows-course';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const FORUM_URL = `${base}/forum`;
+
+const tier4 = workflows.filter(l => l.tier === 4);
+const tier5 = workflows.filter(l => l.tier === 5);
+const tier6 = workflows.filter(l => l.tier === 6);
+const firstLesson = workflows[0];
+---
+
+<Layout
+  title="AI~Workflows — AIQ Course Track"
+  description="Design repeatable AI systems and integrate AI into your daily work at a professional level. 20 modules, Tiers 4–6."
+>
+
+<nav class="p-nav">
+  <div class="p-nav-inner">
+    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#wn1)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#wn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs><linearGradient id="wn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
+      </svg>
+    </a>
+    <div class="p-nav-links">
+      <a href={FORUM_URL} class="p-nav-link">Forum</a>
+      <a href={`${base}/assessment`} class="p-nav-link">Assessment</a>
+      <a href={`${base}/society`} class="p-nav-link p-nav-link--active">Society</a>
+      <a href={`${base}/blog`} class="p-nav-link">Blog</a>
+      <a href={`${base}/services`} class="p-nav-link">Services</a>
+    </div>
+    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">Take the Assessment →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="course-hero grid-bg">
+  <div class="glow-blob" style="width:500px;height:400px;background:var(--violet);top:-120px;right:-80px;opacity:0.14;"></div>
+  <div class="container">
+    <div class="course-hero-inner">
+      <div>
+        <div class="tier-badge reveal">Tiers 4 – 6</div>
+        <h1 class="course-h1 reveal reveal-delay-1">AI<span class="tilde">~</span>Workflows</h1>
+        <p class="course-sub reveal reveal-delay-2">
+          Move from ad-hoc AI use to intentional, repeatable systems. Master advanced prompting, workflow design, and critical evaluation — and make AI a genuine multiplier on everything you do.
+        </p>
+        <div class="course-meta reveal reveal-delay-3">
+          <span class="meta-pill">~10 hours</span>
+          <span class="meta-pill">20 modules</span>
+          <span class="meta-pill">Tiers 4–6</span>
+          <span class="meta-pill">Practitioner → Advanced</span>
+        </div>
+        <div class="course-btns reveal reveal-delay-4">
+          <a href={`${base}/courses/workflows/${firstLesson.slug}`} class="btn-primary btn-lg">
+            Start Module 01
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href={`${base}/courses/foundations`} class="btn-secondary btn-lg">← Start with Foundations</a>
+        </div>
+      </div>
+      <div class="course-badge-wrap reveal">
+        <div class="course-badge glass">
+          <div class="cb-label">COURSE TRACK</div>
+          <div class="cb-name gradient-text">Workflows</div>
+          <div class="cb-tiers">Tier 4 → Tier 6</div>
+          <div class="cb-divider"></div>
+          <div class="cb-stat"><span>20</span> Modules</div>
+          <div class="cb-stat"><span>~10</span> Hours</div>
+          <div class="cb-stat"><span>1</span> Certificate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="p-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">Who This Is For</div>
+      <h2 class="section-title">You belong here if…</h2>
+    </div>
+    <div class="for-grid">
+      {[
+        'You already use AI but your results are inconsistent',
+        'You want to build systems, not just write prompts',
+        "You're responsible for your own productivity and need AI to multiply it",
+        'You want to introduce AI to your team without forcing it',
+        'Your AIQ score placed you at Tier 4, 5, or 6',
+        'You completed AI~Foundations and are ready to go deeper',
+      ].map(item => (
+        <div class="for-item glass reveal"><span class="for-check">✓</span><span>{item}</span></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="p-section modules-section">
+  <div class="container">
+    <div class="p-section-head reveal">
+      <div class="chip">20 Modules · 3 Tiers</div>
+      <h2 class="section-title">The complete curriculum.</h2>
+      <p class="section-sub">From practitioner mindset through advanced workflow design to critical evaluation. Each module is a complete learning unit with concept, demo, exercise, and active recall.</p>
+    </div>
+
+    <!-- Tier 4 -->
+    <div class="tier-group reveal">
+      <div class="tier-group-header">
+        <span class="tier-group-badge tier-4">Tier 4 — Intermediate Prompting</span>
+        <span class="tier-group-desc">Systematic, high-quality outputs every time</span>
+      </div>
+      <div class="modules-grid">
+        {tier4.map((m, i) => (
+          <a href={`${base}/courses/workflows/${m.slug}`} class={`module-card glass reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}`}>
+            <div class="mod-num">{String(m.module).padStart(2,'0')}</div>
+            <div class="mod-body">
+              <div class="mod-title">{m.title}</div>
+              <div class="mod-desc">{m.subtitle}</div>
+            </div>
+            <div class="mod-meta">
+              <span class="mod-duration">{m.duration}</span>
+              <svg class="mod-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Tier 5 -->
+    <div class="tier-group reveal">
+      <div class="tier-group-header">
+        <span class="tier-group-badge tier-5">Tier 5 — Workflow Integration</span>
+        <span class="tier-group-desc">AI embedded in how you actually work</span>
+      </div>
+      <div class="modules-grid">
+        {tier5.map((m, i) => (
+          <a href={`${base}/courses/workflows/${m.slug}`} class={`module-card glass reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}`}>
+            <div class="mod-num">{String(m.module).padStart(2,'0')}</div>
+            <div class="mod-body">
+              <div class="mod-title">{m.title}</div>
+              <div class="mod-desc">{m.subtitle}</div>
+            </div>
+            <div class="mod-meta">
+              <span class="mod-duration">{m.duration}</span>
+              <svg class="mod-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Tier 6 -->
+    <div class="tier-group reveal">
+      <div class="tier-group-header">
+        <span class="tier-group-badge tier-6">Tier 6 — Critical Evaluation</span>
+        <span class="tier-group-desc">Discernment, quality control, and the Workflows assessment</span>
+      </div>
+      <div class="modules-grid">
+        {tier6.map((m, i) => (
+          <a href={`${base}/courses/workflows/${m.slug}`} class={`module-card glass reveal ${i % 3 === 1 ? 'reveal-delay-1' : i % 3 === 2 ? 'reveal-delay-2' : ''}`}>
+            <div class="mod-num">{String(m.module).padStart(2,'0')}</div>
+            <div class="mod-body">
+              <div class="mod-title">{m.title}</div>
+              <div class="mod-desc">{m.subtitle}</div>
+            </div>
+            <div class="mod-meta">
+              <span class="mod-duration">{m.duration}</span>
+              <svg class="mod-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="p-section p-cta-section">
+  <div class="container">
+    <div class="glass cta-block reveal">
+      <div class="chip" style="margin-bottom:1.5rem">From Practitioner to System Builder</div>
+      <h2 class="cta-block-h2">Ready to go from capable to systematic?</h2>
+      <p class="cta-block-sub">Start Module 01 now — free and open. No account needed to begin.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem">
+        <a href={`${base}/courses/workflows/${firstLesson.slug}`} class="btn-primary btn-lg">
+          Start Module 01: {firstLesson.title}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href={`${base}/courses/leadership`} class="btn-secondary btn-lg">Next Track: AI~Leadership</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .p-nav{position:sticky;top:0;z-index:100;background:rgba(4,7,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,207,255,0.08);height:60px}
+  .p-nav-inner{max-width:1140px;margin:0 auto;height:100%;padding:0 1.5rem;display:flex;align-items:center;gap:2rem}
+  .p-nav-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+  .p-nav-links{display:flex;align-items:center;gap:1.5rem;flex:1}
+  .p-nav-link{font-family:'Space Grotesk',sans-serif;font-size:0.88rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color 0.2s}
+  .p-nav-link:hover{color:var(--text)}
+  .p-nav-link--active{color:var(--cyan)}
+  .p-nav-cta{font-size:0.85rem;padding:0.55rem 1.25rem;margin-left:auto;flex-shrink:0}
+  @media(max-width:768px){.p-nav-links{display:none}}
+
+  .course-hero{padding:6rem 1.5rem 5rem;position:relative;overflow:hidden}
+  .course-hero-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center}
+  @media(max-width:700px){.course-hero-inner{grid-template-columns:1fr}}
+  .tier-badge{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.1);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;color:#a855f7;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;margin-bottom:1rem}
+  .course-h1{font-size:clamp(2.5rem,5vw,3.75rem);font-weight:800;font-family:'Space Grotesk',sans-serif;margin-bottom:1.25rem;line-height:1.1}
+  .tilde{background:linear-gradient(135deg,#00CFFF,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .course-sub{color:var(--muted);font-size:1.1rem;line-height:1.75;margin-bottom:2rem;max-width:520px}
+  .course-meta{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem}
+  .meta-pill{padding:0.35rem 0.85rem;border-radius:999px;border:1px solid rgba(124,58,237,0.18);background:rgba(124,58,237,0.05);font-size:0.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+  .course-btns{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-lg{padding:1rem 2.25rem;font-size:1rem}
+  .course-badge-wrap{flex-shrink:0}
+  .course-badge{padding:2rem;min-width:180px;text-align:center}
+  .cb-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-family:'Space Grotesk',sans-serif;margin-bottom:0.5rem}
+  .cb-name{font-size:1.5rem;font-weight:800;font-family:'Space Grotesk',sans-serif;margin-bottom:0.25rem}
+  .cb-tiers{font-size:0.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:1.25rem}
+  .cb-divider{height:1px;background:rgba(124,58,237,0.12);margin-bottom:1.25rem}
+  .cb-stat{font-size:0.85rem;color:var(--muted);margin-bottom:0.4rem}
+  .cb-stat span{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.1rem;color:#a78bfa}
+
+  .p-section{padding:5rem 1.5rem}
+  .p-section-head{margin-bottom:3rem}
+  .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:800;margin-bottom:0.75rem}
+  .section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:560px}
+  .chip{display:inline-block;padding:0.3rem 0.9rem;border-radius:999px;border:1px solid rgba(124,58,237,0.25);background:rgba(124,58,237,0.08);font-size:0.75rem;font-weight:700;letter-spacing:0.06em;color:#a78bfa;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;margin-bottom:1rem}
+
+  .for-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .for-item{display:flex;align-items:flex-start;gap:0.75rem;padding:1.1rem 1.25rem;font-size:0.9rem;color:var(--muted)}
+  .for-check{color:#a78bfa;font-weight:700;flex-shrink:0;margin-top:1px}
+
+  .modules-section{background:rgba(8,13,26,0.5)}
+
+  .tier-group{margin-bottom:3rem}
+  .tier-group-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+  .tier-group-badge{display:inline-block;padding:0.3rem 0.85rem;border-radius:999px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;font-family:'Space Grotesk',sans-serif}
+  .tier-4{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);color:#a78bfa}
+  .tier-5{background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);color:#c084fc}
+  .tier-6{background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.2);color:#f472b6}
+  .tier-group-desc{font-size:0.88rem;color:var(--muted)}
+
+  .modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.85rem}
+  .module-card{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem 1.5rem;text-decoration:none;transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s}
+  .module-card:hover{border-color:rgba(124,58,237,0.35);box-shadow:0 0 20px rgba(124,58,237,0.1);transform:translateY(-2px)}
+  .mod-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;color:#a78bfa;opacity:0.7;flex-shrink:0;margin-top:3px}
+  .mod-body{flex:1}
+  .mod-title{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.35rem;color:var(--text)}
+  .mod-desc{font-size:0.8rem;color:var(--muted);line-height:1.5}
+  .mod-meta{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;margin-top:3px}
+  .mod-duration{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);white-space:nowrap}
+  .mod-arrow{color:rgba(107,122,153,0.4);transition:color 0.2s,transform 0.2s}
+  .module-card:hover .mod-arrow{color:#a78bfa;transform:translateX(3px)}
+
+  .p-cta-section{padding:4rem 1.5rem 7rem}
+  .cta-block{max-width:680px;margin:0 auto;padding:3.5rem;text-align:center;position:relative;overflow:hidden}
+  .cta-block-h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:800;margin-bottom:1rem}
+  .cta-block-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:480px;margin:0 auto}
+</style>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</Layout>

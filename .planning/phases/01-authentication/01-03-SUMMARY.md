@@ -54,7 +54,7 @@ completed: 2026-03-27
 - **Duration:** ~10 min
 - **Started:** 2026-03-27T22:00:00Z
 - **Completed:** 2026-03-27T22:09:25Z
-- **Tasks:** 1 of 2 complete (Task 2 awaiting human verification)
+- **Tasks:** 2 of 2 complete (Task 2 checkpoint approved by human tester)
 - **Files modified:** 1
 
 ## Accomplishments
@@ -69,8 +69,7 @@ completed: 2026-03-27
 Each task was committed atomically:
 
 1. **Task 1: Add auth nav bar and auth state listener to Layout.astro** - `3cb8f05` (feat)
-
-**Note:** Task 2 is a human-verify checkpoint — SUMMARY will be updated after checkpoint resolution.
+2. **Task 2: Verify full auth flow end-to-end** - checkpoint:human-verify — approved by human tester in production on GitHub Pages
 
 ## Files Created/Modified
 - `src/layouts/Layout.astro` - Added BASE const, auth nav strip HTML, and onAuthStateChange script block
@@ -90,12 +89,13 @@ None.
 ## User Setup Required
 See `.planning/phases/01-authentication/01-USER-SETUP.md` — Supabase project, .env vars, and Site URL / Redirect URL configuration required before human-verify checkpoint can be completed.
 
-## Checkpoint Status
+## Checkpoint Outcome
 
-**Task 2 (human-verify) is pending.** The full auth flow (sign in → magic link → callback → session → sign out) requires:
-1. Supabase project created with PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY in `.env`
-2. Site URL and Redirect URL configured in Supabase dashboard
-3. Manual testing of the end-to-end magic link flow
+**Task 2 (human-verify) APPROVED.** Full end-to-end magic link flow verified in production on GitHub Pages:
+- AUTH-01: Email form sends magic link without errors
+- AUTH-02: Clicking magic link establishes session and redirects to /AIQ/
+- AUTH-03: Session survives browser refresh — Sign Out button remains visible
+- AUTH-04: Sign Out button works from any page, clears session, reverts nav to Sign In
 
 ## Next Phase Readiness
 - After checkpoint approval: AUTH-01 through AUTH-04 requirements fully verified
@@ -104,4 +104,4 @@ See `.planning/phases/01-authentication/01-USER-SETUP.md` — Supabase project, 
 
 ---
 *Phase: 01-authentication*
-*Completed: 2026-03-27 (Task 1 complete; Task 2 checkpoint pending)*
+*Completed: 2026-03-27*

@@ -10,7 +10,7 @@
 - [x] **AUTH-01**: User can sign up with email (magic link — no password required)
 - [x] **AUTH-02**: User receives magic link email and can authenticate via it
 - [x] **AUTH-03**: Authenticated session persists across browser refresh and devices
-- [ ] **AUTH-04**: User can sign out from any page
+- [x] **AUTH-04**: User can sign out from any page
 
 ### Payments
 
@@ -128,7 +128,7 @@
 | AUTH-01 | Phase 1 | Complete |
 | AUTH-02 | Phase 1 | Complete |
 | AUTH-03 | Phase 1 | Complete |
-| AUTH-04 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Complete |
 | PAY-01 | Phase 2 | Pending |
 | PAY-02 | Phase 2 | Pending |
 | PAY-03 | Phase 2 | Pending |

@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 01-authentication-01-03-PLAN.md
-last_updated: "2026-03-28T16:11:34.497Z"
-last_activity: 2026-03-28
+status: executing
+stopped_at: Completed 01.1-platform-migration-01.1-01-PLAN.md
+last_updated: "2026-03-29T16:14:21.872Z"
+last_activity: 2026-03-29
 progress:
-  total_phases: 5
+  total_phases: 7
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The assessment score creates a personal AI identity — a tier, a number, and a progression path — that no other consumer platform provides.
-**Current focus:** Phase 01 — authentication
+**Current focus:** Phase 01.1 — platform-migration
 
 ## Current Position
 
-Phase: 01 (authentication) — COMPLETE
-Plan: 3 of 3 — all complete
-Status: Phase complete — ready for verification
-Last activity: 2026-03-28
+Phase: 01.1 (platform-migration) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-03-29
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-authentication P01 | 2 | 2 tasks | 5 files |
 | Phase 01-authentication P03 | 10 | 1 tasks | 1 files |
 | Phase 01-authentication P02 | 2m | 2 tasks | 2 files |
+| Phase 01.1-platform-migration P01 | 83s | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -71,10 +72,16 @@ Recent decisions affecting current work:
 - [Phase 01-authentication]: Layout.astro script tag is not is:inline — Vite bundles it, enabling ES module import of supabase.ts
 - [Phase 01-authentication]: emailRedirectTo hardcoded to GitHub Pages callback URL — static site cannot use dynamic origin
 - [Phase 01-authentication]: shouldCreateUser: true enables auto-registration via magic link, removing need for separate signup flow
+- [Phase 01.1-platform-migration]: Omit base key entirely from astro.config.mjs — setting base: '/' is a no-op that creates confusion
+- [Phase 01.1-platform-migration]: Score card display URL (tier-id-url span) updated to www.theaiq.org alongside functional URL fixes
 
 ### Pending Todos
 
 None yet.
+
+### Roadmap Evolution
+
+- Phase 01.1 inserted after Phase 1: Platform Migration — move hosting to Vercel, configure www.theaiq.org, remove /AIQ base path (URGENT)
 
 ### Blockers/Concerns
 
@@ -83,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T22:30:00.000Z
-Stopped at: Completed 01-authentication-01-03-PLAN.md
+Last session: 2026-03-29T16:14:21.868Z
+Stopped at: Completed 01.1-platform-migration-01.1-01-PLAN.md
 Resume file: None

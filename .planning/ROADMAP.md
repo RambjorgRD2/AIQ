@@ -43,10 +43,10 @@ Plans:
 **Goal:** Site is hosted on Vercel at www.theaiq.org with the /AIQ base path removed from Astro config and all source files.
 **Requirements**: MIG-01, MIG-02, MIG-03, MIG-04, MIG-05, MIG-06
 **Depends on:** Phase 1
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
-- [ ] 01.1-01-PLAN.md — Remove base from astro.config.mjs, fix all 6 hardcoded /AIQ/ strings in 5 source files
+- [x] 01.1-01-PLAN.md — Remove base from astro.config.mjs, fix all 6 hardcoded /AIQ/ strings in 5 source files
 - [ ] 01.1-02-PLAN.md — Replace GitHub Pages workflow with Vercel CI, add .vercel/ to .gitignore, update Supabase Auth redirect URLs
 - [ ] 01.1-03-PLAN.md — DNS configuration for www.theaiq.org and end-to-end live site verification
 
@@ -149,7 +149,7 @@ Phases execute in numeric order: 1 → 01.1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Authentication | 3/3 | Complete | 2026-03-28 |
-| 01.1. Platform Migration | 0/3 | Not started | - |
+| 01.1. Platform Migration | 1/3 | In Progress|  |
 | 2. Payments & Content Gating | 0/4 | Not started | - |
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |

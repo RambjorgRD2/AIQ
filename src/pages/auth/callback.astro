@@ -61,7 +61,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   // Wait for the SIGNED_IN event, then redirect
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'SIGNED_IN' && session) {
-      const redirectTo = sessionStorage.getItem('auth_redirect') || '/AIQ/'
+      const redirectTo = sessionStorage.getItem('auth_redirect') || '/'
       sessionStorage.removeItem('auth_redirect')
       window.location.href = redirectTo
     }
@@ -70,7 +70,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   // Fallback: if already signed in (e.g., page refresh after auth)
   supabase.auth.getSession().then(({ data: { session } }) => {
     if (session) {
-      const redirectTo = sessionStorage.getItem('auth_redirect') || '/AIQ/'
+      const redirectTo = sessionStorage.getItem('auth_redirect') || '/'
       sessionStorage.removeItem('auth_redirect')
       window.location.href = redirectTo
     }

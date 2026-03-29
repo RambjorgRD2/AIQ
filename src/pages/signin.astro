@@ -112,12 +112,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     submitBtn.textContent = 'Sending...'
 
     // Store intended redirect for after callback
-    sessionStorage.setItem('auth_redirect', document.referrer || '/AIQ/')
+    sessionStorage.setItem('auth_redirect', document.referrer || '/')
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'https://RambjorgRD2.github.io/AIQ/auth/callback',
+        emailRedirectTo: 'https://www.theaiq.org/auth/callback',
         shouldCreateUser: true,
       },
     })

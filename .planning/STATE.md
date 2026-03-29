@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 01.1-02-PLAN.md — Vercel CI live, deploying to Vercel on push to main
-last_updated: "2026-03-29T19:46:11.194Z"
+stopped_at: Completed 01.1-03-PLAN.md — www.theaiq.org live, DNS + SSL + end-to-end auth verified, Phase 01.1 complete
+last_updated: "2026-03-29T20:02:11.920Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 7
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01.1-platform-migration P01 | 83s | 2 tasks | 5 files |
 | Phase 01.1-platform-migration P02 | 3min | 1 tasks | 2 files |
 | Phase 01.1-platform-migration P02 | 3min | 2 tasks | 2 files |
+| Phase 01.1-platform-migration P03 | human-action | 2 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,7 @@ Recent decisions affecting current work:
 - [Phase 01.1-platform-migration]: Belt-and-suspenders env block on vercel build step — Supabase vars available even if not yet in Vercel dashboard
 - [Phase 01.1-platform-migration]: Use vercel pull/build/deploy pattern for GitHub Actions — enables prebuilt upload with proper env var injection from Vercel dashboard
 - [Phase 01.1-platform-migration]: Belt-and-suspenders env block on vercel build step — Supabase vars available even if not yet in Vercel dashboard
+- [Phase 01.1-platform-migration]: DNS CNAME www → cname.vercel-dns-0.com and apex A record → 76.76.21.21 configured at registrar; no code changes needed — all source fixes completed in Plans 01 and 02
 
 ### Pending Todos
 
@@ -96,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T19:46:11.191Z
-Stopped at: Completed 01.1-02-PLAN.md — Vercel CI live, deploying to Vercel on push to main
+Last session: 2026-03-29T20:02:11.916Z
+Stopped at: Completed 01.1-03-PLAN.md — www.theaiq.org live, DNS + SSL + end-to-end auth verified, Phase 01.1 complete
 Resume file: None

@@ -13,7 +13,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 ## Phases
 
 - [x] **Phase 1: Authentication** - Users can create accounts and maintain authenticated sessions via Supabase magic link (completed 2026-03-27)
-- [ ] **Phase 01.1: Platform Migration** - Site hosted on Vercel at www.theaiq.org with /AIQ base path removed (URGENT — unblocks Phase 2)
+- [x] **Phase 01.1: Platform Migration** - Site hosted on Vercel at www.theaiq.org with /AIQ base path removed (URGENT — unblocks Phase 2) (completed 2026-03-29)
 - [ ] **Phase 2: Payments & Content Gating** - Users can purchase Society membership via Stripe and locked content is enforced server-side
 - [ ] **Phase 3: Dashboard & Progress** - Authenticated users have a persistent learner dashboard with cross-device progress sync
 - [ ] **Phase 4: Identity Layer** - Assessment scores produce shareable score cards and eligible users receive verifiable certificates
@@ -43,12 +43,12 @@ Plans:
 **Goal:** Site is hosted on Vercel at www.theaiq.org with the /AIQ base path removed from Astro config and all source files.
 **Requirements**: MIG-01, MIG-02, MIG-03, MIG-04, MIG-05, MIG-06
 **Depends on:** Phase 1
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 01.1-01-PLAN.md — Remove base from astro.config.mjs, fix all 6 hardcoded /AIQ/ strings in 5 source files
 - [x] 01.1-02-PLAN.md — Replace GitHub Pages workflow with Vercel CI, add .vercel/ to .gitignore, update Supabase Auth redirect URLs
-- [ ] 01.1-03-PLAN.md — DNS configuration for www.theaiq.org and end-to-end live site verification
+- [x] 01.1-03-PLAN.md — DNS configuration for www.theaiq.org and end-to-end live site verification
 
 ### Phase 2: Payments & Content Gating
 **Goal**: Users can purchase Society membership via Stripe and all locked lesson content is enforced by server-side subscription verification.
@@ -149,7 +149,7 @@ Phases execute in numeric order: 1 → 01.1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Authentication | 3/3 | Complete | 2026-03-28 |
-| 01.1. Platform Migration | 2/3 | In Progress|  |
+| 01.1. Platform Migration | 3/3 | Complete   | 2026-03-29 |
 | 2. Payments & Content Gating | 0/4 | Not started | - |
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |

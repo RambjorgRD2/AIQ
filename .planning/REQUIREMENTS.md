@@ -65,6 +65,14 @@
 - [ ] **LEGAL-04**: Footer links to all legal pages across the site
 - [ ] **LEGAL-05**: Cookie/data consent banner shown on first visit (GDPR)
 
+### User Value Layer
+
+- [ ] **USR-01**: Authenticated user's assessment results are saved and loaded back on the results page on return visits (no retake required to see their score)
+- [ ] **USR-02**: Auth nav strip displays the user's AIQ tier badge rather than their raw email
+- [ ] **USR-03**: Profile page at `/AIQ/profile` shows the user's tier, score history, and membership status
+- [ ] **USR-04**: A user's first sign-in triggers an onboarding welcome experience; subsequent sign-ins skip it
+- [ ] **USR-05**: Locked lesson pages render the first 20% of lesson content as a free preview before the upgrade gate
+
 ### Mobile UX Fix
 
 - [ ] **MOB-01**: Lesson sidebar has a visible toggle button on screens < 900px
@@ -163,10 +171,15 @@
 | LEGAL-05 | Phase 5 | Pending |
 | MOB-01 | Phase 5 | Pending |
 | MOB-02 | Phase 5 | Pending |
+| USR-01 | Phase 6 | Pending |
+| USR-02 | Phase 6 | Pending |
+| USR-03 | Phase 6 | Pending |
+| USR-04 | Phase 6 | Pending |
+| USR-05 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 38 total
-- Mapped to phases: 38
+- v1 requirements: 43 total
+- Mapped to phases: 43
 - Unmapped: 0 ✓
 
 ---

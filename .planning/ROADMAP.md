@@ -6,7 +6,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 
 ## Milestones
 
-- 🚧 **Milestone 1 — Revenue Infrastructure** - Phases 1-5 (in progress)
+- 🚧 **Milestone 1 — Revenue Infrastructure** - Phases 1-6 (in progress)
 
 **Milestone Goal:** Make AIQ a functional, monetized product — auth, payments, gating, dashboard, identity layer, legal.
 
@@ -17,6 +17,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 - [ ] **Phase 3: Dashboard & Progress** - Authenticated users have a persistent learner dashboard with cross-device progress sync
 - [ ] **Phase 4: Identity Layer** - Assessment scores produce shareable score cards and eligible users receive verifiable certificates
 - [ ] **Phase 5: Legal & Mobile Polish** - The platform is legally compliant and fully usable on mobile devices
+- [ ] **Phase 6: User Value Layer** - Authenticated users experience a personalized AIQ journey with persistent scores, identity-linked tier in the nav, a profile page, first-login onboarding, and content teasers
 
 ## Phase Details
 
@@ -107,6 +108,26 @@ Plans:
 - [ ] 05-03: Mobile sidebar fix — add collapsible toggle button to lesson sidebar on screens < 900px; ensure lesson content fills viewport width when sidebar is hidden; test across Foundations / Workflows / Leadership course layouts
 **UI hint**: yes
 
+### Phase 6: User Value Layer
+**Goal**: Authenticated users experience a personalized AIQ journey — their score follows them across sessions, their tier is visible in the nav, new members are welcomed with context, and locked content teases its value before the upgrade gate.
+**Depends on**: Phase 3 (profiles and assessment_results tables must exist)
+**Requirements**: USR-01, USR-02, USR-03, USR-04, USR-05
+**Success Criteria** (what must be TRUE):
+  1. An authenticated user who completes the assessment and returns later sees their previous score on the results page without retaking
+  2. The auth nav strip shows the user's AIQ tier badge (e.g. "L3") rather than their raw email
+  3. Profile page at `/AIQ/profile` shows tier, score history, and membership status
+  4. A user's first sign-in shows a brief onboarding welcome before redirecting — subsequent sign-ins skip it
+  5. Locked lesson pages show the first 20% of lesson content as a free preview before the upgrade gate
+**Plans**: TBD
+
+Plans:
+- [ ] 06-01: Persistent results UX — on assessment completion, save score to Supabase for authenticated users; results page loads stored score on revisit with "Your last AIQ score" banner; retake flow overwrites
+- [ ] 06-02: Profile page — `/AIQ/profile` with AIQ tier badge, score ring, score history timeline, membership status card, and links to dashboard and courses
+- [ ] 06-03: Nav tier badge — replace raw email in auth strip with tier chip (e.g. "L3 · you@email.com") by reading `profiles.tier` from Supabase on auth state change
+- [ ] 06-04: Post-login onboarding — first sign-in shows a full-screen welcome overlay ("Welcome to AIQ — here's what you can do") with `onboarding_completed` flag stored in Supabase; skipped on all subsequent sign-ins
+- [ ] 06-05: Locked content teasers — locked lesson pages render the first 20% of lesson content before the upgrade gate; non-members experience real content value before the subscribe CTA
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
@@ -119,6 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |
 | 5. Legal & Mobile Polish | 0/3 | Not started | - |
+| 6. User Value Layer | 0/5 | Not started | - |
 
 ---
 *Roadmap created: 2026-03-27*

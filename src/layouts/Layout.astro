@@ -28,17 +28,21 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     />
   </head>
   <body>
-    <!-- Auth nav strip — top-right of every page -->
-    <div id="auth-nav" style="position:fixed;top:0;right:0;z-index:9999;padding:0.75rem 1.5rem;display:flex;align-items:center;gap:0.75rem;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;">
+    <!-- Auth nav strip — top-right on desktop, bottom-right on mobile -->
+    <div id="auth-nav" class="auth-nav">
       <!-- Shown when NOT signed in -->
-      <a href={`${BASE}/signin`} data-auth-hide style="display:block;color:var(--cyan);text-decoration:none;padding:0.4rem 1rem;border:1px solid var(--border-hover);border-radius:999px;transition:background 0.2s;">
-        Sign In
-      </a>
+      <a href={`${BASE}/signin`} data-auth-hide class="auth-signin-link">Sign In</a>
       <!-- Shown when signed in -->
-      <span data-auth-show style="display:none;color:var(--muted);" id="auth-user-email"></span>
-      <button data-auth-show data-sign-out style="display:none;color:var(--cyan);background:none;border:1px solid var(--border-hover);border-radius:999px;padding:0.4rem 1rem;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;transition:background 0.2s;">
-        Sign Out
-      </button>
+      <span data-auth-show class="auth-email" id="auth-user-email"></span>
+      <button data-auth-show data-sign-out class="auth-signout-btn">Sign Out</button>
+    </div>
+
+    <!-- Undo toast — appears after clicking Sign Out -->
+    <div id="auth-toast" class="auth-toast" role="status" aria-live="polite">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" fill="var(--muted)"/><path d="M8 4.5a.75.75 0 0 1 .75.75v3.5l2.25 1.3a.75.75 0 1 1-.75 1.3L7.5 9.9a.75.75 0 0 1-.375-.65V5.25A.75.75 0 0 1 8 4.5z" fill="var(--muted)"/></svg>
+      <span>Signed out</span>
+      <button id="auth-toast-undo" class="auth-toast-undo">Undo</button>
+      <span id="auth-toast-timer" class="auth-toast-timer">5</span>
     </div>
 
     <slot />
@@ -58,7 +62,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           ;(el as HTMLElement).style.display = user ? 'none' : ''
         })
 
-        // Show user email
+        // Show user email (truncated on mobile via CSS)
         const emailEl = document.getElementById('auth-user-email')
         if (emailEl && user) {
           emailEl.textContent = user.email ?? ''
@@ -68,12 +72,43 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         ;(window as any).__supabaseUser = user
       })
 
-      // Handle sign-out button(s)
-      document.querySelectorAll('[data-sign-out]').forEach(btn => {
-        btn.addEventListener('click', async () => {
+      // ── Undo-toast sign-out ──────────────────────────────
+      const TOAST_DURATION = 5000
+
+      function showSignOutToast() {
+        const toast = document.getElementById('auth-toast')!
+        const undoBtn = document.getElementById('auth-toast-undo')!
+        const timerEl = document.getElementById('auth-toast-timer')!
+
+        let remaining = Math.round(TOAST_DURATION / 1000)
+        timerEl.textContent = String(remaining)
+        toast.classList.add('visible')
+
+        // Countdown tick
+        const tick = setInterval(() => {
+          remaining--
+          timerEl.textContent = String(remaining)
+          if (remaining <= 0) clearInterval(tick)
+        }, 1000)
+
+        // Sign out after delay
+        const signOutTimer = setTimeout(async () => {
+          clearInterval(tick)
+          toast.classList.remove('visible')
           await supabase.auth.signOut()
           window.location.href = '/AIQ/'
-        })
+        }, TOAST_DURATION)
+
+        // Undo: cancel timer, hide toast — session stays active
+        undoBtn.onclick = () => {
+          clearTimeout(signOutTimer)
+          clearInterval(tick)
+          toast.classList.remove('visible')
+        }
+      }
+
+      document.querySelectorAll('[data-sign-out]').forEach(btn => {
+        btn.addEventListener('click', showSignOutToast)
       })
     </script>
   </body>
@@ -288,5 +323,140 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   ::-webkit-scrollbar-thumb {
     background: rgba(0, 207, 255, 0.25);
     border-radius: 3px;
+  }
+
+  /* ── Auth nav strip ───────────────────────────────────── */
+  .auth-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9000;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .auth-signin-link,
+  .auth-signout-btn {
+    color: var(--cyan);
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border-hover);
+    border-radius: 999px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    background: none;
+  }
+
+  .auth-signin-link:hover,
+  .auth-signout-btn:hover {
+    background: rgba(0, 207, 255, 0.08);
+    border-color: var(--cyan);
+  }
+
+  .auth-email {
+    color: var(--muted);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Mobile: move strip to bottom-right, hide email to save space */
+  @media (max-width: 768px) {
+    .auth-nav {
+      top: auto;
+      bottom: 1.25rem;
+      right: 1rem;
+      padding: 0;
+      gap: 0;
+      background: rgba(4, 7, 15, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-hover);
+      border-radius: 999px;
+    }
+
+    .auth-signin-link,
+    .auth-signout-btn {
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .auth-signin-link:hover,
+    .auth-signout-btn:hover {
+      background: rgba(0, 207, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .auth-email {
+      display: none;
+    }
+  }
+
+  /* ── Undo toast ───────────────────────────────────────── */
+  .auth-toast {
+    position: fixed;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(100% + 2rem));
+    background: var(--card);
+    border: 1px solid var(--border-hover);
+    border-radius: 999px;
+    padding: 0.6rem 0.75rem 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 10000;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .auth-toast.visible {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .auth-toast-undo {
+    color: var(--cyan);
+    background: rgba(0, 207, 255, 0.1);
+    border: 1px solid rgba(0, 207, 255, 0.25);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .auth-toast-undo:hover {
+    background: rgba(0, 207, 255, 0.18);
+    border-color: var(--cyan);
+  }
+
+  .auth-toast-timer {
+    color: var(--muted);
+    font-size: 0.75rem;
+    min-width: 1ch;
+    text-align: center;
+  }
+
+  /* On mobile: toast sits above the auth pill */
+  @media (max-width: 768px) {
+    .auth-toast {
+      bottom: 4.5rem;
+    }
   }
 </style>

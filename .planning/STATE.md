@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: "Checkpoint: Task 2 human-action required for Vercel project setup in 01.1-02-PLAN.md"
-last_updated: "2026-03-29T16:17:02.423Z"
+status: verifying
+stopped_at: Completed 01.1-02-PLAN.md — Vercel CI live, deploying to Vercel on push to main
+last_updated: "2026-03-29T19:46:11.194Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 7
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 Phase: 01.1 (platform-migration) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-29
 
 Progress: [░░░░░░░░░░] 0%
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-authentication P02 | 2m | 2 tasks | 2 files |
 | Phase 01.1-platform-migration P01 | 83s | 2 tasks | 5 files |
 | Phase 01.1-platform-migration P02 | 3min | 1 tasks | 2 files |
+| Phase 01.1-platform-migration P02 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 01.1-platform-migration]: Score card display URL (tier-id-url span) updated to www.theaiq.org alongside functional URL fixes
 - [Phase 01.1-platform-migration]: Use vercel pull/build/deploy pattern for GitHub Actions — enables prebuilt upload with proper env var injection from Vercel dashboard
 - [Phase 01.1-platform-migration]: Belt-and-suspenders env block on vercel build step — Supabase vars available even if not yet in Vercel dashboard
+- [Phase 01.1-platform-migration]: Use vercel pull/build/deploy pattern for GitHub Actions — enables prebuilt upload with proper env var injection from Vercel dashboard
+- [Phase 01.1-platform-migration]: Belt-and-suspenders env block on vercel build step — Supabase vars available even if not yet in Vercel dashboard
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T16:17:02.419Z
-Stopped at: Checkpoint: Task 2 human-action required for Vercel project setup in 01.1-02-PLAN.md
+Last session: 2026-03-29T19:46:11.191Z
+Stopped at: Completed 01.1-02-PLAN.md — Vercel CI live, deploying to Vercel on push to main
 Resume file: None

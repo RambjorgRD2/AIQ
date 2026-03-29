@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01.1-platform-migration-01.1-01-PLAN.md
-last_updated: "2026-03-29T16:14:21.872Z"
+stopped_at: "Checkpoint: Task 2 human-action required for Vercel project setup in 01.1-02-PLAN.md"
+last_updated: "2026-03-29T16:17:02.423Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 01.1 (platform-migration) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-03-29
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-authentication P03 | 10 | 1 tasks | 1 files |
 | Phase 01-authentication P02 | 2m | 2 tasks | 2 files |
 | Phase 01.1-platform-migration P01 | 83s | 2 tasks | 5 files |
+| Phase 01.1-platform-migration P02 | 3min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01-authentication]: shouldCreateUser: true enables auto-registration via magic link, removing need for separate signup flow
 - [Phase 01.1-platform-migration]: Omit base key entirely from astro.config.mjs — setting base: '/' is a no-op that creates confusion
 - [Phase 01.1-platform-migration]: Score card display URL (tier-id-url span) updated to www.theaiq.org alongside functional URL fixes
+- [Phase 01.1-platform-migration]: Use vercel pull/build/deploy pattern for GitHub Actions — enables prebuilt upload with proper env var injection from Vercel dashboard
+- [Phase 01.1-platform-migration]: Belt-and-suspenders env block on vercel build step — Supabase vars available even if not yet in Vercel dashboard
 
 ### Pending Todos
 
@@ -90,6 +93,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T16:14:21.868Z
-Stopped at: Completed 01.1-platform-migration-01.1-01-PLAN.md
+Last session: 2026-03-29T16:17:02.419Z
+Stopped at: Checkpoint: Task 2 human-action required for Vercel project setup in 01.1-02-PLAN.md
 Resume file: None

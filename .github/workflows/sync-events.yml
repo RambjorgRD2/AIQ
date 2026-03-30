@@ -22,13 +22,12 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Fetch events from Luma and update forum.astro
-        continue-on-error: true
+      - name: Fetch events from Luma iCal feed and update events.ts
         run: node .github/scripts/sync-luma-events.mjs
         env:
-          # Optional — only needed if Luma starts requiring auth for public calendars.
-          # Add as a repo secret: Settings → Secrets → Actions → LUMA_API_KEY
-          LUMA_API_KEY: ${{ secrets.LUMA_API_KEY }}
+          # Required: Luma Dashboard → Calendar → Settings → Subscribe to Calendar
+          # Add the .ics URL as a repo secret: Settings → Secrets → Actions → LUMA_ICAL_URL
+          LUMA_ICAL_URL: ${{ secrets.LUMA_ICAL_URL }}
 
       - name: Commit changes (if any)
         run: |
@@ -37,8 +36,8 @@ jobs:
           if git diff --quiet; then
             echo "No changes — nothing to commit."
           else
-            git add src/pages/forum.astro
+            git add src/data/events.ts
             git commit -m "chore: sync Luma events $(date -u +%Y-%m-%d)"
             git push
-            echo "Pushed updated events. Deploy workflow will pick this up automatically."
+            echo "Pushed updated events. Vercel will redeploy automatically."
           fi

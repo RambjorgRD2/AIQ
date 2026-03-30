@@ -27,18 +27,18 @@ export interface ForumEvent {
 
 export const events: ForumEvent[] = [
   {
-    lumaEventId: 'evt-ksh9sNL7qgWZWup',
-    title: 'Sosial AI Forum — Meetup',
-    date: '2026-04-08',
-    time: '12:00',
-    timezone: 'CET',
-    format: 'Meetup',
-    location: 'PEAK Sunnfjord, Førde',
-    description: 'A social gathering of AI enthusiasts and like-minded individuals. Challenge thoughts and uses of AI in daily life, and find a workshop that appeals to your level and field of interest.',
-    tierRecommended: 'All tiers',
+    lumaEventId: "evt-ksh9sNL7qgWZWup",
+    title: "Sosial AI Forum",
+    date: "2026-04-08",
+    time: "10:00",
+    timezone: "UTC",
+    format: "Workshop",
+    location: "PEAK Sunnfjord, Hafstadvegen 23, Hafstadvegen 25, 6800 Førde, Norway",
+    description: "You are hosting this event. View the public page at https://luma.com/eh4mxqxm Manage the event at https://luma.com/event/manage/evt-ksh9sNL7qgWZWup Address: PEAK Sunnfjord Førde, Vestland Norway Tema for workshop er enda ikkje bestemt, men vil bli oppdatert i god tid før eventet. Hosted by SosiAI Ad",
+    tierRecommended: "All tiers",
     host: 'Sosial AI Forum',
     capacity: 50,
-    status: 'upcoming',
+    status: "upcoming",
   },
 ];
 

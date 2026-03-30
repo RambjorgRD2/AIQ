@@ -34,7 +34,7 @@ export const events: ForumEvent[] = [
     timezone: "UTC",
     format: "Workshop",
     location: "PEAK Sunnfjord, Hafstadvegen 23, Hafstadvegen 25, 6800 Førde, Norway",
-    description: "You are hosting this event. View the public page at https://luma.com/eh4mxqxm Manage the event at https://luma.com/event/manage/evt-ksh9sNL7qgWZWup Address: PEAK Sunnfjord Førde, Vestland Norway Tema for workshop er enda ikkje bestemt, men vil bli oppdatert i god tid før eventet. Hosted by SosiAI Ad",
+    description: "",
     tierRecommended: "All tiers",
     host: 'Sosial AI Forum',
     capacity: 50,

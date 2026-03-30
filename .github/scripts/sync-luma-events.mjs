@@ -86,9 +86,10 @@ const TZ_ABBR = {
 function parseIcal(raw) {
   const text = unfold(raw);
 
-  // Calendar-level timezone (X-WR-TIMEZONE) — used when DTSTART is in UTC
+  // Calendar-level timezone — prefer X-WR-TIMEZONE from feed, fall back to
+  // CALENDAR_TIMEZONE env var (set in workflow). Used when DTSTART is in UTC.
   const calTzMatch = text.match(/X-WR-TIMEZONE:(.+)/);
-  const calTzid = calTzMatch ? calTzMatch[1].trim() : '';
+  const calTzid = (calTzMatch ? calTzMatch[1].trim() : '') || process.env.CALENDAR_TIMEZONE || '';
 
   const results = [];
 
@@ -139,10 +140,11 @@ function parseIcal(raw) {
 
     // Clean description: strip Luma management noise, markdown, cap at 300 chars
     const description = rawDesc
-      .replace(/You are hosting this event\.[^]*?(View the public page|Manage the event)[^\n]*/g, '')
-      .replace(/View the public page at https?:\/\/\S+/g, '')
-      .replace(/Manage the event at https?:\/\/\S+/g, '')
-      .replace(/Hosted by\s+\S+.*$/m, '')
+      .replace(/You are hosting this event\.\s*/g, '')
+      .replace(/View the public page at https?:\/\/\S+\s*/g, '')
+      .replace(/Manage the event at https?:\/\/\S+\s*/g, '')
+      .replace(/Hosted by\s+\S+\s*/g, '')
+      .replace(/Address:\s*/g, '')
       .replace(/\*\*|__|~~|`{1,3}/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\s+/g, ' ')

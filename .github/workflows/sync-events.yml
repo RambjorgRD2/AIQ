@@ -28,6 +28,7 @@ jobs:
           # Required: Luma Dashboard → Calendar → Settings → Subscribe to Calendar
           # Add the .ics URL as a repo secret: Settings → Secrets → Actions → LUMA_ICAL_URL
           LUMA_ICAL_URL: ${{ secrets.LUMA_ICAL_URL }}
+          CALENDAR_TIMEZONE: Europe/Oslo
 
       - name: Commit changes (if any)
         run: |

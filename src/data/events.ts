@@ -34,7 +34,7 @@ export const events: ForumEvent[] = [
     timezone: "UTC",
     format: "Workshop",
     location: "PEAK Sunnfjord, Hafstadvegen 23, Hafstadvegen 25, 6800 Førde, Norway",
-    description: "",
+    description: "PEAK Sunnfjord Førde, Vestland Norway Tema for workshop er enda ikkje bestemt, men vil bli oppdatert i god tid før eventet. Admin",
     tierRecommended: "All tiers",
     host: 'Sosial AI Forum',
     capacity: 50,

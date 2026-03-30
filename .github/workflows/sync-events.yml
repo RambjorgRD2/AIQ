@@ -23,6 +23,7 @@ jobs:
           node-version: '22'
 
       - name: Fetch events from Luma and update forum.astro
+        continue-on-error: true
         run: node .github/scripts/sync-luma-events.mjs
         env:
           # Optional — only needed if Luma starts requiring auth for public calendars.

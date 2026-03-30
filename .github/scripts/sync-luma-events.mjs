@@ -85,6 +85,11 @@ const TZ_ABBR = {
 
 function parseIcal(raw) {
   const text = unfold(raw);
+
+  // Calendar-level timezone (X-WR-TIMEZONE) — used when DTSTART is in UTC
+  const calTzMatch = text.match(/X-WR-TIMEZONE:(.+)/);
+  const calTzid = calTzMatch ? calTzMatch[1].trim() : '';
+
   const results = [];
 
   for (const block of text.split('BEGIN:VEVENT').slice(1)) {
@@ -108,9 +113,22 @@ function parseIcal(raw) {
 
     // Parse DTSTART: YYYYMMDDTHHMMSS[Z] or YYYYMMDD (all-day)
     const d = dtstart.replace(/Z$/, '');
-    const date = `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`;
-    const time = d.length >= 13 ? `${d.slice(9,11)}:${d.slice(11,13)}` : '00:00';
-    const timezone = TZ_ABBR[tzid] || (dtstart.endsWith('Z') ? 'UTC' : tzid || 'UTC');
+    let date = `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`;
+    let time = d.length >= 13 ? `${d.slice(9,11)}:${d.slice(11,13)}` : '00:00';
+
+    // Resolve timezone: explicit TZID wins; UTC timestamps fall back to
+    // the calendar's X-WR-TIMEZONE and convert the time to local
+    const effectiveTzid = tzid || (dtstart.endsWith('Z') ? calTzid : '') || '';
+    if (dtstart.endsWith('Z') && effectiveTzid) {
+      const utc = new Date(`${date}T${time}:00Z`);
+      date = new Intl.DateTimeFormat('en-CA', {
+        timeZone: effectiveTzid, year: 'numeric', month: '2-digit', day: '2-digit',
+      }).format(utc);
+      time = new Intl.DateTimeFormat('en-GB', {
+        timeZone: effectiveTzid, hour: '2-digit', minute: '2-digit', hour12: false,
+      }).format(utc);
+    }
+    const timezone = TZ_ABBR[effectiveTzid] || effectiveTzid || 'UTC';
 
     // Extract Luma event ID from URL or UID (evt-xxxxxxxxxx pattern)
     const idMatch = (url + uid).match(/evt-[a-zA-Z0-9]+/);
@@ -119,8 +137,12 @@ function parseIcal(raw) {
     // Status: upcoming if start is in the future
     const status = new Date(`${date}T${time}:00`) > new Date() ? 'upcoming' : 'past';
 
-    // Clean description: strip markdown syntax, cap at 300 chars
+    // Clean description: strip Luma management noise, markdown, cap at 300 chars
     const description = rawDesc
+      .replace(/You are hosting this event\.[^]*?(View the public page|Manage the event)[^\n]*/g, '')
+      .replace(/View the public page at https?:\/\/\S+/g, '')
+      .replace(/Manage the event at https?:\/\/\S+/g, '')
+      .replace(/Hosted by\s+\S+.*$/m, '')
       .replace(/\*\*|__|~~|`{1,3}/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\s+/g, ' ')

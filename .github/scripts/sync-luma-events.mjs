@@ -143,7 +143,7 @@ function parseIcal(raw) {
       .replace(/You are hosting this event\.\s*/g, '')
       .replace(/View the public page at https?:\/\/\S+\s*/g, '')
       .replace(/Manage the event at https?:\/\/\S+\s*/g, '')
-      .replace(/Hosted by\s+\S+\s*/g, '')
+      .replace(/Hosted by\s+.+$/m, '')
       .replace(/Address:\s*/g, '')
       .replace(/\*\*|__|~~|`{1,3}/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')

@@ -33,7 +33,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       <!-- Shown when NOT signed in -->
       <a href={`${BASE}/signin`} data-auth-hide class="auth-signin-link">Sign In</a>
       <!-- Shown when signed in -->
-      <span data-auth-show class="auth-email" id="auth-user-email"></span>
+      <span data-auth-show class="auth-email auth-user-email" id="auth-user-email"></span>
       <button data-auth-show data-sign-out class="auth-signout-btn">Sign Out</button>
     </div>
 
@@ -62,11 +62,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           ;(el as HTMLElement).style.display = user ? 'none' : ''
         })
 
-        // Show user email (truncated on mobile via CSS)
-        const emailEl = document.getElementById('auth-user-email')
-        if (emailEl && user) {
-          emailEl.textContent = user.email ?? ''
-        }
+        // Show user email in all auth-user-email elements (desktop strip + mobile menu)
+        document.querySelectorAll('.auth-user-email').forEach(el => {
+          if (user) (el as HTMLElement).textContent = user.email ?? ''
+        })
 
         // Expose user globally for page-level scripts
         ;(window as any).__supabaseUser = user
@@ -406,6 +405,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     bottom: 1.75rem;
     left: 50%;
     transform: translateX(-50%) translateY(calc(100% + 2rem));
+    opacity: 0;
+    pointer-events: none;
     background: var(--card);
     border: 1px solid var(--border-hover);
     border-radius: 999px;
@@ -426,6 +427,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .auth-toast.visible {
     transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .auth-toast-undo {

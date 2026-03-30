@@ -55,6 +55,10 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     <a href={`${BASE}/blog`} class="mobile-link">Blog</a>
     <a href={SERVICES_URL} class="mobile-link">Services</a>
     <a href={ASSESSMENT_URL} class="btn-primary" style="margin-top:0.5rem">Discover your AIQ</a>
+    <!-- Auth row — hidden/shown by Layout.astro auth script via data-auth-* attributes -->
+    <a href={`${BASE}/signin`} data-auth-hide class="mobile-link mobile-auth-link">Sign In</a>
+    <span data-auth-show class="mobile-link mobile-auth-email auth-user-email"></span>
+    <button data-auth-show data-sign-out class="mobile-link mobile-auth-signout">Sign Out</button>
   </div>
 
   <!-- ─── HERO ─────────────────────────────────────────── -->
@@ -696,6 +700,29 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     font-size: 1.05rem;
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-auth-email {
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: default;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-auth-signout {
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--cyan);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
   }
 
   /* HERO */
@@ -1559,6 +1586,13 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     .cta-box { padding: 2.5rem 1.5rem; }
     .hero-stats { gap: 0.5rem; }
     .stat-pill { padding: 0.5rem 0.75rem; min-width: 54px; }
+  }
+</style>
+
+<style is:global>
+  /* Hide the floating auth pill on mobile — auth lives in the hamburger menu instead */
+  @media (max-width: 768px) {
+    body:has(#mobileMenu) #auth-nav { display: none; }
   }
 </style>
 

@@ -85,12 +85,14 @@ export const foundations: Lesson[] = [
 
 <p>It doesn't know things the way a person knows things. It knows them the way a language knows them — as patterns in how things are expressed. This model predicts your actual experience with AI far better than either wrong model:</p>
 
+<div class="c-list-box">
 <ul>
   <li><strong>Why it writes beautifully about grief without feeling it:</strong> pattern-matching on how grief is written about, not experiencing it</li>
   <li><strong>Why it hallucinates:</strong> when there's no strong pattern match for a specific fact, it generates something that <em>looks like</em> a correct answer — the shape of truth without the substance</li>
   <li><strong>Why prompting matters:</strong> you're feeding context to a prediction engine that generates the most plausible continuation of what you wrote</li>
   <li><strong>Why it's wrong with total confidence:</strong> confidence is a tone pattern, not a verification signal</li>
 </ul>
+</div>
 
 <div class="c-section-break"></div>
 <h2>What AI Is Good At — and Where It Fails</h2>
@@ -218,12 +220,15 @@ export const foundations: Lesson[] = [
 <blockquote>Each conversation with an AI is a fresh piece of paper. Everything on that paper is available to it. Anything not on that paper doesn't exist from the model's perspective.</blockquote>
 
 <p>What this means in practice:</p>
+
+<div class="c-list-box">
 <ul>
   <li>In very long conversations, earlier messages may be dropped as the context fills up</li>
   <li>The AI can't access previous conversations unless the platform stores and re-injects them</li>
   <li>To make AI "remember" something important, keep it in the current context</li>
   <li>Context windows are large (100K+ tokens for Claude and ChatGPT) — but not infinite</li>
 </ul>
+</div>
 
 <div class="c-section-break"></div>
 <h2>🎲 Temperature: Why the Same Prompt Gets Different Results</h2>
@@ -252,7 +257,7 @@ export const foundations: Lesson[] = [
 
 <p>The model is always generating the most statistically plausible continuation of the text it's seen. When you ask about a specific fact, it doesn't retrieve it from a database — it generates a response that <em>looks like</em> a factual answer, in the style factual answers are written.</p>
 
-<p>If the fact was well-represented in training data, the output is often accurate. If it was rare, obscure, or recent, the model still generates something that <em>looks</em> like a confident factual claim — because that's what confident factual claims look like in text.</p>
+<blockquote>If the fact was well-represented in training data, the output is often accurate. If it was rare, obscure, or recent, the model still generates something that <em>looks</em> like a confident factual claim — because that's what confident factual claims look like in text.</blockquote>
 
 <div class="c-callout">
   <div class="c-callout-icon">⚠️</div>
@@ -328,7 +333,7 @@ export const foundations: Lesson[] = [
     hook: `Most people prompt AI the way they type a Google search — short, keyword-heavy, vague. This produces mediocre results and leads people to conclude that "AI isn't that useful." The problem isn't the AI. It's the input. Prompting is a skill, and like all skills, it has a learning curve. This lesson gives you the fundamentals: three changes to how you write prompts that will immediately produce better results.`,
 
     concept: `
-<p>Remember the mental model from Lesson 1: you're not asking a question of a knowledgeable entity. You're providing context to a prediction engine. The quality of what you get back is a <strong>direct function</strong> of the quality and specificity of the context you provide.</p>
+<p class="c-lead-para">Remember the mental model from Lesson 1: you're not asking a question of a knowledgeable entity. You're providing context to a prediction engine. The quality of what you get back is a <strong>direct function</strong> of the quality and specificity of the context you provide.</p>
 
 <p>When you type "write me a summary," the AI makes dozens of decisions on your behalf: How long? For what audience? Of what? In what tone? It will guess — often plausibly, often wrong for your specific needs. Give it those decisions upfront and you get something much closer to what you want on the first attempt.</p>
 
@@ -377,11 +382,14 @@ export const foundations: Lesson[] = [
 <h2>The Before/After Habit</h2>
 
 <p>Before sending a prompt, run through this quick checklist:</p>
+
+<div class="c-list-box">
 <ol>
   <li>Have I given it a <strong>role</strong> or at least a framing for who it should be?</li>
   <li>Have I provided all the <strong>context</strong> it needs to actually help me?</li>
   <li>Have I specified what I want the <strong>output</strong> to look like?</li>
 </ol>
+</div>
 
 <p>You don't need all three every time. But running through it before sending will improve your first-attempt results significantly.</p>
 

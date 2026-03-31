@@ -481,9 +481,27 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     margin: 1.5rem 0 0.5rem;
     color: var(--cyan);
   }
-  .l-content-body p { margin-bottom: 1.1rem; line-height: 1.85; color: rgba(232,240,255,0.85); }
+  .l-content-body p { margin-bottom: 1.35rem; line-height: 1.85; color: rgba(232,240,255,0.85); }
   .l-content-body ul, .l-content-body ol { margin: 0.75rem 0 1.25rem 1.25rem; }
-  .l-content-body li { margin-bottom: 0.6rem; line-height: 1.75; color: rgba(232,240,255,0.8); }
+  .l-content-body li { margin-bottom: 0.65rem; line-height: 1.75; color: rgba(232,240,255,0.8); }
+  .c-lead-para {
+    font-size: 1.05rem;
+    line-height: 1.95;
+    color: rgba(232,240,255,0.95);
+    border-left: 3px solid rgba(0,207,255,0.25);
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem !important;
+  }
+  .c-list-box {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem 1rem 1.5rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+  .c-list-box ul, .c-list-box ol { margin: 0 0 0 1rem; }
+  .c-list-box li { margin-bottom: 0.75rem; line-height: 1.75; }
+  .c-list-box li:last-child { margin-bottom: 0; }
   .l-content-body strong { color: var(--text); font-weight: 600; }
   .l-content-body em { color: var(--cyan); font-style: italic; }
   .l-content-body blockquote {

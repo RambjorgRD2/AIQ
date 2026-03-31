@@ -120,7 +120,19 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#00CFFF" stroke-width="1.4"/><path d="M5 8h6M5 5.5h6M5 10.5h4" stroke="#00CFFF" stroke-width="1.2" stroke-linecap="round"/></svg>
         The Concept
       </div>
-      <div class="l-content-body" set:html={lesson.concept} />
+      <div class="l-concept glass">
+        <div class="l-concept-header">
+          <span class="l-concept-label">Core Reading</span>
+          <div class="l-concept-chips">
+            <span class="l-concept-chip">{lesson.tierLabel}</span>
+            <span class="l-concept-chip l-concept-chip--time">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="#00CFFF" stroke-width="1.1"/><path d="M5.5 3v2.5l1.25.9" stroke="#00CFFF" stroke-width="1.1" stroke-linecap="round"/></svg>
+              {lesson.duration}
+            </span>
+          </div>
+        </div>
+        <div class="l-content-body" set:html={lesson.concept} />
+      </div>
     </section>
 
     <!-- DEMO -->
@@ -465,6 +477,39 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   .l-hook { padding: 1.75rem 2rem; }
   .l-hook-text { font-size: 1.05rem; line-height: 1.8; color: var(--text); }
 
+  /* ─── Concept card ─── */
+  .l-concept { padding: 1.75rem 2rem; }
+  .l-concept-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid rgba(0,207,255,0.1);
+  }
+  .l-concept-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+  }
+  .l-concept-chips { display: flex; gap: 0.4rem; align-items: center; }
+  .l-concept-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(0,207,255,0.07);
+    border: 1px solid rgba(0,207,255,0.18);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--cyan);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
   /* ─── Concept body ─── */
   .l-content-body h2 {
     font-family: 'Space Grotesk', sans-serif;
@@ -493,8 +538,8 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     margin-bottom: 1.5rem !important;
   }
   .c-list-box {
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
     padding: 1.25rem 1.5rem 1rem 1.5rem;
     margin: 1.25rem 0 1.5rem;
@@ -544,8 +589,8 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   .c-model-card {
     padding: 1.25rem 1.5rem;
     border-radius: 12px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.1);
   }
   .c-model-card-label {
     font-family: 'Space Grotesk', sans-serif;

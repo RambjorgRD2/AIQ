@@ -117,9 +117,11 @@ function parseIcal(raw) {
     let date = `${d.slice(0,4)}-${d.slice(4,6)}-${d.slice(6,8)}`;
     let time = d.length >= 13 ? `${d.slice(9,11)}:${d.slice(11,13)}` : '00:00';
 
-    // Resolve timezone: explicit TZID wins; UTC timestamps fall back to
-    // the calendar's X-WR-TIMEZONE and convert the time to local
-    const effectiveTzid = tzid || (dtstart.endsWith('Z') ? calTzid : '') || '';
+    // Resolve timezone:
+    //   1. Explicit TZID on DTSTART → use as-is, no conversion needed
+    //   2. Z-suffix (UTC) + calTzid → convert UTC→local, use calTzid as label
+    //   3. Floating time (no Z, no TZID) → already local, just label with calTzid
+    const effectiveTzid = tzid || calTzid || '';
     if (dtstart.endsWith('Z') && effectiveTzid) {
       const utc = new Date(`${date}T${time}:00Z`);
       date = new Intl.DateTimeFormat('en-CA', {
@@ -163,7 +165,7 @@ function parseIcal(raw) {
 // tierRecommended and capacity are not in iCal — keep any values already set.
 
 function parseExisting(src) {
-  const tiers = {}, capacities = {};
+  const tiers = {}, capacities = {}, formats = {};
   const re = /lumaEventId:\s*['"]([^'"]+)['"]\s*,[\s\S]*?tierRecommended:\s*([^,\n]+)[\s\S]*?capacity:\s*([^,\n]+)/g;
   let m;
   while ((m = re.exec(src)) !== null) {
@@ -173,7 +175,12 @@ function parseExisting(src) {
     if (tier !== 'null' && tier !== "''") tiers[id] = tier.replace(/^['"]|['"]$/g, '');
     if (cap  !== 'null')                  capacities[id] = cap;
   }
-  return { tiers, capacities };
+  // Preserve manually set format (auto-inferred format from title may be wrong)
+  const fmtRe = /lumaEventId:\s*['"]([^'"]+)['"][\s\S]*?format:\s*['"]([^'"]+)['"]/g;
+  while ((m = fmtRe.exec(src)) !== null) {
+    formats[m[1]] = m[2];
+  }
+  return { tiers, capacities, formats };
 }
 
 // ─── SERIALISE ────────────────────────────────────────────────────────────────
@@ -223,10 +230,11 @@ async function main() {
 
   // Restore manually curated fields
   const src = readFileSync(EVENTS_TS, 'utf-8');
-  const { tiers, capacities } = parseExisting(src);
+  const { tiers, capacities, formats } = parseExisting(src);
   for (const e of events) {
     if (tiers[e.lumaEventId])      e.tierRecommended = tiers[e.lumaEventId];
     if (capacities[e.lumaEventId]) e.capacity        = capacities[e.lumaEventId];
+    if (formats[e.lumaEventId])    e.format          = formats[e.lumaEventId];
   }
 
   // Sort: upcoming first (chronological), then past (reverse chronological)

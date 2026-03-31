@@ -40,109 +40,125 @@ export const foundations: Lesson[] = [
     hook: `Most people's mental model of AI is borrowed from science fiction — a sentient computer that thinks, reasons, and has goals. This model makes you worse at using AI. It leads to misplaced trust, frustrating failures, and approaches that don't work. In the next 12 minutes, you'll replace that borrowed model with one that's accurate, useful, and immediately changes how you work.`,
 
     concept: `
-<h2>The Two Wrong Models Everyone Starts With</h2>
-
 <p>Before we talk about what AI is, let's name what most people think it is. There are two dominant wrong models, and they each cause predictable problems.</p>
 
-<h3>Wrong Model 1: The Oracle</h3>
-<p>You ask it a question. It knows the answer. It's essentially a smarter Google — a vast database of truth that retrieves the correct answer when prompted correctly.</p>
-<p>This model produces people who: trust AI outputs without verifying them, get confused when AI is confidently wrong, treat every response as a fact that just needs to be quoted.</p>
+<div class="c-model-grid">
+  <div class="c-model-card">
+    <div class="c-model-card-label">❌ Wrong Model 1</div>
+    <h3>The Oracle</h3>
+    <p>You ask it a question. It knows the answer. It's essentially a smarter Google — a vast database of truth that retrieves the correct answer when prompted correctly.</p>
+    <p class="c-model-problem"><strong>What this produces:</strong> You trust outputs without verifying. You get confused when AI is confidently wrong. You treat every response as fact.</p>
+  </div>
+  <div class="c-model-card">
+    <div class="c-model-card-label">❌ Wrong Model 2</div>
+    <h3>The Robot</h3>
+    <p>It follows instructions mechanically, like sophisticated autocomplete. Very fast, very literal, executing commands without anything like intelligence.</p>
+    <p class="c-model-problem"><strong>What this produces:</strong> You dramatically underuse AI's capabilities. You don't understand why careful prompting matters. You give up quickly when results disappoint.</p>
+  </div>
+</div>
 
-<h3>Wrong Model 2: The Robot</h3>
-<p>It follows instructions mechanically, like a very sophisticated autocomplete. Very fast, very literal, but essentially just executing commands without anything like intelligence.</p>
-<p>This model produces people who: dramatically underuse AI's capabilities, don't understand why careful prompting matters, give up quickly when results aren't what they expected.</p>
+<p class="c-insight-text">Both models produce systematic mistakes. The Oracle produces <strong>over-trust</strong>. The Robot produces <strong>under-use</strong>. The accurate model produces neither.</p>
 
-<p>Both models produce systematic mistakes. The Oracle model produces over-trust. The Robot model produces under-use. The accurate model produces neither.</p>
-
+<div class="c-section-break"></div>
 <h2>What an LLM Actually Does</h2>
 
 <p>A Large Language Model is, fundamentally, a <strong>prediction engine</strong>.</p>
 
-<p>It was trained on a massive dataset of text — books, websites, code, conversations, articles, documentation, essentially most of human-written language — and learned one thing with extraordinary precision:</p>
+<p>It was trained on a massive dataset of text — books, websites, code, conversations, articles — and learned one thing with extraordinary precision:</p>
 
 <blockquote>Given this sequence of text, what word (technically, what "token") is most likely to come next?</blockquote>
 
 <p>That's not a metaphor. That's the literal mechanism. Every word in every AI response is selected through a probabilistic process of predicting the most contextually appropriate continuation of what you wrote.</p>
 
-<p>What emerged from doing this at massive scale on virtually all of human-written language is something genuinely remarkable: a system that can generate coherent, contextually appropriate text on virtually any topic, reason through problems step by step, write code, translate languages, analyze documents, and explain concepts at multiple levels of complexity.</p>
+<div class="c-callout">
+  <div class="c-callout-icon">⚡</div>
+  <div><p>What emerged from doing this at massive scale on virtually all of human-written language is something genuinely remarkable: a system that can reason through problems step by step, write code, translate languages, analyze documents, and explain concepts at multiple levels of complexity.</p>
+  <p style="margin:0"><strong>But the mechanism is <em>prediction</em>, not understanding.</strong> This distinction has real consequences.</p></div>
+</div>
 
-<p>But the mechanism is <em>prediction</em>, not understanding. This distinction has real consequences.</p>
-
+<div class="c-section-break"></div>
 <h2>The Alien Translator</h2>
 
-<p>Here's the mental model that actually works: imagine an entity that has read essentially everything humans have ever written, but has never experienced anything.</p>
+<p>Here's the mental model that actually works: imagine an entity that has read essentially everything humans have ever written, but has never <em>experienced</em> anything.</p>
 
-<p>It has never seen the color red, felt cold, made a decision with real stakes, or cared about an outcome. It has never been surprised. It has never been confused. It has no preferences, no fear, no curiosity.</p>
+<p>It has never seen the color red, felt cold, made a decision with real stakes, or cared about an outcome. It has no preferences, no fear, no curiosity. What it has is an extraordinarily rich statistical model of how humans <em>write</em> about all of these things.</p>
 
-<p>What it has is an extraordinarily rich statistical model of how humans write about all of these things. It knows that sentences about grief tend to have certain patterns. It knows that good arguments have certain structures. It knows what a persuasive essay sounds like, what a confident medical diagnosis sounds like, what a wrong answer stated confidently looks like.</p>
-
-<p>It doesn't know these things the way a person knows things. It knows them the way a language knows them — as patterns in how things are expressed.</p>
-
-<p>This model predicts your actual experience with AI far better than either wrong model:</p>
+<p>It doesn't know things the way a person knows things. It knows them the way a language knows them — as patterns in how things are expressed. This model predicts your actual experience with AI far better than either wrong model:</p>
 
 <ul>
-  <li><strong>Why it can write beautifully about grief without feeling it:</strong> it's pattern-matching on how grief is written about, not experiencing grief itself</li>
-  <li><strong>Why it hallucinates:</strong> when it doesn't have a strong pattern match for a specific fact, it generates something that <em>looks like</em> a correct answer — the shape of truth without the substance of it</li>
-  <li><strong>Why prompting matters:</strong> you're not talking to someone who reads your mind; you're feeding context to a prediction engine that will generate the most plausible continuation of what you wrote</li>
-  <li><strong>Why it can be wrong with total confidence:</strong> confidence is a tone pattern, not a verification signal — the model learned that certain types of answers sound confident, and it reproduces that tone whether or not the content is accurate</li>
+  <li><strong>Why it writes beautifully about grief without feeling it:</strong> pattern-matching on how grief is written about, not experiencing it</li>
+  <li><strong>Why it hallucinates:</strong> when there's no strong pattern match for a specific fact, it generates something that <em>looks like</em> a correct answer — the shape of truth without the substance</li>
+  <li><strong>Why prompting matters:</strong> you're feeding context to a prediction engine that generates the most plausible continuation of what you wrote</li>
+  <li><strong>Why it's wrong with total confidence:</strong> confidence is a tone pattern, not a verification signal</li>
 </ul>
 
+<div class="c-section-break"></div>
 <h2>What AI Is Good At — and Where It Fails</h2>
 
-<p>Once you hold the right model, the capabilities and limitations of AI become predictable rather than mysterious.</p>
+<p>Once you hold the right model, AI's capabilities and limitations become <strong>predictable</strong> rather than mysterious.</p>
 
-<h3>Reliably good:</h3>
-<ul>
-  <li>Generating well-structured, contextually appropriate text on any topic</li>
-  <li>Drafting, rewriting, summarizing, and reformatting content</li>
-  <li>Explaining concepts at different levels of complexity</li>
-  <li>Writing code that follows common patterns</li>
-  <li>Synthesizing multiple sources into a coherent summary</li>
-  <li>Generating options, variations, and alternatives</li>
-  <li>Following complex multi-part instructions</li>
-</ul>
-
-<h3>Unreliable — verify before using:</h3>
-<ul>
-  <li>Specific factual claims (especially recent events, statistics, citations)</li>
-  <li>Precise mathematical calculation (use a calculator or code interpreter)</li>
-  <li>Information about events after the model's training cutoff</li>
-  <li>Anything where being precisely right matters and you can't check it</li>
-  <li>Generating genuinely original ideas (it generates novelty that <em>looks</em> original)</li>
-  <li>Knowing what it doesn't know — it rarely signals uncertainty accurately</li>
-</ul>
+<div class="c-two-col">
+  <div class="c-two-col-good">
+    <div class="c-two-col-header">✅ Reliably good</div>
+    <ul>
+      <li>Generating well-structured text on any topic</li>
+      <li>Drafting, rewriting, summarizing, reformatting</li>
+      <li>Explaining concepts at different complexity levels</li>
+      <li>Writing code that follows common patterns</li>
+      <li>Synthesizing multiple sources into a summary</li>
+      <li>Generating options, variations, and alternatives</li>
+      <li>Following complex multi-part instructions</li>
+    </ul>
+  </div>
+  <div class="c-two-col-bad">
+    <div class="c-two-col-header">⚠️ Verify before using</div>
+    <ul>
+      <li>Specific factual claims (events, statistics, citations)</li>
+      <li>Precise mathematical calculation</li>
+      <li>Information after the model's training cutoff</li>
+      <li>Anything where being precisely right matters</li>
+      <li>Genuinely original ideas (it generates novelty that <em>looks</em> original)</li>
+      <li>Knowing what it doesn't know — rarely signals uncertainty accurately</li>
+    </ul>
+  </div>
+</div>
 `,
 
     demoTitle: 'Watch the prediction engine at work',
     demo: `
-<p>The clearest demonstration of what AI actually is — not a search engine, not a sentient agent — is to watch it complete something that has no "right" answer.</p>
+<p>The clearest demonstration: watch AI complete something that has no "right" answer.</p>
 
-<p>Consider what happens when you give an AI this prompt:</p>
+<div class="demo-step">
+  <div class="demo-step-num">1</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">No context</p>
+    <div class="demo-prompt">"The meeting had been going for two hours. Sarah put down her pen and"</div>
+    <p>The AI completes this plausibly — "looked out the window," "exhaled slowly," "pushed back her chair." None is retrieved from a database. None is "correct." Each is a statistically plausible continuation drawn from patterns in millions of similar sentences.</p>
+  </div>
+</div>
 
-<div class="demo-prompt">"The meeting had been going for two hours. Sarah put down her pen and"</div>
+<div class="demo-step">
+  <div class="demo-step-num">2</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">Add emotional context</p>
+    <div class="demo-prompt">"The meeting had been going for two hours and nothing had been decided. Sarah, who had driven four hours to be there, put down her pen and"</div>
+    <p>The completions shift toward frustration, fatigue, or resignation — not because the AI understood the emotional stakes, but because text describing similar situations tends to continue in those directions.</p>
+  </div>
+</div>
 
-<p>The AI will complete this sentence plausibly — it might say "looked out the window," "exhaled slowly," "pushed back her chair," or dozens of other things. None of these is retrieved from a database. None of them is "correct." Each is a statistically plausible continuation of the text you provided, drawn from patterns in millions of similar sentences it has seen.</p>
-
-<p>This is the prediction engine in action. Now watch what happens when you add context:</p>
-
-<div class="demo-prompt">"The meeting had been going for two hours and nothing had been decided. Sarah, who had driven four hours to be there, put down her pen and"</div>
-
-<p>The completions shift. They're more likely to reflect frustration, fatigue, or resignation — not because the AI understood the emotional stakes, but because text describing similar situations tends to continue in those directions.</p>
-
-<p>You are not asking questions and receiving answers. You are providing context and receiving plausible continuations. This reframing changes everything about how you use the tool.</p>
+<div class="c-callout">
+  <div class="c-callout-icon">💡</div>
+  <p style="margin:0">You are not asking questions and receiving answers. You are <strong>providing context and receiving plausible continuations</strong>. This reframing changes everything about how you use the tool.</p>
+</div>
 `,
 
     exercise: {
       title: 'Try the prediction engine yourself',
-      prompt: `Open any AI tool (Claude, ChatGPT, or Gemini) and try the following two prompts. Notice what the AI produces and how it differs between them.
-
-**Prompt 1:** "The most important thing to understand about AI is"
-
-**Prompt 2:** "A skeptic who had just read three articles about AI hype might say: 'The most important thing to understand about AI is"
-
-Compare the two completions. Ask yourself: did the AI "know" more in one case? Or did the context you provided change what kind of completion was most statistically plausible?
-
-Then try one more: give the AI an incomplete sentence from your own work or life and notice how it completes it. Does the completion feel "intelligent"? Or does it feel like a very sophisticated pattern match?`,
+      prompt: `<p>Open any AI tool (Claude, ChatGPT, or Gemini) and try these two prompts. Notice what the AI produces and how it differs between them.</p>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Prompt 1</div><div class="demo-prompt">"The most important thing to understand about AI is"</div></div>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Prompt 2</div><div class="demo-prompt">"A skeptic who had just read three articles about AI hype might say: 'The most important thing to understand about AI is"</div></div>
+<p>Compare the two completions. Did the AI "know" more in one case? Or did the context change what kind of completion was most statistically plausible?</p>
+<p>Then try one more: give the AI an incomplete sentence from your own work or life. Does the completion feel "intelligent"? Or like a very sophisticated pattern match?</p>`,
       hint: 'There are no right or wrong answers here. You\'re building the mental model, not testing knowledge.',
       tools: ['Claude', 'ChatGPT', 'Gemini'],
     },
@@ -178,81 +194,105 @@ Then try one more: give the AI an incomplete sentence from your own work or life
     hook: `You don't need to understand the math to work effectively with AI. But you do need to understand the three mechanics that explain most of the weird things AI does — including why it forgets earlier parts of a conversation, why the same prompt can give wildly different results, and why AI sometimes "goes off the rails." Once you understand tokens, context windows, and temperature, most AI surprises stop being mysterious.`,
 
     concept: `
-<h2>Tokens: The Unit of Thought</h2>
+<h2>🔤 Tokens: The Unit of Thought</h2>
 
-<p>AI doesn't read text the way you do. It breaks language into <strong>tokens</strong> — chunks of text that are roughly, but not exactly, words. Common words are usually single tokens. Rare or long words might be multiple tokens. Punctuation is often its own token.</p>
+<p>AI doesn't read text the way you do. It breaks language into <strong>tokens</strong> — chunks roughly corresponding to words. Common words are usually one token. Rare or long words may be several. Punctuation is often its own token.</p>
 
-<p>This matters because:</p>
+<div class="c-callout">
+  <div class="c-callout-icon">💡</div>
+  <div>
+    <p><strong>Why tokens matter in practice:</strong></p>
+    <ul style="margin:0.5rem 0 0 1rem">
+      <li>Context window limits (like "128K context") are in <strong>tokens</strong>, not words</li>
+      <li>Every generated token is influenced by every previous token in the conversation</li>
+      <li>Unusual words or names get split unexpectedly, making the model less reliable on them</li>
+    </ul>
+  </div>
+</div>
+
+<div class="c-section-break"></div>
+<h2>🧠 The Context Window: Your AI's Working Memory</h2>
+
+<p>An AI model only "knows" what's currently in its context window — your system prompt, the conversation history, and the current message. Think of it as <strong>working memory, not long-term memory</strong>.</p>
+
+<blockquote>Each conversation with an AI is a fresh piece of paper. Everything on that paper is available to it. Anything not on that paper doesn't exist from the model's perspective.</blockquote>
+
+<p>What this means in practice:</p>
 <ul>
-  <li><strong>AI counts tokens, not words.</strong> When you see a "context window" limit (like "128K context"), that's tokens, not words or characters.</li>
-  <li><strong>AI processes each token in relation to all previous tokens.</strong> Every word it generates is influenced by every token that came before it in your conversation.</li>
-  <li><strong>Tokenization is why AI sometimes mangles unusual words or names.</strong> A word it has rarely seen gets split into unexpected token chunks, and the prediction process becomes less reliable.</li>
+  <li>In very long conversations, earlier messages may be dropped as the context fills up</li>
+  <li>The AI can't access previous conversations unless the platform stores and re-injects them</li>
+  <li>To make AI "remember" something important, keep it in the current context</li>
+  <li>Context windows are large (100K+ tokens for Claude and ChatGPT) — but not infinite</li>
 </ul>
 
-<h2>The Context Window: Your AI's Working Memory</h2>
+<div class="c-section-break"></div>
+<h2>🎲 Temperature: Why the Same Prompt Gets Different Results</h2>
 
-<p>An AI model only "knows" what's currently in its context window. The context window is everything the model can see at once — your system prompt, the conversation history, and the current message.</p>
+<p>AI doesn't always pick the single most probable next token — that would produce repetitive output. Instead, it <em>samples</em> from a probability distribution. <strong>Temperature</strong> controls how this sampling works:</p>
 
-<p>Think of it as working memory, not long-term memory. Once something leaves the context window, the model genuinely doesn't have access to it. It didn't "forget" the way a person forgets — it simply never had access to it again.</p>
+<div class="c-temp-scale">
+  <div class="c-temp-item c-temp-low">
+    <div class="c-temp-label">Low (0.0–0.3)</div>
+    <div class="c-temp-desc">Picks highest-probability tokens. Consistent, predictable. Best for code and factual tasks.</div>
+  </div>
+  <div class="c-temp-item c-temp-mid">
+    <div class="c-temp-label">Medium (0.5–0.7)</div>
+    <div class="c-temp-desc">Balances likely and interesting. Most conversational AI defaults here.</div>
+  </div>
+  <div class="c-temp-item c-temp-high">
+    <div class="c-temp-label">High (0.8–1.0+)</div>
+    <div class="c-temp-desc">Wider range of tokens selected. More creative and varied — but more likely to go off track.</div>
+  </div>
+</div>
 
-<p><strong>What this means in practice:</strong></p>
-<ul>
-  <li>In a very long conversation, earlier messages may get dropped or summarized as the context fills up</li>
-  <li>The AI can't access your previous conversations (unless the platform stores and re-injects them)</li>
-  <li>If you want the AI to "remember" something important, you need to keep it in the current context — either repeat it or keep the conversation window fresh</li>
-  <li>Context windows have gotten very large (Claude and ChatGPT both support 100K+ tokens), but they still have limits</li>
-</ul>
+<p>Running the same prompt twice and getting different results isn't a bug. It's how sampling works. For creative tasks, variation is a feature. For consistency, ask explicitly or use platform settings.</p>
 
-<p>A useful mental model: each conversation with an AI is a fresh piece of paper. Everything on that piece of paper is available to it. Anything not on that piece of paper doesn't exist from the model's perspective.</p>
+<div class="c-section-break"></div>
+<h2>🌀 Why AI "Hallucinates"</h2>
 
-<h2>Temperature: Why the Same Prompt Gets Different Results</h2>
+<p>The model is always generating the most statistically plausible continuation of the text it's seen. When you ask about a specific fact, it doesn't retrieve it from a database — it generates a response that <em>looks like</em> a factual answer, in the style factual answers are written.</p>
 
-<p>When an AI model is generating text, it doesn't just always pick the single most probable next token. That would produce repetitive, boring output. Instead, it samples from a probability distribution — a ranked list of possible next tokens with associated probabilities.</p>
+<p>If the fact was well-represented in training data, the output is often accurate. If it was rare, obscure, or recent, the model still generates something that <em>looks</em> like a confident factual claim — because that's what confident factual claims look like in text.</p>
 
-<p><strong>Temperature</strong> is the dial that controls how this sampling works:</p>
-<ul>
-  <li><strong>Low temperature (0.0-0.3):</strong> Almost always picks the highest-probability token. Outputs are consistent, predictable, and sometimes repetitive. Good for factual or code tasks.</li>
-  <li><strong>Medium temperature (0.5-0.7):</strong> Balances between likely and interesting. Most conversational AI defaults to something in this range.</li>
-  <li><strong>High temperature (0.8-1.0+):</strong> Picks from a wider range of possible tokens, including lower-probability options. Outputs are more creative and varied, but also more likely to go off track.</li>
-</ul>
-
-<p>This explains why you can run the same prompt twice and get meaningfully different results — it's not a bug, it's how the sampling process works. For tasks where consistency matters (code, factual summaries), use a platform setting or explicitly ask for the same output style. For creative tasks, the variation is a feature.</p>
-
-<h2>Why AI "Hallucinates" (The Technical Explanation)</h2>
-
-<p>You now have enough background to understand hallucinations mechanically.</p>
-
-<p>The model is always generating the most statistically plausible continuation of the text it's seen. When you ask it about a specific fact — say, the date of a particular event, or the exact content of a specific document — the model doesn't retrieve that fact from a database. It generates a response that <em>looks like</em> a factual answer, in the style that factual answers are written.</p>
-
-<p>If the correct fact was well-represented in the training data, the most probable continuation will often be accurate. If the fact was rare, obscure, recent, or simply not well-represented in training, the model will still generate something that looks like a confident factual claim — because that's what a confident factual claim looks like in text.</p>
-
-<p>The model has no internal flag that says "I'm not sure about this." It just keeps predicting. The confidence of the output is a stylistic feature of the text it generates, not a signal about the accuracy of the content.</p>
-
-<p><strong>The practical rule:</strong> Any specific claim — a date, a statistic, a quote, a citation — should be independently verified before you use it. Use AI for synthesis, structure, and generation. Use primary sources for facts.</p>
+<div class="c-callout">
+  <div class="c-callout-icon">⚠️</div>
+  <p style="margin:0"><strong>The practical rule:</strong> Any specific claim — a date, a statistic, a quote, a citation — should be independently verified before you use it. Use AI for synthesis, structure, and generation. Use primary sources for facts.</p>
+</div>
 `,
 
     demoTitle: 'The context window in real life',
     demo: `
-<p>Here's a demonstration you can try: start a very long conversation with an AI, or paste in a very long document, and then ask about something from the very beginning of the conversation. Pay attention to whether the AI accurately recalls it or seems to have lost track.</p>
+<p>Three experiments you can run right now to see tokens, context, and temperature in action:</p>
 
-<p>A simpler version: ask an AI to tell you how many tokens are in its current context, or how much of the context window you've used. Some platforms show this directly in the interface.</p>
+<div class="demo-step">
+  <div class="demo-step-num">1</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">Test the context window</p>
+    <p>Start a conversation with an AI. Tell it your name and one unusual fact about yourself. Have a normal 10-message conversation on a completely different topic. Then ask: <em>"What do you remember about me from the start of this conversation?"</em></p>
+    <p>Notice whether it remembered, what it recalled accurately, and what it got wrong or fabricated.</p>
+  </div>
+</div>
 
-<p>Another revealing experiment: ask the same creative prompt twice in a row in a fresh conversation. Notice that the outputs differ in specific ways — word choices, structure, examples — even though the instruction was identical. This is temperature in action.</p>
+<div class="demo-step">
+  <div class="demo-step-num">2</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">Test temperature variation</p>
+    <p>Ask the same creative prompt three times in fresh conversations: <em>"Write the opening sentence of a short story about someone discovering something unexpected."</em></p>
+    <p>Compare the three sentences. They'll differ in structure, tone, and word choice — even though the instruction was identical. This is temperature in action.</p>
+  </div>
+</div>
+
+<div class="c-callout">
+  <div class="c-callout-icon">💡</div>
+  <p style="margin:0">These aren't tests to catch AI doing something wrong. They're <strong>calibration exercises</strong> — building your intuition for how AI memory and variation actually work so you can design better prompts.</p>
+</div>
 `,
 
     exercise: {
       title: 'Test the boundaries of AI memory',
-      prompt: `This exercise has two parts.
-
-**Part 1 — Test the context:**
-Start a new conversation with any AI tool. Tell it your name and one unusual, specific fact about yourself (make one up if you prefer). Have a normal 10-message conversation about a different topic entirely. Then, at the end, ask: "What do you remember about me from the start of this conversation?"
-
-Notice whether it remembered, what it recalled accurately, and what (if anything) it got wrong.
-
-**Part 2 — Test temperature:**
-Ask the AI to write the opening sentence of a short story about someone discovering something unexpected. Run the exact same prompt three times (start fresh each time or ask again immediately). Compare the three opening sentences. Are they similar? Different? What varies?
-
-Jot down what you notice. These aren't tests with right answers — they're building your intuition for how AI memory and variation actually work.`,
+      prompt: `<p>This exercise has two parts — both are quick and revealing.</p>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Part 1 — Test the context window</div><p>Start a new conversation. Tell the AI your name and one unusual specific fact about yourself. Have a normal 10-message conversation on a completely different topic. Then ask: <em>"What do you remember about me from the start of this conversation?"</em></p><p>Notice whether it remembered, what it recalled accurately, and what it got wrong or invented.</p></div>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Part 2 — Test temperature</div><p>Ask the AI: <em>"Write the opening sentence of a short story about someone discovering something unexpected."</em> Run this exact prompt three times (start fresh each time). Compare the three results.</p><p>Are they similar? Different? What varies — word choices, structure, tone?</p></div>`,
       hint: 'The goal is to build intuition through experience, not to catch the AI doing something wrong.',
       tools: ['Claude', 'ChatGPT', 'Gemini'],
     },
@@ -288,92 +328,109 @@ Jot down what you notice. These aren't tests with right answers — they're buil
     hook: `Most people prompt AI the way they type a Google search — short, keyword-heavy, vague. This produces mediocre results and leads people to conclude that "AI isn't that useful." The problem isn't the AI. It's the input. Prompting is a skill, and like all skills, it has a learning curve. This lesson gives you the fundamentals: three changes to how you write prompts that will immediately produce better results.`,
 
     concept: `
-<h2>Why Vague Prompts Produce Vague Results</h2>
+<p>Remember the mental model from Lesson 1: you're not asking a question of a knowledgeable entity. You're providing context to a prediction engine. The quality of what you get back is a <strong>direct function</strong> of the quality and specificity of the context you provide.</p>
 
-<p>Remember the mental model from Lesson 1: you're not asking a question of a knowledgeable entity. You're providing context to a prediction engine. The quality of what you get back is a direct function of the quality and specificity of the context you provide.</p>
+<p>When you type "write me a summary," the AI makes dozens of decisions on your behalf: How long? For what audience? Of what? In what tone? It will guess — often plausibly, often wrong for your specific needs. Give it those decisions upfront and you get something much closer to what you want on the first attempt.</p>
 
-<p>When you type "write me a summary," the AI has to make dozens of decisions on your behalf: How long? For what audience? Of what? In what tone? From what angle? It will guess — often plausibly, often wrong for your specific needs.</p>
-
-<p>When you give it those decisions upfront, you get something much closer to what you actually want on the first attempt.</p>
-
+<div class="c-section-break"></div>
 <h2>The Three Fundamentals</h2>
 
-<h3>1. Role: Tell AI who it's being</h3>
+<div class="c-fundamental">
+  <div class="c-fundamental-num">1</div>
+  <div class="c-fundamental-body">
+    <h3>Role — tell AI who it's being</h3>
+    <p>Role specification implicitly imports a vast set of contextual assumptions — vocabulary, tone, framing, depth — that would take many sentences to specify individually.</p>
+    <div class="c-compare">
+      <div class="c-compare-weak"><span class="c-compare-label">❌ Weak</span>"Explain machine learning to me."</div>
+      <div class="c-compare-strong"><span class="c-compare-label">✅ Strong</span>"You are a patient teacher explaining machine learning to a curious professional with no technical background. Use everyday analogies and avoid jargon."</div>
+    </div>
+  </div>
+</div>
 
-<p>Assigning a role to the AI is one of the highest-leverage prompt techniques available to beginners. It works because role specification implicitly imports a vast set of contextual assumptions — vocabulary, tone, framing, depth, and focus — that would take many sentences to specify individually.</p>
+<div class="c-fundamental">
+  <div class="c-fundamental-num">2</div>
+  <div class="c-fundamental-body">
+    <h3>Context — give it what it needs</h3>
+    <p>AI cannot read your mind, your files, or your organizational context. The most common reason AI gives unhelpful responses is missing context. Before sending, ask: what does it need to know that it might not have?</p>
+    <div class="c-compare">
+      <div class="c-compare-weak"><span class="c-compare-label">❌ Weak</span>"Rewrite this email to be more professional."</div>
+      <div class="c-compare-strong"><span class="c-compare-label">✅ Strong</span>"Rewrite this email to be more professional. The recipient is a new client we haven't met yet. I want to sound warm but authoritative. The current version feels too casual. Keep it under 150 words. [paste email]"</div>
+    </div>
+  </div>
+</div>
 
-<p><strong>Weak:</strong> "Explain machine learning to me."</p>
-<p><strong>Strong:</strong> "You are a patient teacher explaining machine learning to a curious professional with no technical background. Use everyday analogies and avoid jargon."</p>
+<div class="c-fundamental">
+  <div class="c-fundamental-num">3</div>
+  <div class="c-fundamental-body">
+    <h3>Format — specify what you want back</h3>
+    <p>By default, AI responds in the format that seems most typical for your request type. You can and should specify what you actually need:</p>
+    <ul>
+      <li>"Give me three options" — prevents AI from committing to one approach</li>
+      <li>"Use bullet points, not paragraphs" — for scannable reference material</li>
+      <li>"Keep the total response under 200 words" — for tight constraints</li>
+      <li>"Include a brief explanation of your reasoning" — for understanding, not just output</li>
+    </ul>
+  </div>
+</div>
 
-<p>The second prompt produces an explanation calibrated to your actual need. The first produces an explanation calibrated to... average text about machine learning.</p>
+<div class="c-section-break"></div>
+<h2>The Before/After Habit</h2>
 
-<h3>2. Context: Give it what it needs to help you</h3>
-
-<p>AI cannot read your mind, your file system, or your organizational context. Anything it needs to give you a useful response, you have to provide in the prompt. The most common reason AI gives unhelpful responses is missing context.</p>
-
-<p>Before sending a prompt, ask: what does the AI need to know that it might not have? Common missing context includes: who this is for, what format is needed, what constraints exist, what you've already tried, and what specifically wasn't working.</p>
-
-<p><strong>Weak:</strong> "Rewrite this email to be more professional."</p>
-<p><strong>Strong:</strong> "Rewrite this email to be more professional. The recipient is a new client who we haven't met yet. I want to sound warm but authoritative. The current version feels too casual. Keep it under 150 words. [paste email]"</p>
-
-<h3>3. Format: Specify what you want back</h3>
-
-<p>By default, AI will respond in the format that seems most typical for your type of request. Sometimes that's right. Often it isn't. You can and should specify the output format you need.</p>
-
-<p>Useful format specifications:</p>
-<ul>
-  <li>"Give me three options" — prevents AI from committing to one approach</li>
-  <li>"Use bullet points, not paragraphs" — for scannable reference material</li>
-  <li>"Keep the total response under 200 words" — for tight constraints</li>
-  <li>"Include a brief explanation of your reasoning" — for understanding, not just output</li>
-  <li>"Format this as a table with columns for X, Y, and Z" — for structured data</li>
-</ul>
-
-<h2>The Before/After Pattern</h2>
-
-<p>The single most useful habit to develop is comparing your first-draft prompt to a revised version that applies these three principles before you send it. Ask yourself:</p>
-
+<p>Before sending a prompt, run through this quick checklist:</p>
 <ol>
-  <li>Have I given it a role or at least a framing for who it should be?</li>
-  <li>Have I provided all the context it needs to actually help me?</li>
-  <li>Have I specified what I want the output to look like?</li>
+  <li>Have I given it a <strong>role</strong> or at least a framing for who it should be?</li>
+  <li>Have I provided all the <strong>context</strong> it needs to actually help me?</li>
+  <li>Have I specified what I want the <strong>output</strong> to look like?</li>
 </ol>
 
-<p>You don't need all three every time. A simple creative request may not need a format spec. An exploratory question may not need a role. But running through this checklist before sending will improve your first-attempt results significantly.</p>
+<p>You don't need all three every time. But running through it before sending will improve your first-attempt results significantly.</p>
 
-<h2>Iteration Is Not Failure</h2>
-
-<p>One more thing: expecting to get exactly what you want on the first attempt is an unrealistic standard. Expert AI users iterate. They send a first prompt, evaluate the output, and follow up with refinements: "Make it shorter," "That's the right direction but less formal," "Give me the third option expanded into a full paragraph."</p>
-
-<p>Multi-turn conversations with AI are often more productive than trying to write the perfect single prompt. Think of it as a dialogue, not a command.</p>
+<div class="c-callout">
+  <div class="c-callout-icon">🔁</div>
+  <p style="margin:0"><strong>Iteration is not failure.</strong> Expert AI users iterate — they send a first prompt, evaluate the output, and follow up: "Make it shorter," "Less formal," "Expand the third option." Multi-turn conversations are often more productive than trying to write the perfect single prompt. Think of it as a dialogue, not a command.</p>
+</div>
 `,
 
     demoTitle: 'Before and after: the same request, rewritten',
     demo: `
-<p>Here is the same request written at three levels of specificity. Notice how the quality of the likely AI response shifts with each version.</p>
+<p>The same request written at three levels of specificity. Notice how each version gives the prediction engine more to work with.</p>
 
-<p><strong>Version 1 — Typical first attempt:</strong><br>"Help me write a LinkedIn post."</p>
-<p>The AI will write a generic LinkedIn post. It has no idea what topic, what tone, what audience, or what goal. It will guess all of these. The result will be usable at best, forgettable always.</p>
+<div class="demo-step">
+  <div class="demo-step-num">1</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">Typical first attempt</p>
+    <div class="demo-prompt">"Help me write a LinkedIn post."</div>
+    <p>The AI has no idea what topic, tone, audience, or goal you have. It guesses all of these. The result will be usable at best, forgettable always.</p>
+  </div>
+</div>
 
-<p><strong>Version 2 — With role and context:</strong><br>"I'm a marketing manager who just completed a three-month AI implementation project at my company. Help me write a LinkedIn post about what we learned."</p>
-<p>Better. But still no format spec, no audience specification, and "what we learned" is vague. The AI will produce something reasonable but probably too long and too generic.</p>
+<div class="demo-step">
+  <div class="demo-step-num">2</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">With role and context</p>
+    <div class="demo-prompt">"I'm a marketing manager who just completed a three-month AI implementation project at my company. Help me write a LinkedIn post about what we learned."</div>
+    <p>Better. But still no format spec, no audience, and "what we learned" is vague. Reasonable output — probably too long and too generic.</p>
+  </div>
+</div>
 
-<p><strong>Version 3 — With role, context, and format:</strong><br>"I'm a marketing manager who just completed a three-month AI implementation project at my company. The biggest lesson was that the hardest part wasn't the technology — it was getting the team to change their workflows. Write a LinkedIn post that shares this insight in a way that will resonate with other managers going through the same thing. Use a first-person narrative tone, start with a specific moment rather than a general statement, and keep it under 250 words."</p>
-<p>Now the AI has enough to produce something genuinely useful on the first attempt.</p>
+<div class="demo-step">
+  <div class="demo-step-num">3</div>
+  <div class="demo-step-body">
+    <p class="demo-step-label">With role, context, and format</p>
+    <div class="demo-prompt">"I'm a marketing manager who just completed a three-month AI implementation project. The biggest lesson: the hardest part wasn't the technology — it was getting the team to change their workflows. Write a LinkedIn post that shares this insight for other managers going through the same thing. First-person narrative tone, start with a specific moment rather than a general statement, under 250 words."</div>
+    <p>Now the AI has enough to produce something genuinely useful on the first attempt.</p>
+  </div>
+</div>
 `,
 
     exercise: {
       title: 'Rewrite your weakest prompt',
-      prompt: `Think of a time you used AI and the result was disappointing — too generic, too long, wrong tone, missed the point. If you can't remember a specific example, choose one of the "weak" prompts from this lesson.
-
-Take that weak prompt and rewrite it three times, adding one element each time:
-1. First rewrite: add a role ("you are a...")
-2. Second rewrite: add context (audience, constraints, background)
-3. Third rewrite: add a format specification
-
-Then try all three versions in an actual AI tool. Compare the outputs. Which changed the result most? Was it the role, the context, or the format spec?
-
-There's no required output format for this exercise — just the observation of what actually changed when you changed the prompt.`,
+      prompt: `<p>Think of a time you used AI and the result was disappointing — too generic, too long, wrong tone, missed the point. If nothing comes to mind, use one of the "weak" prompts from this lesson.</p>
+<p>Take that prompt and rewrite it three times, adding one element each time:</p>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Rewrite 1 — Add a role</div><p>Start with: <em>"You are a [role]..."</em></p></div>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Rewrite 2 — Add context</div><p>Add: audience, constraints, background, what you've already tried.</p></div>
+<div class="ex-prompt-block"><div class="ex-prompt-label">Rewrite 3 — Add a format spec</div><p>Add: length, structure, tone, output style.</p></div>
+<p>Try all three versions in an actual AI tool. Which changed the result most — the role, the context, or the format spec?</p>`,
       hint: 'Don\'t try to write the perfect prompt on the first try. The goal is to notice what each element adds.',
       tools: ['Claude', 'ChatGPT', 'Gemini'],
     },

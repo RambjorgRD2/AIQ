@@ -149,7 +149,7 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
             ))}
           </div>
         </div>
-        <div class="l-exercise-prompt">{lesson.exercise.prompt}</div>
+        <div class="l-exercise-prompt" set:html={lesson.exercise.prompt} />
         <div class="l-exercise-hint">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#6B7A99" stroke-width="1.2"/><path d="M7 6v4M7 4.5v.5" stroke="#6B7A99" stroke-width="1.4" stroke-linecap="round"/></svg>
           <span>{lesson.exercise.hint}</span>
@@ -192,7 +192,10 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
         Reflection
       </div>
       <div class="l-reflection glass">
-        <p class="l-reflection-prompt">{lesson.reflection}</p>
+        <div class="l-reflection-header">
+          <span class="l-reflection-emoji">💭</span>
+          <p class="l-reflection-prompt">{lesson.reflection}</p>
+        </div>
         <textarea
           class="l-reflection-input"
           placeholder="Write your reflection here. This is for you — no one else sees it."
@@ -467,9 +470,10 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.35rem;
     font-weight: 700;
-    margin: 2rem 0 0.75rem;
+    margin: 2.5rem 0 0.75rem;
     color: var(--text);
   }
+  .l-content-body h2:first-child { margin-top: 0; }
   .l-content-body h3 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.05rem;
@@ -477,19 +481,21 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     margin: 1.5rem 0 0.5rem;
     color: var(--cyan);
   }
-  .l-content-body p { margin-bottom: 1rem; line-height: 1.8; color: rgba(232,240,255,0.85); }
-  .l-content-body ul, .l-content-body ol { margin: 0.75rem 0 1rem 1.25rem; }
-  .l-content-body li { margin-bottom: 0.5rem; line-height: 1.7; color: rgba(232,240,255,0.8); }
+  .l-content-body p { margin-bottom: 1.1rem; line-height: 1.85; color: rgba(232,240,255,0.85); }
+  .l-content-body ul, .l-content-body ol { margin: 0.75rem 0 1.25rem 1.25rem; }
+  .l-content-body li { margin-bottom: 0.6rem; line-height: 1.75; color: rgba(232,240,255,0.8); }
   .l-content-body strong { color: var(--text); font-weight: 600; }
   .l-content-body em { color: var(--cyan); font-style: italic; }
   .l-content-body blockquote {
-    margin: 1.5rem 0;
-    padding: 1rem 1.5rem;
+    margin: 1.75rem 0;
+    padding: 1.1rem 1.5rem;
     border-left: 3px solid var(--cyan);
-    background: rgba(0,207,255,0.04);
-    border-radius: 0 8px 8px 0;
+    background: rgba(0,207,255,0.05);
+    border-radius: 0 10px 10px 0;
     font-style: italic;
-    color: rgba(232,240,255,0.8);
+    font-size: 1.05rem;
+    color: rgba(232,240,255,0.85);
+    line-height: 1.75;
   }
   .demo-prompt {
     padding: 1rem 1.25rem;
@@ -499,9 +505,232 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.88rem;
     color: var(--text);
-    margin: 1rem 0;
+    margin: 0.75rem 0 1rem;
     line-height: 1.6;
   }
+
+  /* ─── Concept visual components ─── */
+  .c-section-break {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,207,255,0.18), transparent);
+    margin: 2.5rem 0 2rem;
+    border: none;
+  }
+  .c-model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media(max-width:600px) { .c-model-grid { grid-template-columns: 1fr; } }
+  .c-model-card {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .c-model-card-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .c-model-card h3 {
+    font-size: 1rem !important;
+    margin: 0 0 0.65rem !important;
+    color: var(--text) !important;
+  }
+  .c-model-card p { font-size: 0.88rem !important; margin-bottom: 0.65rem !important; }
+  .c-model-problem {
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    font-size: 0.85rem !important;
+    margin: 0 !important;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .c-insight-text {
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--cyan);
+    background: rgba(0,207,255,0.04);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    margin: 1.5rem 0;
+    color: rgba(232,240,255,0.9);
+  }
+  .c-callout {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    background: rgba(124,58,237,0.06);
+    border: 1px solid rgba(124,58,237,0.18);
+    margin: 1.5rem 0;
+    align-items: flex-start;
+  }
+  .c-callout-icon { font-size: 1.25rem; flex-shrink: 0; line-height: 1.5; }
+  .c-callout p { margin-bottom: 0.5rem; }
+  .c-callout p:last-child { margin-bottom: 0; }
+  .c-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  @media(max-width:600px) { .c-two-col { grid-template-columns: 1fr; } }
+  .c-two-col-good, .c-two-col-bad {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid;
+  }
+  .c-two-col-good { background: rgba(0,207,255,0.04); border-color: rgba(0,207,255,0.15); }
+  .c-two-col-bad { background: rgba(251,146,60,0.04); border-color: rgba(251,146,60,0.18); }
+  .c-two-col-header {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .c-two-col-good ul, .c-two-col-bad ul { margin-left: 1rem; margin-bottom: 0; }
+  .c-two-col-good li, .c-two-col-bad li { font-size: 0.87rem !important; }
+  /* Temperature scale */
+  .c-temp-scale { display: flex; flex-direction: column; gap: 0.5rem; margin: 1.25rem 0 1.5rem; }
+  .c-temp-item {
+    padding: 0.75rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid;
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .c-temp-low { background: rgba(0,207,255,0.04); border-color: rgba(0,207,255,0.15); }
+  .c-temp-mid { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.18); }
+  .c-temp-high { background: rgba(236,72,153,0.04); border-color: rgba(236,72,153,0.15); }
+  .c-temp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+  .c-temp-desc { font-size: 0.87rem; color: rgba(232,240,255,0.75); line-height: 1.55; }
+  /* Prompting fundamentals */
+  .c-fundamental {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
+    margin: 1rem 0;
+  }
+  .c-fundamental-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 0.1rem;
+  }
+  .c-fundamental-body { flex: 1; }
+  .c-fundamental-body h3 { margin-top: 0 !important; }
+  .c-compare { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+  .c-compare-weak, .c-compare-strong {
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-size: 0.87rem;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .c-compare-weak { background: rgba(236,72,153,0.05); border: 1px solid rgba(236,72,153,0.15); color: rgba(232,240,255,0.7); }
+  .c-compare-strong { background: rgba(0,207,255,0.05); border: 1px solid rgba(0,207,255,0.18); color: rgba(232,240,255,0.9); }
+  .c-compare-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 0.5rem;
+  }
+
+  /* ─── Demo steps ─── */
+  .demo-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 1.25rem 0;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .demo-step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,207,255,0.1);
+    border: 1px solid rgba(0,207,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-top: 0.1rem;
+  }
+  .demo-step-body { flex: 1; }
+  .demo-step-body p { margin-bottom: 0.75rem; }
+  .demo-step-body p:last-child { margin-bottom: 0; }
+  .demo-step-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 0.65rem;
+  }
+
+  /* ─── Exercise prompt blocks ─── */
+  .l-exercise-prompt p { margin-bottom: 0.9rem; line-height: 1.8; color: rgba(232,240,255,0.85); }
+  .l-exercise-prompt p:last-child { margin-bottom: 0; }
+  .l-exercise-prompt em { color: var(--cyan); font-style: italic; }
+  .ex-prompt-block {
+    padding: 1.1rem 1.25rem;
+    border-radius: 10px;
+    background: rgba(124,58,237,0.05);
+    border: 1px solid rgba(124,58,237,0.18);
+    margin: 0.75rem 0;
+  }
+  .ex-prompt-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #a78bfa;
+    margin-bottom: 0.5rem;
+  }
+  .ex-prompt-block .demo-prompt { margin: 0.5rem 0 0; }
+  .ex-prompt-block p { font-size: 0.88rem; margin-bottom: 0.5rem; color: rgba(232,240,255,0.8); }
+  .ex-prompt-block p:last-child { margin-bottom: 0; }
 
   /* ─── Demo ─── */
   .l-demo-card { padding: 1.75rem 2rem; }
@@ -600,8 +829,10 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   .l-recall-hint svg { flex-shrink: 0; margin-top: 2px; }
 
   /* ─── Reflection ─── */
-  .l-reflection { padding: 1.75rem 2rem; }
-  .l-reflection-prompt { font-size: 1rem; line-height: 1.8; color: rgba(232,240,255,0.85); margin-bottom: 1.25rem; }
+  .l-reflection { padding: 2rem 2.25rem; }
+  .l-reflection-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+  .l-reflection-emoji { font-size: 1.75rem; flex-shrink: 0; line-height: 1.3; }
+  .l-reflection-prompt { font-size: 1rem; line-height: 1.85; color: rgba(232,240,255,0.88); margin: 0; }
   .l-reflection-input {
     width: 100%;
     background: rgba(4,7,15,0.6);
@@ -695,22 +926,22 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
 
 <script>
   // ── Hint toggles ──
+  // Use style.display instead of the hidden attribute so that
+  // the .l-recall-hint { display:flex } CSS rule doesn't override visibility.
+  document.querySelectorAll('.l-recall-hint').forEach(el => {
+    (el as HTMLElement).style.display = 'none';
+  });
+
   document.querySelectorAll('.l-recall-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const i = btn.getAttribute('data-target');
-      const hint = document.getElementById(`hint-${i}`);
+      const hint = document.getElementById(`hint-${i}`) as HTMLElement | null;
       if (!hint) return;
-      const isHidden = hint.hidden;
-      hint.hidden = !isHidden;
-      btn.textContent = isHidden ? 'Hide hint' : 'Show hint';
-      // Re-add the icon
-      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      svg.setAttribute('width','14'); svg.setAttribute('height','14'); svg.setAttribute('viewBox','0 0 14 14'); svg.setAttribute('fill','none');
-      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d', isHidden ? 'M4 8l3-3 3 3' : 'M4 6l3 3 3-3');
-      path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width','1.4'); path.setAttribute('stroke-linecap','round');
-      svg.appendChild(path);
-      btn.appendChild(svg);
+      const isVisible = hint.style.display !== 'none';
+      hint.style.display = isVisible ? 'none' : 'flex';
+      btn.innerHTML = isVisible
+        ? 'Show hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'
+        : 'Hide hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8l3-3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
     });
   });
 

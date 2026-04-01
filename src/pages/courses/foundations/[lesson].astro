@@ -526,7 +526,7 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     margin: 1.5rem 0 0.5rem;
     color: var(--cyan);
   }
-  .l-content-body p { margin-bottom: 1.35rem; line-height: 1.85; color: rgba(232,240,255,0.85); }
+  .l-content-body p { margin-bottom: 1.85rem; line-height: 1.85; color: rgba(232,240,255,0.85); }
   .l-content-body ul, .l-content-body ol { margin: 0.75rem 0 1.25rem 1.25rem; }
   .l-content-body li { margin-bottom: 0.65rem; line-height: 1.75; color: rgba(232,240,255,0.8); }
   .c-lead-para {
@@ -570,6 +570,22 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     color: var(--text);
     margin: 0.75rem 0 1rem;
     line-height: 1.6;
+  }
+
+  /* ─── Concept section wrappers ─── */
+  .c-concept-section {
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .c-concept-section:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+  .c-concept-section:last-child {
+    padding-bottom: 0;
+  }
+  .c-concept-section > h2:first-child {
+    margin-top: 0;
   }
 
   /* ─── Concept visual components ─── */

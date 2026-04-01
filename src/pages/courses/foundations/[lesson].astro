@@ -513,10 +513,12 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   /* ─── Concept body ─── */
   .l-content-body h2 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin: 2.5rem 0 1.25rem;
     color: var(--text);
+    border-left: 3px solid rgba(0,207,255,0.6);
+    padding-left: 0.85rem;
   }
   .l-content-body h2:first-child { margin-top: 0; }
   .l-content-body h3 {
@@ -574,8 +576,8 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
 
   /* ─── Concept section wrappers ─── */
   .c-concept-section {
-    padding: 2rem 0;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
   .c-concept-section:first-child {
     padding-top: 0;
@@ -598,23 +600,24 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   .c-model-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin: 1.5rem 0;
+    gap: 1.25rem;
+    margin: 1.75rem 0;
   }
-  @media(max-width:600px) { .c-model-grid { grid-template-columns: 1fr; } }
+  @media(max-width:600px) { .c-model-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
   .c-model-card {
     padding: 1.5rem;
     border-radius: 12px;
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-left: 3px solid rgba(236,72,153,0.5);
   }
   .c-model-card-label {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--muted);
+    color: rgba(236,72,153,0.8);
     margin-bottom: 0.75rem;
   }
   .c-model-card h3 {
@@ -624,13 +627,13 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
   }
   .c-model-card p { font-size: 0.92rem !important; line-height: 1.75 !important; margin-bottom: 0.9rem !important; }
   .c-model-problem {
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1rem;
     border-radius: 8px;
-    background: rgba(255,255,255,0.03);
+    background: rgba(236,72,153,0.05);
     font-size: 0.88rem !important;
     line-height: 1.65 !important;
-    margin: 0.25rem 0 0 !important;
-    border: 1px solid rgba(255,255,255,0.08);
+    margin: 0.5rem 0 0 !important;
+    border: 1px solid rgba(236,72,153,0.15);
   }
   .c-insight-text {
     padding: 1rem 1.5rem;

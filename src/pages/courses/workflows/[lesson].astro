@@ -340,6 +340,15 @@ const FORUM_URL = `${BASE}/forum`;
   .l-main { padding:3rem 3rem 6rem;max-width:760px; }
   @media(max-width:1024px) { .l-main { padding:2.5rem 2rem 5rem; } }
   @media(max-width:640px) { .l-main { padding:2rem 1.25rem 4rem; } }
+  @media(max-width:640px) {
+    .l-hook { padding:1.25rem 1.25rem; }
+    .l-demo-card { padding:1.25rem 1.25rem; }
+    .l-exercise { padding:1.25rem 1.25rem; }
+    .l-recall-item { padding:1rem 1.25rem; }
+    .l-reflection { padding:1.25rem 1.25rem; }
+    .l-gate { padding:1.5rem 1.25rem; }
+  }
+  @media(max-width:480px) { .l-lesson-nav { flex-direction:column; } .l-nav-btn--next { max-width:100%; } }
 
   .l-header { margin-bottom:3rem; }
   .l-module-badge { display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;color:#a78bfa;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;opacity:0.8; }
@@ -362,7 +371,7 @@ const FORUM_URL = `${BASE}/forum`;
   .l-content-body strong { color:var(--text);font-weight:600; }
   .l-content-body em { color:#a78bfa;font-style:italic; }
   .l-content-body blockquote { margin:1.5rem 0;padding:1rem 1.5rem;border-left:3px solid var(--violet);background:rgba(124,58,237,0.05);border-radius:0 8px 8px 0;font-style:italic;color:rgba(232,240,255,0.8); }
-  .demo-prompt { padding:1rem 1.25rem;background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.18);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--text);margin:1rem 0;line-height:1.6; }
+  .demo-prompt { padding:1rem 1.25rem;background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.18);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--text);margin:1rem 0;line-height:1.6;word-break:break-word;overflow-wrap:break-word; }
 
   .l-demo-card { padding:1.75rem 2rem; }
 
@@ -380,7 +389,7 @@ const FORUM_URL = `${BASE}/forum`;
   .l-recall-item { padding:1.25rem 1.5rem; }
   .l-recall-q { display:flex;gap:0.75rem;align-items:flex-start;font-size:0.93rem;line-height:1.65;margin-bottom:0.75rem; }
   .l-recall-num { flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;color:#a78bfa;margin-top:2px; }
-  .l-recall-toggle { display:inline-flex;align-items:center;gap:0.35rem;background:none;border:1px solid rgba(107,122,153,0.2);color:var(--muted);font-size:0.78rem;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;padding:0.3rem 0.75rem;border-radius:999px;transition:border-color 0.2s,color 0.2s; }
+  .l-recall-toggle { display:inline-flex;align-items:center;gap:0.35rem;background:none;border:1px solid rgba(107,122,153,0.2);color:var(--muted);font-size:0.78rem;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;padding:0.5rem 0.9rem;min-height:36px;border-radius:999px;transition:border-color 0.2s,color 0.2s; }
   .l-recall-toggle:hover { border-color:#a78bfa;color:#a78bfa; }
   .l-recall-hint { margin-top:0.75rem;padding:0.75rem 1rem;border-radius:8px;background:rgba(124,58,237,0.04);border:1px solid rgba(124,58,237,0.12);font-size:0.84rem;color:var(--muted);line-height:1.65;display:flex;gap:0.5rem;align-items:flex-start; }
   .l-recall-hint svg { flex-shrink:0;margin-top:2px; }
@@ -410,21 +419,20 @@ const FORUM_URL = `${BASE}/forum`;
 </style>
 
 <script>
+  document.querySelectorAll('.l-recall-hint').forEach(el => {
+    (el as HTMLElement).style.display = 'none';
+  });
+
   document.querySelectorAll('.l-recall-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const i = btn.getAttribute('data-target');
-      const hint = document.getElementById(`hint-${i}`);
+      const hint = document.getElementById(`hint-${i}`) as HTMLElement | null;
       if (!hint) return;
-      const isHidden = hint.hidden;
-      hint.hidden = !isHidden;
-      btn.textContent = isHidden ? 'Hide hint' : 'Show hint';
-      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      svg.setAttribute('width','14'); svg.setAttribute('height','14'); svg.setAttribute('viewBox','0 0 14 14'); svg.setAttribute('fill','none');
-      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d', isHidden ? 'M4 8l3-3 3 3' : 'M4 6l3 3 3-3');
-      path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width','1.4'); path.setAttribute('stroke-linecap','round');
-      svg.appendChild(path);
-      btn.appendChild(svg);
+      const isVisible = hint.style.display !== 'none';
+      hint.style.display = isVisible ? 'none' : 'flex';
+      btn.innerHTML = isVisible
+        ? 'Show hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'
+        : 'Hide hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8l3-3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
     });
   });
 

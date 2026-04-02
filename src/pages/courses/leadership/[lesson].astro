@@ -340,6 +340,15 @@ const FORUM_URL = `${BASE}/forum`;
   .l-main { padding:3rem 3rem 6rem;max-width:760px; }
   @media(max-width:1024px) { .l-main { padding:2.5rem 2rem 5rem; } }
   @media(max-width:640px) { .l-main { padding:2rem 1.25rem 4rem; } }
+  @media(max-width:640px) {
+    .l-hook { padding:1.25rem 1.25rem; }
+    .l-demo-card { padding:1.25rem 1.25rem; }
+    .l-exercise { padding:1.25rem 1.25rem; }
+    .l-recall-item { padding:1rem 1.25rem; }
+    .l-reflection { padding:1.25rem 1.25rem; }
+    .l-gate { padding:1.5rem 1.25rem; }
+  }
+  @media(max-width:480px) { .l-lesson-nav { flex-direction:column; } .l-nav-btn--next { max-width:100%; } }
 
   .l-header { margin-bottom:3rem; }
   .l-module-badge { display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;color:#fbbf24;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;opacity:0.8; }
@@ -409,21 +418,20 @@ const FORUM_URL = `${BASE}/forum`;
 </style>
 
 <script>
+  document.querySelectorAll('.l-recall-hint').forEach(el => {
+    (el as HTMLElement).style.display = 'none';
+  });
+
   document.querySelectorAll('.l-recall-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const i = btn.getAttribute('data-target');
-      const hint = document.getElementById(`hint-${i}`);
+      const hint = document.getElementById(`hint-${i}`) as HTMLElement | null;
       if (!hint) return;
-      const isHidden = hint.hidden;
-      hint.hidden = !isHidden;
-      btn.textContent = isHidden ? 'Hide hint' : 'Show hint';
-      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-      svg.setAttribute('width','14'); svg.setAttribute('height','14'); svg.setAttribute('viewBox','0 0 14 14'); svg.setAttribute('fill','none');
-      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d', isHidden ? 'M4 8l3-3 3 3' : 'M4 6l3 3 3-3');
-      path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width','1.4'); path.setAttribute('stroke-linecap','round');
-      svg.appendChild(path);
-      btn.appendChild(svg);
+      const isVisible = hint.style.display !== 'none';
+      hint.style.display = isVisible ? 'none' : 'flex';
+      btn.innerHTML = isVisible
+        ? 'Show hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'
+        : 'Hide hint <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8l3-3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
     });
   });
 

@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import { foundations } from '../../data/foundations-course';
 import { workflows } from '../../data/workflows-course';
 import { leadership } from '../../data/leadership-course';
@@ -85,25 +87,7 @@ const TRACKS = [
   description="Three structured learning tracks covering all 9 AIQ tiers. Start free with AI~Foundations. Unlock the full curriculum with Society membership."
 >
 
-<nav class="c-nav">
-  <div class="c-nav-inner">
-    <a href={`${BASE}/`} class="c-nav-logo" aria-label="AIQ Home">
-      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#cn1)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#cn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="cn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <div class="c-nav-links">
-      <a href={FORUM_URL} class="c-nav-link">Forum</a>
-      <a href={`${BASE}/assessment`} class="c-nav-link">Assessment</a>
-      <a href={`${BASE}/society`} class="c-nav-link">Society</a>
-      <a href={`${BASE}/blog`} class="c-nav-link">Blog</a>
-      <a href={`${BASE}/services`} class="c-nav-link">Services</a>
-    </div>
-    <a href={`${BASE}/assessment`} class="btn-primary c-nav-cta">Take the Assessment →</a>
-  </div>
-</nav>
+<SiteNav active="society" />
 
 <!-- HERO -->
 <section class="c-hero grid-bg">
@@ -351,4 +335,5 @@ const TRACKS = [
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
+<SiteFooter />
 </Layout>

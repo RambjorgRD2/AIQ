@@ -1,0 +1,91 @@
+---
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ASSESSMENT_URL = `${BASE}/assessment`;
+const FORUM_URL = `${BASE}/forum`;
+const SERVICES_URL = `${BASE}/services`;
+---
+
+<footer class="site-footer">
+  <div class="container site-footer-inner">
+
+    <a href={BASE || '/'} class="site-footer-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#siteFootGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#siteFootGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="siteFootGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+
+    <p class="site-footer-tagline">Know before you Grow.</p>
+    <p class="site-footer-brand">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
+
+    <nav class="site-footer-nav">
+      <a href={FORUM_URL}>Forum</a>
+      <a href={ASSESSMENT_URL}>Assessment</a>
+      <a href={`${BASE}/society`}>Society</a>
+      <a href={`${BASE}/blog`}>Blog</a>
+      <a href={SERVICES_URL}>Services</a>
+      <a href={`${BASE}/certification`}>Certification</a>
+    </nav>
+
+    <p class="site-footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
+
+  </div>
+</footer>
+
+<style is:global>
+  .site-footer {
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .site-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .site-footer-logo { display: flex; align-items: center; text-decoration: none; }
+
+  .site-footer-tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .site-footer-brand {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.6);
+  }
+
+  .site-footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .site-footer-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .site-footer-nav a:hover { color: var(--text); }
+
+  .site-footer-copy {
+    font-size: 0.78rem;
+    color: rgba(107, 122, 153, 0.5);
+    margin-top: 0.5rem;
+  }
+</style>

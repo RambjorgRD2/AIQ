@@ -1,0 +1,271 @@
+---
+export interface Props {
+  active?: 'forum' | 'assessment' | 'society' | 'blog' | 'services';
+  backLink?: { href: string; label: string };
+}
+
+const { active, backLink } = Astro.props;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ASSESSMENT_URL = `${BASE}/assessment`;
+const FORUM_URL = `${BASE}/forum`;
+const SERVICES_URL = `${BASE}/services`;
+
+const navLinks = [
+  { href: FORUM_URL,            label: 'Forum',      key: 'forum'      },
+  { href: ASSESSMENT_URL,       label: 'Assessment', key: 'assessment' },
+  { href: `${BASE}/society`,    label: 'Society',    key: 'society'    },
+  { href: `${BASE}/blog`,       label: 'Blog',       key: 'blog'       },
+  { href: SERVICES_URL,         label: 'Services',   key: 'services'   },
+] as const;
+---
+
+<nav class="site-nav" id="site-nav">
+  <div class="site-nav-inner">
+
+    <a href={BASE || '/'} class="site-nav-logo" aria-label="AIQ Home">
+      <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#siteNavGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#siteNavGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="siteNavGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/>
+            <stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+
+    {backLink && (
+      <a href={backLink.href} class="site-nav-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {backLink.label}
+      </a>
+      <span class="site-nav-divider"></span>
+    )}
+
+    <ul class="site-nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class={`site-nav-link${active === link.key ? ' site-nav-link--active' : ''}`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <a href={ASSESSMENT_URL} class="btn-primary site-nav-cta">
+      Discover your AIQ
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <button class="site-nav-hamburger" aria-label="Open menu" id="site-hamburger">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+</nav>
+
+<div class="site-mobile-menu glass" id="site-mobile-menu">
+  {navLinks.map(link => (
+    <a href={link.href} class="site-mobile-link">{link.label}</a>
+  ))}
+  <a href={ASSESSMENT_URL} class="btn-primary" style="margin-top:0.5rem">Discover your AIQ</a>
+  <a href={`${BASE}/signin`} data-auth-hide class="site-mobile-link site-mobile-auth-link">Sign In</a>
+  <span data-auth-show class="site-mobile-link site-mobile-auth-email auth-user-email" style="display:none"></span>
+  <button data-auth-show data-sign-out class="site-mobile-link site-mobile-auth-signout" style="display:none">Sign Out</button>
+</div>
+
+<script>
+  const hamburger = document.getElementById('site-hamburger');
+  const mobileMenu = document.getElementById('site-mobile-menu');
+
+  hamburger?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.toggle('open');
+    hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    hamburger.classList.toggle('open', !!isOpen);
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger?.classList.remove('open');
+      hamburger?.setAttribute('aria-label', 'Open menu');
+    });
+  });
+
+  mobileMenu?.querySelector('[data-sign-out]')?.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger?.classList.remove('open');
+  });
+</script>
+
+<style is:global>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4, 7, 15, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+    height: 68px;
+  }
+
+  .site-nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .site-nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .site-nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B7A99;
+    text-decoration: none;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .site-nav-back:hover { color: #E8F0FF; }
+
+  .site-nav-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(107, 122, 153, 0.25);
+    flex-shrink: 0;
+  }
+
+  .site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    list-style: none;
+    flex: 1;
+  }
+
+  .site-nav-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #6B7A99;
+    text-decoration: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .site-nav-link:hover { color: #E8F0FF; }
+  .site-nav-link--active { color: #00CFFF; }
+
+  .site-nav-cta {
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .site-nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.35rem;
+    margin-left: auto;
+  }
+
+  .site-nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #E8F0FF;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .site-nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .site-nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .site-nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .site-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px;
+    left: 1rem;
+    right: 1rem;
+    z-index: 99;
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    border-radius: 16px;
+  }
+
+  .site-mobile-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .site-mobile-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #E8F0FF;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  .site-mobile-auth-link,
+  .site-mobile-auth-email {
+    color: #6B7A99 !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .site-mobile-auth-signout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6B7A99;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-align: left;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    .site-nav-links,
+    .site-nav-cta,
+    .site-nav-divider { display: none; }
+
+    .site-nav-hamburger { display: flex; }
+    .site-mobile-menu { display: flex; }
+  }
+</style>

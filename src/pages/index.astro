@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { events, formatColors, formatTextColors, formatDate } from '../data/events';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -37,7 +38,7 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
       </ul>
 
       <a href={ASSESSMENT_URL} class="btn-primary nav-cta">
-        Take the Assessment
+        Discover your AIQ
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
 
@@ -565,34 +566,7 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     </div>
   </section>
 
-  <!-- ─── FOOTER ────────────────────────────────────────── -->
-  <footer>
-    <div class="container footer-inner">
-      <a href="#" class="nav-logo" aria-label="AIQ Home">
-        <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
-          <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#footGrad)">AIQ</text>
-          <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#footGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-          <defs>
-            <linearGradient id="footGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#00CFFF"/>
-              <stop offset="1" stop-color="#7C3AED"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </a>
-      <p class="footer-tagline">Know before you Grow.</p>
-      <p class="footer-brand-line">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
-      <nav class="footer-nav">
-        <a href={FORUM_URL}>Forum</a>
-        <a href={ASSESSMENT_URL}>Assessment</a>
-        <a href={`${BASE}/society`}>Society</a>
-        <a href={`${BASE}/blog`}>Blog</a>
-        <a href={SERVICES_URL}>Services</a>
-        <a href={`${BASE}/certification`}>Certification</a>
-      </nav>
-      <p class="footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
-    </div>
-  </footer>
+  <SiteFooter />
 
 </Layout>
 
@@ -1589,12 +1563,6 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
   }
 </style>
 
-<style is:global>
-  /* Hide the floating auth pill on mobile — auth lives in the hamburger menu instead */
-  @media (max-width: 768px) {
-    body:has(#mobileMenu) #auth-nav { display: none; }
-  }
-</style>
 
 <!-- Luma checkout script for event registration buttons -->
 <script is:inline src="https://embed.lu.ma/checkout-button.js" id="luma-checkout"></script>

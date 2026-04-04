@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { events, formatColors, formatTextColors, formatDate } from '../data/events';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${base}/forum`;
@@ -15,28 +17,7 @@ const pastEvents = events.filter(e => e.status === 'past');
 >
 
 <!-- NAV -->
-<nav class="f-nav">
-  <div class="f-nav-inner">
-    <a href={`${base}/`} class="f-nav-logo" aria-label="AIQ Home">
-      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#fn1)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#fn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="fn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <div class="f-nav-links">
-      <a href={`${base}/forum`} class="f-nav-link f-nav-link--active">Forum</a>
-      <a href={`${base}/assessment`} class="f-nav-link">Assessment</a>
-      <a href={`${base}/society`} class="f-nav-link">Society</a>
-      <a href={`${base}/blog`} class="f-nav-link">Blog</a>
-      <a href={SERVICES_URL} class="f-nav-link">Services</a>
-    </div>
-    <a href={`${base}/assessment`} class="btn-primary f-nav-cta">
-      Take the Assessment
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
-</nav>
+<SiteNav active="forum" />
 
 <!-- HERO -->
 <section class="f-hero grid-bg">
@@ -544,4 +525,5 @@ const pastEvents = events.filter(e => e.status === 'past');
   });
 </script>
 
+<SiteFooter />
 </Layout>

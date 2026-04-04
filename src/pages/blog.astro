@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { articles } from '../data/articles';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${BASE}/forum`;
@@ -13,34 +15,7 @@ const SERVICES_URL = `${BASE}/services`;
   description="Thinking clearly about AI — how it works, where it's going, and how to raise your AIQ. Insights and ideas from the AI~Quotient community."
 >
 
-<!-- NAV -->
-<nav class="blog-nav">
-  <div class="blog-nav-inner">
-    <a href={BASE} class="blog-nav-logo" aria-label="AIQ Home">
-      <svg width="72" height="28" viewBox="0 0 72 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#blogNavGrad)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#blogNavGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs>
-          <linearGradient id="blogNavGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#00CFFF"/>
-            <stop offset="1" stop-color="#7C3AED"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-    <div class="blog-nav-links">
-      <a href={FORUM_URL} class="blog-nav-link">Forum</a>
-      <a href={ASSESSMENT_URL} class="blog-nav-link">Assessment</a>
-      <a href={`${BASE}/society`} class="blog-nav-link">Society</a>
-      <a href={`${BASE}/blog`} class="blog-nav-link blog-nav-link--active">Blog</a>
-      <a href={SERVICES_URL} class="blog-nav-link">Services</a>
-    </div>
-    <a href={ASSESSMENT_URL} class="btn-primary blog-nav-cta">
-      Discover your AIQ
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
-</nav>
+<SiteNav active="blog" />
 
 <!-- HERO -->
 <section class="blog-hero">
@@ -104,34 +79,7 @@ const SERVICES_URL = `${BASE}/services`;
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="blog-footer">
-  <div class="blog-container blog-footer-inner">
-    <a href={BASE} class="blog-footer-logo" aria-label="AIQ Home">
-      <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#blogFootGrad)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#blogFootGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs>
-          <linearGradient id="blogFootGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#00CFFF"/>
-            <stop offset="1" stop-color="#7C3AED"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </a>
-    <p class="blog-footer-tagline">Know before you Grow.</p>
-    <p class="blog-footer-brand">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
-    <nav class="blog-footer-nav">
-      <a href={FORUM_URL}>Forum</a>
-      <a href={ASSESSMENT_URL}>Assessment</a>
-      <a href={`${BASE}/society`}>Society</a>
-      <a href={`${BASE}/blog`}>Blog</a>
-      <a href={SERVICES_URL}>Services</a>
-      <a href={`${BASE}/certification`}>Certification</a>
-    </nav>
-    <p class="blog-footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
-  </div>
-</footer>
+<SiteFooter />
 
 </Layout>
 

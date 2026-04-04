@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${base}/forum`;
 const SERVICES_URL = `${base}/services`;
@@ -10,25 +12,7 @@ const SERVICES_URL = `${base}/services`;
   description="Earn a verified AIQ Certificate. Complete your course track, demonstrate your AI fluency, and share a credential that signals real capability."
 >
 
-<nav class="p-nav">
-  <div class="p-nav-inner">
-    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
-      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#cn1)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#cn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="cn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <div class="p-nav-links">
-      <a href={FORUM_URL} class="p-nav-link">Forum</a>
-      <a href={`${base}/assessment`} class="p-nav-link">Assessment</a>
-      <a href={`${base}/society`} class="p-nav-link">Society</a>
-      <a href={`${base}/blog`} class="p-nav-link">Blog</a>
-      <a href={SERVICES_URL} class="p-nav-link">Services</a>
-    </div>
-    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">Take the Assessment →</a>
-  </div>
-</nav>
+<SiteNav />
 
 <!-- HERO -->
 <section class="cert-hero grid-bg">
@@ -247,4 +231,5 @@ const SERVICES_URL = `${base}/services`;
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 
+<SiteFooter />
 </Layout>

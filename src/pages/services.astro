@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ASSESSMENT_URL = `${BASE}/assessment`;
 const FORUM_URL = `${BASE}/forum`;
@@ -11,28 +13,7 @@ const FORUM_URL = `${BASE}/forum`;
 >
 
 <!-- NAV -->
-<nav class="sv-nav">
-  <div class="sv-nav-inner">
-    <a href={`${BASE}/`} class="sv-nav-logo" aria-label="Home">
-      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#svn1)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#svn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="svn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <div class="sv-nav-links">
-      <a href={FORUM_URL} class="sv-nav-link">Forum</a>
-      <a href={ASSESSMENT_URL} class="sv-nav-link">Assessment</a>
-      <a href={`${BASE}/society`} class="sv-nav-link">Society</a>
-      <a href={`${BASE}/blog`} class="sv-nav-link">Blog</a>
-      <a href={`${BASE}/services`} class="sv-nav-link sv-nav-link--active">Services</a>
-    </div>
-    <a href={ASSESSMENT_URL} class="btn-primary sv-nav-cta">
-      Take the Assessment
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
-</nav>
+<SiteNav active="services" />
 
 <!-- HERO -->
 <section class="sv-hero grid-bg">
@@ -244,29 +225,7 @@ const FORUM_URL = `${BASE}/forum`;
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="sv-footer">
-  <div class="container sv-footer-inner">
-    <a href={`${BASE}/`} class="sv-footer-logo" aria-label="Home">
-      <svg width="72" height="28" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#svfg)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#svfg)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="svfg" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <p class="sv-footer-tagline">Know before you Grow.</p>
-    <p class="sv-footer-brand">AIQ is a product of Optimal AI &middot; Sosial AI Forum is the community.</p>
-    <nav class="sv-footer-nav">
-      <a href={FORUM_URL}>Forum</a>
-      <a href={ASSESSMENT_URL}>Assessment</a>
-      <a href={`${BASE}/society`}>Society</a>
-      <a href={`${BASE}/blog`}>Blog</a>
-      <a href={`${BASE}/services`}>Services</a>
-      <a href={`${BASE}/certification`}>Certification</a>
-    </nav>
-    <p class="sv-footer-copy">&copy; {new Date().getFullYear()} Optimal AI. AIQ — AI~Quotient &middot; Sosial AI Forum. All rights reserved.</p>
-  </div>
-</footer>
+<SiteFooter />
 
 <style>
   /* NAV */

@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const FORUM_URL = `${base}/forum`;
 const SERVICES_URL = `${base}/services`;
@@ -10,28 +12,7 @@ const SERVICES_URL = `${base}/services`;
   description="Join the Sosial AI Society. The learning community for people serious about raising their AI~Quotient. Know before you Grow."
 >
 
-<nav class="p-nav">
-  <div class="p-nav-inner">
-    <a href={`${base}/`} class="p-nav-logo" aria-label="AIQ Home">
-      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
-        <text x="0" y="22" font-family="'Space Grotesk',sans-serif" font-size="22" font-weight="800" fill="url(#pn1)">AIQ</text>
-        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#pn1)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <defs><linearGradient id="pn1" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      </svg>
-    </a>
-    <div class="p-nav-links">
-      <a href={FORUM_URL} class="p-nav-link">Forum</a>
-      <a href={`${base}/assessment`} class="p-nav-link">Assessment</a>
-      <a href={`${base}/society`} class="p-nav-link p-nav-link--active">Society</a>
-      <a href={`${base}/blog`} class="p-nav-link">Blog</a>
-      <a href={SERVICES_URL} class="p-nav-link">Services</a>
-    </div>
-    <a href={`${base}/assessment`} class="btn-primary p-nav-cta">
-      Take the Assessment
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
-</nav>
+<SiteNav active="society" />
 
 <!-- HERO -->
 <section class="p-hero grid-bg">
@@ -289,4 +270,5 @@ const SERVICES_URL = `${base}/services`;
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
+<SiteFooter />
 </Layout>

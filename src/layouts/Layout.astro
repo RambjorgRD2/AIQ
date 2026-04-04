@@ -32,9 +32,48 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div id="auth-nav" class="auth-nav">
       <!-- Shown when NOT signed in -->
       <a href={`${BASE}/signin`} data-auth-hide class="auth-signin-link">Sign In</a>
-      <!-- Shown when signed in -->
-      <span data-auth-show class="auth-email auth-user-email" id="auth-user-email" style="display:none"></span>
-      <button data-auth-show data-sign-out class="auth-signout-btn" style="display:none">Sign Out</button>
+
+      <!-- Shown when signed in — dropdown trigger -->
+      <div data-auth-show id="auth-dropdown-wrap" style="display:none; position:relative;">
+        <button id="auth-dropdown-btn" class="auth-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+          <span id="auth-tier-badge" class="auth-tier-chip"></span>
+          <span class="auth-user-email auth-user-email-short" id="auth-user-email"></span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" id="auth-chevron"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div id="auth-dropdown-panel" class="auth-dropdown-panel" hidden>
+          <!-- My AIQ section -->
+          <div class="auth-dd-section">
+            <div class="auth-dd-label">My AIQ</div>
+            <div id="auth-aiq-display" class="auth-dd-aiq">
+              <span id="auth-aiq-score" class="auth-aiq-score">—</span>
+              <span id="auth-aiq-tier" class="auth-aiq-tier"></span>
+            </div>
+          </div>
+          <div class="auth-dd-divider"></div>
+          <!-- Course progress section -->
+          <div class="auth-dd-section">
+            <div class="auth-dd-label">Course Progress</div>
+            <div class="auth-dd-progress-list">
+              <div class="auth-dd-progress-row">
+                <span class="auth-dd-course-name">AI~Foundations</span>
+                <span id="prog-foundations" class="auth-dd-fraction">0/12</span>
+              </div>
+              <div class="auth-dd-progress-row">
+                <span class="auth-dd-course-name">AI~Workflows</span>
+                <span id="prog-workflows" class="auth-dd-fraction">0/22</span>
+              </div>
+              <div class="auth-dd-progress-row">
+                <span class="auth-dd-course-name">AI~Leadership</span>
+                <span id="prog-leadership" class="auth-dd-fraction">0/21</span>
+              </div>
+            </div>
+          </div>
+          <div class="auth-dd-divider"></div>
+          <!-- Sign out -->
+          <button data-sign-out class="auth-dd-signout">Sign Out</button>
+        </div>
+      </div>
     </div>
 
     <!-- Undo toast — appears after clicking Sign Out -->
@@ -49,7 +88,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <script>
       import { supabase } from '../lib/supabase.ts'
-      import { upsertLessonProgress, upsertAssessmentResult, upsertReflectionNote } from '../lib/db.ts'
+      import { upsertLessonProgress, upsertAssessmentResult, upsertReflectionNote, getLatestAssessmentResult, getCompletedLessons } from '../lib/db.ts'
 
       // Migrate existing localStorage data to Supabase on sign-in
       async function migrateLocalStorageToSupabase(userId: string) {
@@ -108,16 +147,68 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         // Toggle auth UI elements
         document.querySelectorAll('[data-auth-show]').forEach(el => {
-          ;(el as HTMLElement).style.display = user ? '' : 'none'
+          ;(el as HTMLElement).style.display = user
+            ? (el.id === 'auth-dropdown-wrap' ? 'flex' : '')
+            : 'none'
         })
         document.querySelectorAll('[data-auth-hide]').forEach(el => {
           ;(el as HTMLElement).style.display = user ? 'none' : ''
         })
 
-        // Show user email in all auth-user-email elements (desktop strip + mobile menu)
-        document.querySelectorAll('.auth-user-email').forEach(el => {
-          if (user) (el as HTMLElement).textContent = user.email ?? ''
-        })
+        if (user) {
+          // Show truncated email
+          const emailShort = (user.email ?? '').slice(0, 18)
+          document.querySelectorAll('.auth-user-email').forEach(el => {
+            ;(el as HTMLElement).textContent = emailShort
+          })
+
+          // Populate dropdown data
+          getLatestAssessmentResult(user.id).then(result => {
+            if (result) {
+              const scoreEl = document.getElementById('auth-aiq-score')
+              const tierEl = document.getElementById('auth-aiq-tier')
+              const badgeEl = document.getElementById('auth-tier-badge')
+              if (scoreEl) scoreEl.textContent = String(result.score)
+              if (tierEl) tierEl.textContent = result.tier_label || result.tier
+              if (badgeEl) {
+                badgeEl.textContent = result.tier ? `L${result.tier}` : ''
+                badgeEl.style.display = result.tier ? '' : 'none'
+              }
+            }
+          }).catch(() => {})
+
+          getCompletedLessons(user.id, 'foundations').then(ids => {
+            const el = document.getElementById('prog-foundations')
+            if (el) el.textContent = `${ids.length}/12`
+          }).catch(() => {})
+
+          getCompletedLessons(user.id, 'workflows').then(ids => {
+            const el = document.getElementById('prog-workflows')
+            if (el) el.textContent = `${ids.length}/22`
+          }).catch(() => {})
+
+          getCompletedLessons(user.id, 'leadership').then(ids => {
+            const el = document.getElementById('prog-leadership')
+            if (el) el.textContent = `${ids.length}/21`
+          }).catch(() => {})
+        } else {
+          // Reset dropdown values on sign-out
+          const scoreEl = document.getElementById('auth-aiq-score')
+          const tierEl = document.getElementById('auth-aiq-tier')
+          const badgeEl = document.getElementById('auth-tier-badge')
+          if (scoreEl) scoreEl.textContent = '—'
+          if (tierEl) tierEl.textContent = ''
+          if (badgeEl) { badgeEl.textContent = ''; badgeEl.style.display = 'none' }
+          const progEls = [
+            { id: 'prog-foundations', def: '0/12' },
+            { id: 'prog-workflows', def: '0/22' },
+            { id: 'prog-leadership', def: '0/21' },
+          ]
+          progEls.forEach(({ id, def }) => {
+            const el = document.getElementById(id)
+            if (el) el.textContent = def
+          })
+        }
 
         // Expose user globally for page-level scripts
         ;(window as any).__supabaseUser = user
@@ -125,6 +216,32 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         // On sign-in: migrate any existing localStorage data to Supabase
         if (_event === 'SIGNED_IN' && user) {
           migrateLocalStorageToSupabase(user.id);
+        }
+      })
+
+      // ── Dropdown toggle ──────────────────────────────────
+      const dropBtn = document.getElementById('auth-dropdown-btn')
+      const dropPanel = document.getElementById('auth-dropdown-panel')
+      const chevron = document.getElementById('auth-chevron')
+      dropBtn?.addEventListener('click', () => {
+        const isOpen = dropPanel?.hasAttribute('hidden') === false
+        if (isOpen) {
+          dropPanel?.setAttribute('hidden', '')
+          dropBtn.setAttribute('aria-expanded', 'false')
+          if (chevron) chevron.style.transform = ''
+        } else {
+          dropPanel?.removeAttribute('hidden')
+          dropBtn.setAttribute('aria-expanded', 'true')
+          if (chevron) chevron.style.transform = 'rotate(180deg)'
+        }
+      })
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        const wrap = document.getElementById('auth-dropdown-wrap')
+        if (wrap && !wrap.contains(e.target as Node)) {
+          dropPanel?.setAttribute('hidden', '')
+          dropBtn?.setAttribute('aria-expanded', 'false')
+          if (chevron) chevron.style.transform = ''
         }
       })
 
@@ -421,6 +538,148 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  /* ── Auth dropdown ─────────────────────────────────────── */
+  .auth-dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .auth-dropdown-btn:hover {
+    border-color: rgba(0, 207, 255, 0.3);
+    background: rgba(0, 207, 255, 0.04);
+  }
+
+  #auth-chevron {
+    color: var(--muted);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .auth-tier-chip {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid rgba(0, 207, 255, 0.35);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    line-height: 1.4;
+  }
+
+  .auth-user-email-short {
+    color: var(--muted);
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .auth-dropdown-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    background: rgba(4, 7, 15, 0.97);
+    border: 1px solid rgba(0, 207, 255, 0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    z-index: 200;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .auth-dd-section {
+    /* spacing handled by children */
+  }
+
+  .auth-dd-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .auth-dd-aiq {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .auth-aiq-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .auth-aiq-tier {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .auth-dd-divider {
+    height: 1px;
+    background: rgba(0, 207, 255, 0.08);
+    margin: 0.75rem 0;
+  }
+
+  .auth-dd-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .auth-dd-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 0;
+  }
+
+  .auth-dd-course-name {
+    font-size: 0.82rem;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+  }
+
+  .auth-dd-fraction {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .auth-dd-signout {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 0.2rem 0;
+    transition: color 0.2s;
+  }
+
+  .auth-dd-signout:hover {
+    color: var(--cyan);
   }
 
   /* Mobile: auth lives in the hamburger menu on all pages */

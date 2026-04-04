@@ -14,6 +14,7 @@ Milestone 1 transforms AIQ from a content-complete static site into a functional
 
 - [x] **Phase 1: Authentication** - Users can create accounts and maintain authenticated sessions via Supabase magic link (completed 2026-03-27)
 - [x] **Phase 01.1: Platform Migration** - Site hosted on Vercel at www.theaiq.org with /AIQ base path removed (URGENT — unblocks Phase 2) (completed 2026-03-29)
+- [x] **Phase 1.2: localStorage → Supabase Sync** - Authenticated users have lesson progress, assessment results, and reflection notes persisted to Supabase and synced across devices (completed 2026-04-04)
 - [ ] **Phase 2: Payments & Content Gating** - Users can purchase Society membership via Stripe and locked content is enforced server-side
 - [ ] **Phase 3: Dashboard & Progress** - Authenticated users have a persistent learner dashboard with cross-device progress sync
 - [ ] **Phase 4: Identity Layer** - Assessment scores produce shareable score cards and eligible users receive verifiable certificates
@@ -49,6 +50,18 @@ Plans:
 - [x] 01.1-01-PLAN.md — Remove base from astro.config.mjs, fix all 6 hardcoded /AIQ/ strings in 5 source files
 - [x] 01.1-02-PLAN.md — Replace GitHub Pages workflow with Vercel CI, add .vercel/ to .gitignore, update Supabase Auth redirect URLs
 - [x] 01.1-03-PLAN.md — DNS configuration for www.theaiq.org and end-to-end live site verification
+
+### Phase 1.2: localStorage → Supabase Sync (INSERTED)
+
+**Goal:** When an authenticated user visits the site, their locally-stored lesson progress, assessment results, and reflection notes are migrated to Supabase and subsequently written there on every new event — so data persists across devices and sessions for all authenticated users.
+**Depends on:** Phase 1 (auth must be live)
+**Requirements:** PROG-01, PROG-02, PROG-03, PROG-04 (pulled forward from Phase 3)
+**Plans:** 3 plans
+
+Plans:
+- [x] 1.2-01-PLAN.md — Supabase schema — create `lesson_progress`, `assessment_results`, and `reflection_notes` tables with RLS policies
+- [x] 1.2-02-PLAN.md — Write hooks — on lesson completion and assessment completion, write to Supabase for authenticated users; add client-side sync trigger on sign-in to migrate existing localStorage data
+- [x] 1.2-03-PLAN.md — Read paths — load persisted progress/results from Supabase on page load for authenticated users (lesson sidebar completion marks, assessment results page)
 
 ### Phase 2: Payments & Content Gating
 **Goal**: Users can purchase Society membership via Stripe and all locked lesson content is enforced by server-side subscription verification.
@@ -144,12 +157,13 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 01.1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 → 01.1 → 1.2 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Authentication | 3/3 | Complete | 2026-03-28 |
 | 01.1. Platform Migration | 3/3 | Complete    | 2026-03-29 |
+| 1.2. localStorage → Supabase Sync | 3/3 | Complete | 2026-04-04 |
 | 2. Payments & Content Gating | 0/4 | Not started | - |
 | 3. Dashboard & Progress | 0/3 | Not started | - |
 | 4. Identity Layer | 0/4 | Not started | - |
@@ -159,16 +173,10 @@ Phases execute in numeric order: 1 → 01.1 → 2 → 3 → 4 → 5 → 6
 ---
 *Roadmap created: 2026-03-27*
 *Milestone 1 — Revenue Infrastructure*
-*Coverage: 38/38 v1 requirements mapped + MIG-01 through MIG-06 (Phase 01.1)*
+*Coverage: 38/38 v1 requirements mapped + MIG-01 through MIG-06 (Phase 01.1) + PROG-01 through PROG-04 pulled forward to Phase 1.2*
 
 ## Backlog
 
-### Phase 999.1: Sync localStorage to Supabase (BACKLOG)
+### Phase 999.1: Sync localStorage to Supabase (BACKLOG — PROMOTED to Phase 1.2)
 
-**Goal:** When a user signs in, sync their locally-stored course progress, AIQ scores, and reflections to Supabase so data persists across devices and sessions.
-**Trigger:** When Society membership gating becomes functional and auth needs to do real work (post Phase 2).
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
+This backlog item has been promoted and inserted as Phase 1.2. See Phase 1.2 above.

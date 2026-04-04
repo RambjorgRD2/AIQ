@@ -160,3 +160,15 @@ Phases execute in numeric order: 1 → 01.1 → 2 → 3 → 4 → 5 → 6
 *Roadmap created: 2026-03-27*
 *Milestone 1 — Revenue Infrastructure*
 *Coverage: 38/38 v1 requirements mapped + MIG-01 through MIG-06 (Phase 01.1)*
+
+## Backlog
+
+### Phase 999.1: Sync localStorage to Supabase (BACKLOG)
+
+**Goal:** When a user signs in, sync their locally-stored course progress, AIQ scores, and reflections to Supabase so data persists across devices and sessions.
+**Trigger:** When Society membership gating becomes functional and auth needs to do real work (post Phase 2).
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)

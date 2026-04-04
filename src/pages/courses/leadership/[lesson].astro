@@ -419,7 +419,7 @@ const FORUM_URL = `${BASE}/forum`;
 
 <script>
   import { supabase } from '../../../lib/supabase.ts';
-  import { upsertLessonProgress, upsertReflectionNote } from '../../../lib/db.ts';
+  import { upsertLessonProgress, upsertReflectionNote, getCompletedLessons, getReflectionNote } from '../../../lib/db.ts';
 
   document.querySelectorAll('.l-recall-hint').forEach(el => {
     (el as HTMLElement).style.display = 'none';
@@ -443,7 +443,44 @@ const FORUM_URL = `${BASE}/forum`;
   const textarea = document.getElementById('reflection-input') as HTMLTextAreaElement;
   const saveBtn = document.getElementById('save-reflection');
   const savedMsg = document.getElementById('reflection-saved');
-  if (textarea) { const saved = localStorage.getItem(storageKey); if (saved) textarea.value = saved; }
+
+  // Supabase-first init: load completed lessons and reflection note
+  async function initProgress() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      const completedIds = await getCompletedLessons(session.user.id, 'leadership').catch(() => null);
+      if (completedIds) {
+        document.querySelectorAll('.l-module-item').forEach(el => {
+          const href = el.getAttribute('href') || '';
+          const slug = href.split('/').filter(Boolean).pop();
+          if (slug && completedIds.includes(slug)) {
+            el.classList.add('done');
+            if (!el.querySelector('.l-module-check')) {
+              const check = document.createElement('span');
+              check.className = 'l-module-check';
+              check.textContent = '✓';
+              el.appendChild(check);
+            }
+          }
+        });
+      }
+      if (textarea && moduleSlug) {
+        const note = await getReflectionNote(session.user.id, moduleSlug).catch(() => null);
+        if (note !== null) {
+          textarea.value = note;
+        } else {
+          const saved = localStorage.getItem(storageKey);
+          if (saved) textarea.value = saved;
+        }
+      }
+    } else {
+      if (textarea) {
+        const saved = localStorage.getItem(storageKey);
+        if (saved) textarea.value = saved;
+      }
+    }
+  }
+  initProgress();
   saveBtn?.addEventListener('click', async () => {
     if (textarea) {
       localStorage.setItem(storageKey, textarea.value);

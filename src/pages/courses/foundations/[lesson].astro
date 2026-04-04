@@ -1009,7 +1009,7 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
 
 <script>
   import { supabase } from '../../../lib/supabase.ts';
-  import { upsertLessonProgress, upsertReflectionNote } from '../../../lib/db.ts';
+  import { upsertLessonProgress, upsertReflectionNote, getCompletedLessons, getReflectionNote } from '../../../lib/db.ts';
 
   // ── Hint toggles ──
   // Use style.display instead of the hidden attribute so that
@@ -1031,17 +1031,53 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     });
   });
 
-  // ── Reflection persistence ──
+  // ── Reflection persistence + Supabase read path ──
   const moduleSlug = location.pathname.split('/').filter(Boolean).pop();
   const storageKey = `reflection-${moduleSlug}`;
   const textarea = document.getElementById('reflection-input') as HTMLTextAreaElement;
   const saveBtn = document.getElementById('save-reflection');
   const savedMsg = document.getElementById('reflection-saved');
 
-  if (textarea) {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) textarea.value = saved;
+  // Supabase-first init: load completed lessons and reflection note
+  async function initProgress() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      // Load completed lessons from Supabase and mark sidebar
+      const completedIds = await getCompletedLessons(session.user.id, 'foundations').catch(() => null);
+      if (completedIds) {
+        document.querySelectorAll('.l-module-item').forEach(el => {
+          const href = el.getAttribute('href') || '';
+          const slug = href.split('/').filter(Boolean).pop();
+          if (slug && completedIds.includes(slug)) {
+            el.classList.add('done');
+            if (!el.querySelector('.l-module-check')) {
+              const check = document.createElement('span');
+              check.className = 'l-module-check';
+              check.textContent = '✓';
+              el.appendChild(check);
+            }
+          }
+        });
+      }
+      // Pre-fill reflection from Supabase
+      if (textarea && moduleSlug) {
+        const note = await getReflectionNote(session.user.id, moduleSlug).catch(() => null);
+        if (note !== null) {
+          textarea.value = note;
+        } else {
+          const saved = localStorage.getItem(storageKey);
+          if (saved) textarea.value = saved;
+        }
+      }
+    } else {
+      // Unauthenticated: use localStorage
+      if (textarea) {
+        const saved = localStorage.getItem(storageKey);
+        if (saved) textarea.value = saved;
+      }
+    }
   }
+  initProgress();
 
   saveBtn?.addEventListener('click', async () => {
     if (textarea) {

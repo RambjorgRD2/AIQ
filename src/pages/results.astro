@@ -40,6 +40,13 @@ import Layout from '../layouts/Layout.astro';
 <!-- RESULTS (hidden until JS populates) -->
 <div id="results-content" style="display:none">
 
+  <!-- Stored result banner — shown when score is loaded from Supabase (not a fresh session result) -->
+  <div id="stored-result-banner" style="display:none; text-align:center; padding:0.75rem 1.5rem; background:rgba(107,122,153,0.1); border-bottom:1px solid rgba(107,122,153,0.15);">
+    <span style="color:var(--muted); font-size:0.85rem; font-family:'Space Grotesk',sans-serif;">
+      Your last AIQ score — <a id="btn-retake-banner" href="#" style="color:var(--cyan); text-decoration:none;">retake to update it</a>
+    </span>
+  </div>
+
   <!-- ── HERO: SCORE ────────────────────────────────── -->
   <section class="r-hero">
     <div class="container">
@@ -564,25 +571,72 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  import { supabase } from '../lib/supabase.ts';
+  import { getLatestAssessmentResult } from '../lib/db.ts';
+
 (function () {
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   // Wire up retake / take links
   document.getElementById('btn-retake').href = BASE + '/assessment';
   document.getElementById('btn-take') && (document.getElementById('btn-take').href = BASE + '/assessment');
   document.getElementById('btn-join-society').href = BASE + '/forum';
+  const retakeBanner = document.getElementById('btn-retake-banner');
+  if (retakeBanner) retakeBanner.href = BASE + '/assessment';
 
-  // ── Load result from localStorage ────────────────────
-  let result;
-  try {
-    result = JSON.parse(localStorage.getItem('aiq_latest_result'));
-  } catch (_) { result = null; }
+  // ── Load result (localStorage first, then Supabase) ────────────────────
+  async function loadResult() {
+    // Priority 1: fresh result from this session
+    let result = null;
+    let isStoredResult = false;
+    try {
+      const raw = localStorage.getItem('aiq_latest_result');
+      if (raw) result = JSON.parse(raw);
+    } catch (_) { result = null; }
 
-  if (!result) {
-    document.getElementById('no-result').style.display = 'block';
-    return;
+    // Priority 2: persisted result from Supabase for authenticated users
+    if (!result) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const stored = await getLatestAssessmentResult(session.user.id).catch(() => null);
+        if (stored) {
+          // Map AssessmentResultRow shape to the result shape the render code expects
+          result = {
+            scores: {
+              aiq: stored.score,
+              think: (stored.radar_data as any)?.think ?? stored.score,
+              apply: (stored.radar_data as any)?.apply ?? stored.score,
+              lead: (stored.radar_data as any)?.lead ?? stored.score,
+            },
+            tier: {
+              tier: stored.tier,
+              label: stored.tier_label,
+              desc: '',
+              track: 'foundations',
+            },
+            insight: '',
+          };
+          isStoredResult = true;
+        }
+      }
+    }
+
+    if (!result) {
+      document.getElementById('no-result').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('results-content').style.display = 'block';
+
+    // Show banner for stored (non-fresh) results
+    if (isStoredResult) {
+      const banner = document.getElementById('stored-result-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    renderResult(result);
   }
 
-  document.getElementById('results-content').style.display = 'block';
+  function renderResult(result) {
 
   const { scores, tier, insight } = result;
 
@@ -745,6 +799,10 @@ import Layout from '../layouts/Layout.astro';
       setTimeout(() => { label.textContent = 'Copy Score'; }, 2500);
     } catch (_) {}
   });
+  } // end renderResult
+
+  // Kick off async load
+  loadResult();
 
 })();
 </script>

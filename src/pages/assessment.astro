@@ -504,6 +504,9 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  import { supabase } from '../lib/supabase.ts';
+  import { upsertAssessmentResult } from '../lib/db.ts';
+
 (function () {
   'use strict';
 
@@ -1592,6 +1595,20 @@ import Layout from '../layouts/Layout.astro';
 
     try { localStorage.setItem('aiq_latest_result', JSON.stringify(result)); }
     catch { /* storage blocked — results will not persist */ }
+
+    // Supabase dual-write (fire-and-forget)
+    ;(async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        upsertAssessmentResult({
+          userId: session.user.id,
+          score: result.scores.aiq,
+          tier: String(result.tier.tier),
+          tierLabel: result.tier.label || '',
+          radarData: result.scores,
+        }).catch(console.error);
+      }
+    })();
 
     // Record question IDs and increment counter only after full completion
     addSeenIds(state.questionSet.map(item => item.id));

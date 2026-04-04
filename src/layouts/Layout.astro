@@ -49,6 +49,58 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <script>
       import { supabase } from '../lib/supabase.ts'
+      import { upsertLessonProgress, upsertAssessmentResult, upsertReflectionNote } from '../lib/db.ts'
+
+      // Migrate existing localStorage data to Supabase on sign-in
+      async function migrateLocalStorageToSupabase(userId: string) {
+        // Migrate lesson completions
+        const courseMap = [
+          { key: 'aiq-foundations-completed', courseId: 'foundations' },
+          { key: 'aiq-workflows-completed', courseId: 'workflows' },
+          { key: 'aiq-leadership-completed', courseId: 'leadership' },
+        ];
+        for (const { key, courseId } of courseMap) {
+          const ids: string[] = JSON.parse(localStorage.getItem(key) || '[]');
+          for (const lessonId of ids) {
+            await upsertLessonProgress({ userId, lessonId, courseId }).catch(console.error);
+          }
+        }
+
+        // Migrate reflection notes — scan all localStorage keys
+        const prefixes = [
+          { prefix: 'reflection-' },
+          { prefix: 'wf-reflection-' },
+          { prefix: 'ld-reflection-' },
+        ];
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (!k) continue;
+          for (const { prefix } of prefixes) {
+            if (k.startsWith(prefix)) {
+              const lessonId = k.slice(prefix.length);
+              const noteText = localStorage.getItem(k) || '';
+              if (noteText) {
+                await upsertReflectionNote({ userId, lessonId, noteText }).catch(console.error);
+              }
+            }
+          }
+        }
+
+        // Migrate latest assessment result
+        const raw = localStorage.getItem('aiq_latest_result');
+        if (raw) {
+          try {
+            const r = JSON.parse(raw);
+            await upsertAssessmentResult({
+              userId,
+              score: r.scores?.aiq ?? r.score ?? 0,
+              tier: String(r.tier?.tier ?? r.tier ?? ''),
+              tierLabel: r.tier?.label ?? r.tierLabel ?? r.tier_label ?? '',
+              radarData: r.scores ?? r.radarData ?? r.radar_data,
+            }).catch(console.error);
+          } catch (_e) { /* malformed JSON, skip */ }
+        }
+      }
 
       // Subscribe to auth state changes — fires on page load and on sign in/out
       supabase.auth.onAuthStateChange((_event, session) => {
@@ -69,6 +121,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
         // Expose user globally for page-level scripts
         ;(window as any).__supabaseUser = user
+
+        // On sign-in: migrate any existing localStorage data to Supabase
+        if (_event === 'SIGNED_IN' && user) {
+          migrateLocalStorageToSupabase(user.id);
+        }
       })
 
       // ── Undo-toast sign-out ──────────────────────────────

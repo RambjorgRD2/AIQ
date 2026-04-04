@@ -1008,6 +1008,9 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
 </style>
 
 <script>
+  import { supabase } from '../../../lib/supabase.ts';
+  import { upsertLessonProgress, upsertReflectionNote } from '../../../lib/db.ts';
+
   // ── Hint toggles ──
   // Use style.display instead of the hidden attribute so that
   // the .l-recall-hint { display:flex } CSS rule doesn't override visibility.
@@ -1040,25 +1043,37 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     if (saved) textarea.value = saved;
   }
 
-  saveBtn?.addEventListener('click', () => {
+  saveBtn?.addEventListener('click', async () => {
     if (textarea) {
       localStorage.setItem(storageKey, textarea.value);
       if (savedMsg) {
         savedMsg.hidden = false;
         setTimeout(() => { savedMsg.hidden = true; }, 2500);
       }
+      // Supabase dual-write (fire-and-forget)
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user && moduleSlug) {
+        upsertReflectionNote({ userId: session.user.id, lessonId: moduleSlug, noteText: textarea.value }).catch(console.error);
+      }
     }
   });
 
   // ── Mark module complete on "Next" ──
   const completeBtn = document.getElementById('complete-btn');
-  completeBtn?.addEventListener('click', () => {
+  completeBtn?.addEventListener('click', async () => {
     const slug = location.pathname.split('/').filter(Boolean).pop();
     const completedKey = 'aiq-foundations-completed';
     const completed: string[] = JSON.parse(localStorage.getItem(completedKey) || '[]');
     if (slug && !completed.includes(slug)) {
       completed.push(slug);
       localStorage.setItem(completedKey, JSON.stringify(completed));
+    }
+    // Supabase dual-write (fire-and-forget)
+    if (slug) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'foundations' }).catch(console.error);
+      }
     }
     const next = completeBtn.getAttribute('data-next');
     if (next) window.location.href = next;

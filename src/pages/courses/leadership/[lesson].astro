@@ -418,6 +418,9 @@ const FORUM_URL = `${BASE}/forum`;
 </style>
 
 <script>
+  import { supabase } from '../../../lib/supabase.ts';
+  import { upsertLessonProgress, upsertReflectionNote } from '../../../lib/db.ts';
+
   document.querySelectorAll('.l-recall-hint').forEach(el => {
     (el as HTMLElement).style.display = 'none';
   });
@@ -441,19 +444,31 @@ const FORUM_URL = `${BASE}/forum`;
   const saveBtn = document.getElementById('save-reflection');
   const savedMsg = document.getElementById('reflection-saved');
   if (textarea) { const saved = localStorage.getItem(storageKey); if (saved) textarea.value = saved; }
-  saveBtn?.addEventListener('click', () => {
+  saveBtn?.addEventListener('click', async () => {
     if (textarea) {
       localStorage.setItem(storageKey, textarea.value);
       if (savedMsg) { savedMsg.hidden = false; setTimeout(() => { savedMsg.hidden = true; }, 2500); }
+      // Supabase dual-write (fire-and-forget)
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user && moduleSlug) {
+        upsertReflectionNote({ userId: session.user.id, lessonId: moduleSlug, noteText: textarea.value }).catch(console.error);
+      }
     }
   });
 
   const completeBtn = document.getElementById('complete-btn');
-  completeBtn?.addEventListener('click', () => {
+  completeBtn?.addEventListener('click', async () => {
     const slug = location.pathname.split('/').filter(Boolean).pop();
     const key = 'aiq-leadership-completed';
     const completed: string[] = JSON.parse(localStorage.getItem(key) || '[]');
     if (slug && !completed.includes(slug)) { completed.push(slug); localStorage.setItem(key, JSON.stringify(completed)); }
+    // Supabase dual-write (fire-and-forget)
+    if (slug) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'leadership' }).catch(console.error);
+      }
+    }
     const next = completeBtn.getAttribute('data-next');
     if (next) window.location.href = next;
   });

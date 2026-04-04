@@ -71,13 +71,10 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
         {foundations.map(m => (
           <a
             href={`${BASE}/courses/foundations/${m.slug}`}
-            class={`l-module-item ${m.slug === lesson.slug ? 'active' : ''} ${m.module < lesson.module ? 'done' : ''}`}
+            class={`l-module-item ${m.slug === lesson.slug ? 'active' : ''}`}
           >
             <span class="l-module-num">{String(m.module).padStart(2,'0')}</span>
             <span class="l-module-title">{m.title}</span>
-            {m.module < lesson.module && (
-              <span class="l-module-check">✓</span>
-            )}
           </a>
         ))}
       </nav>
@@ -1040,6 +1037,12 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
 
   // Supabase-first init: load completed lessons and reflection note
   async function initProgress() {
+    // Clear any stale positional done classes from static render
+    document.querySelectorAll('.l-module-item.done').forEach(el => {
+      el.classList.remove('done');
+      el.querySelector('.l-module-check')?.remove();
+    });
+
     const { data: { session } } = await supabase.auth.getSession();
     if (session?.user) {
       // Load completed lessons from Supabase and mark sidebar
@@ -1070,7 +1073,23 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
         }
       }
     } else {
-      // Unauthenticated: use localStorage
+      // Unauthenticated: use localStorage for completion marks
+      const completedIds: string[] = JSON.parse(localStorage.getItem('aiq-foundations-completed') || '[]');
+      if (completedIds.length > 0) {
+        document.querySelectorAll('.l-module-item').forEach(el => {
+          const href = el.getAttribute('href') || '';
+          const slug = href.split('/').filter(Boolean).pop();
+          if (slug && completedIds.includes(slug)) {
+            el.classList.add('done');
+            if (!el.querySelector('.l-module-check')) {
+              const check = document.createElement('span');
+              check.className = 'l-module-check';
+              check.textContent = '✓';
+              el.appendChild(check);
+            }
+          }
+        });
+      }
       if (textarea) {
         const saved = localStorage.getItem(storageKey);
         if (saved) textarea.value = saved;

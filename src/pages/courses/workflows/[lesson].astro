@@ -504,7 +504,16 @@ const FORUM_URL = `${BASE}/forum`;
       }
     }
   }
-  initProgress();
+  // Use onAuthStateChange instead of a bare initProgress() call.
+  // INITIAL_SESSION fires once the SDK has fully restored session state from
+  // storage, avoiding the race condition where getSession() returns null on
+  // first load even though the user is signed in.
+  supabase.auth.onAuthStateChange((event) => {
+    if (['INITIAL_SESSION', 'SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
+      initProgress();
+    }
+  });
+
   saveBtn?.addEventListener('click', async () => {
     if (textarea) {
       localStorage.setItem(storageKey, textarea.value);
@@ -523,11 +532,11 @@ const FORUM_URL = `${BASE}/forum`;
     const key = 'aiq-workflows-completed';
     const completed: string[] = JSON.parse(localStorage.getItem(key) || '[]');
     if (slug && !completed.includes(slug)) { completed.push(slug); localStorage.setItem(key, JSON.stringify(completed)); }
-    // Supabase dual-write (fire-and-forget)
+    // Await Supabase write before navigating so data is persisted
     if (slug) {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'workflows' }).catch(console.error);
+        await upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'workflows' }).catch(console.error);
       }
     }
     const next = completeBtn.getAttribute('data-next');

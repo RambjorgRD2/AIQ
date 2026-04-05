@@ -253,6 +253,37 @@ const pastEvents = events.filter(e => e.status === 'past');
   </section>
 )}
 
+<!-- HOST A SESSION CTA -->
+<section class="f-section f-speak-section">
+  <div class="container">
+    <div class="f-speak-inner glass reveal">
+      <div class="glow-blob" style="width:260px;height:260px;background:var(--violet);top:-80px;left:-80px;opacity:0.07;"></div>
+      <div class="f-speak-text">
+        <div class="chip" style="margin-bottom:1rem">For practitioners</div>
+        <h2 class="f-speak-h2">Know something worth sharing?</h2>
+        <p class="f-speak-sub">The Forum is run by practitioners, for practitioners. If you're doing real AI work and want to share it with the community — we want to hear from you. Every application is reviewed personally.</p>
+        <a href={`${base}/speak`} class="btn-primary f-speak-btn">
+          Propose a session
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="f-speak-formats">
+        {[
+          { icon: '🛠️', label: 'Workshop' },
+          { icon: '📡', label: 'Webinar' },
+          { icon: '🔵', label: 'Roundtable' },
+          { icon: '⚡', label: 'brAInstorm' },
+        ].map(f => (
+          <div class="f-speak-format-pill glass">
+            <span class="f-sf-icon">{f.icon}</span>
+            <span class="f-sf-label">{f.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- JOIN CTA -->
 <section class="f-section f-cta-section">
   <div class="container">
@@ -325,6 +356,31 @@ const pastEvents = events.filter(e => e.status === 'past');
   /* SECTIONS */
   .f-section { padding: 5rem 1.5rem; }
   .f-section-head { margin-bottom: 3rem; }
+  .f-speak-section { padding: 3rem 1.5rem; }
+  .f-speak-inner {
+    padding: 3rem; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+  }
+  .f-speak-h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.4rem,3vw,2rem); font-weight: 800;
+    margin-bottom: 0.75rem;
+  }
+  .f-speak-sub { color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 520px; margin-bottom: 1.75rem; }
+  .f-speak-btn { font-size: 0.9rem; padding: 0.75rem 1.75rem; }
+  .f-speak-formats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; flex-shrink: 0; }
+  .f-speak-format-pill {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.65rem 1rem; border-radius: 10px; min-width: 130px;
+  }
+  .f-sf-icon { font-size: 1.1rem; }
+  .f-sf-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; font-weight: 700; }
+  @media (max-width: 768px) {
+    .f-speak-inner { grid-template-columns: 1fr; }
+    .f-speak-formats { grid-template-columns: repeat(4, auto); justify-content: flex-start; }
+    .f-speak-format-pill { min-width: 0; }
+  }
+
   .f-cta-section { padding: 3rem 1.5rem 7rem; }
   .f-expect-section { background: rgba(8,13,26,0.5); }
   .f-past-section { background: rgba(8,13,26,0.3); }

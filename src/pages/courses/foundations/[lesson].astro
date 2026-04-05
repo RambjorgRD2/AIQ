@@ -1099,7 +1099,15 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
       }
     }
   }
-  initProgress();
+  // Use onAuthStateChange instead of a bare initProgress() call.
+  // INITIAL_SESSION fires once the SDK has fully restored session state from
+  // storage, avoiding the race condition where getSession() returns null on
+  // first load even though the user is signed in.
+  supabase.auth.onAuthStateChange((event) => {
+    if (['INITIAL_SESSION', 'SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
+      initProgress();
+    }
+  });
 
   saveBtn?.addEventListener('click', async () => {
     if (textarea) {
@@ -1126,11 +1134,11 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
       completed.push(slug);
       localStorage.setItem(completedKey, JSON.stringify(completed));
     }
-    // Supabase dual-write (fire-and-forget)
+    // Await Supabase write before navigating so data is persisted
     if (slug) {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'foundations' }).catch(console.error);
+        await upsertLessonProgress({ userId: session.user.id, lessonId: slug, courseId: 'foundations' }).catch(console.error);
       }
     }
     const next = completeBtn.getAttribute('data-next');

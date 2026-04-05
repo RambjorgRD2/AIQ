@@ -142,6 +142,77 @@ export async function getLatestAssessmentResult(
   return data as AssessmentResultRow
 }
 
+// ── Speaker applications ─────────────────────────────────────────────────────
+
+export interface SpeakerApplicationRow {
+  id: string
+  created_at: string
+  name: string
+  email: string
+  topic_title: string
+  session_type: string
+  abstract: string
+  bio: string
+  preferred_month: string | null
+  links: string | null
+  status: 'pending' | 'approved' | 'rejected'
+  admin_notes: string | null
+}
+
+/** Submit a new speaker application. */
+export async function submitSpeakerApplication({
+  name,
+  email,
+  topicTitle,
+  sessionType,
+  abstract,
+  bio,
+  preferredMonth,
+  links,
+}: {
+  name: string
+  email: string
+  topicTitle: string
+  sessionType: string
+  abstract: string
+  bio: string
+  preferredMonth?: string
+  links?: string
+}): Promise<void> {
+  const { error } = await supabase
+    .from('speaker_applications')
+    .insert({
+      name,
+      email,
+      topic_title: topicTitle,
+      session_type: sessionType,
+      abstract,
+      bio,
+      preferred_month: preferredMonth ?? null,
+      links: links ?? null,
+    })
+  if (error) {
+    console.error('[db] submitSpeakerApplication error:', error.message)
+    throw error
+  }
+}
+
+/**
+ * Returns true if speaker applications are currently open.
+ * Reads from system_config table. Defaults to true on error (fail-open).
+ */
+export async function isSpeakerApplicationsOpen(): Promise<boolean> {
+  const { data, error } = await supabase
+    .from('system_config')
+    .select('value')
+    .eq('key', 'speaker_applications_open')
+    .single()
+  if (error || !data) return true
+  return (data as { value: string }).value === 'true'
+}
+
+// ── Reflection notes ─────────────────────────────────────────────────────────
+
 /** Returns the stored reflection note text for a lesson, or null if none. */
 export async function getReflectionNote(
   userId: string,

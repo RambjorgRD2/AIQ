@@ -1,0 +1,536 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Admin — Speaker Applications Toggle">
+
+<div class="adm-shell grid-bg">
+  <div class="glow-blob" style="width:400px;height:400px;background:var(--violet);top:-150px;right:-150px;opacity:0.06;"></div>
+  <div class="glow-blob" style="width:300px;height:300px;background:var(--cyan);bottom:-100px;left:-100px;opacity:0.05;"></div>
+
+  <!-- Header bar -->
+  <header class="adm-header">
+    <a href={`${BASE}/`} class="adm-logo" aria-label="AIQ Home">
+      <svg width="60" height="24" viewBox="0 0 72 28" fill="none">
+        <text x="0" y="22" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="800" fill="url(#admGrad)">AIQ</text>
+        <path d="M2 26 Q18 21 36 26 Q54 21 70 26" stroke="url(#admGrad)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="admGrad" x1="0" y1="0" x2="72" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <div class="adm-header-right">
+      <span class="adm-label-chip">Admin</span>
+      <span class="adm-user-email" id="adm-email"></span>
+      <button class="adm-signout-btn" id="adm-signout">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="adm-main">
+
+    <!-- Auth loading -->
+    <div id="adm-auth-loading" class="adm-state-wrap">
+      <div class="adm-spinner"></div>
+      <p class="adm-state-text">Checking authentication…</p>
+    </div>
+
+    <!-- Not authenticated -->
+    <div id="adm-unauth" class="adm-state-wrap" style="display:none">
+      <div class="adm-state-icon">🔒</div>
+      <p class="adm-state-text">You need to be signed in to access this page.</p>
+      <a id="adm-signin-link" href={`${BASE}/signin`} class="btn-primary" style="margin-top:1rem">Sign in →</a>
+    </div>
+
+    <!-- Admin panel -->
+    <div id="adm-panel" style="display:none">
+      <div class="adm-card glass">
+
+        <div class="adm-card-head">
+          <div class="adm-card-title-row">
+            <h1 class="adm-title">Speaker Applications</h1>
+            <!-- Live status badge -->
+            <div id="adm-status-badge" class="adm-status-badge adm-status-loading">
+              <span class="adm-status-dot"></span>
+              <span id="adm-status-text">Loading…</span>
+            </div>
+          </div>
+          <p class="adm-desc">Controls whether the application form on <a href={`${BASE}/speak`} class="adm-link" target="_blank">/speak ↗</a> is visible to visitors. Toggle it off to stop receiving new applications; toggle on to reopen.</p>
+        </div>
+
+        <!-- Toggle widget -->
+        <div id="adm-toggle-loading" class="adm-toggle-skeleton">
+          <div class="adm-skel adm-skel-toggle"></div>
+          <div class="adm-skel adm-skel-label"></div>
+        </div>
+
+        <div id="adm-toggle-wrap" class="adm-toggle-wrap" style="display:none">
+          <button
+            id="adm-toggle-btn"
+            class="adm-toggle-btn"
+            type="button"
+            aria-label="Toggle speaker applications"
+          >
+            <span class="adm-toggle-track" id="adm-toggle-track">
+              <span class="adm-toggle-thumb" id="adm-toggle-thumb"></span>
+            </span>
+            <span class="adm-toggle-labels">
+              <span id="adm-toggle-main-label" class="adm-toggle-main-label">Open</span>
+              <span id="adm-toggle-sub-label" class="adm-toggle-sub-label">Visitors can submit speaker applications</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- Confirm action -->
+        <div id="adm-confirm-wrap" class="adm-confirm-wrap glass" style="display:none">
+          <p class="adm-confirm-text" id="adm-confirm-text"></p>
+          <div class="adm-confirm-btns">
+            <button id="adm-confirm-yes" class="btn-primary adm-confirm-btn" type="button">Confirm</button>
+            <button id="adm-confirm-no" class="btn-secondary adm-confirm-btn" type="button">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Saving state -->
+        <div id="adm-saving" class="adm-saving" style="display:none">
+          <div class="adm-spinner adm-spinner-sm"></div>
+          <span>Saving…</span>
+        </div>
+
+        <!-- Toast -->
+        <div id="adm-toast" class="adm-toast" style="display:none" role="status" aria-live="polite"></div>
+
+        <div class="adm-divider"></div>
+
+        <!-- Quick links -->
+        <div class="adm-links-row">
+          <a href={`${BASE}/speak`} class="adm-quick-link" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View /speak page
+          </a>
+          <a href={`${BASE}/forum`} class="adm-quick-link" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View Forum
+          </a>
+          <a href="https://supabase.com/dashboard" class="adm-quick-link" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Supabase Dashboard
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</Layout>
+
+<style>
+  :global(body) { min-height: 100vh; }
+
+  .adm-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* HEADER */
+  .adm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    border-bottom: 1px solid rgba(0,207,255,0.08);
+    background: rgba(4,7,15,0.7);
+    backdrop-filter: blur(12px);
+    flex-shrink: 0;
+  }
+  .adm-logo { display: flex; align-items: center; text-decoration: none; }
+  .adm-header-right { display: flex; align-items: center; gap: 1rem; }
+  .adm-label-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(124,58,237,0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+  }
+  .adm-user-email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .adm-signout-btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); padding: 0.3rem 0.5rem;
+    transition: color 0.2s;
+  }
+  .adm-signout-btn:hover { color: var(--text); }
+
+  /* MAIN */
+  .adm-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+  }
+
+  /* STATE WRAPPERS */
+  .adm-state-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  .adm-state-icon { font-size: 2rem; }
+  .adm-state-text { color: var(--muted); font-size: 0.95rem; }
+
+  /* SPINNERS */
+  .adm-spinner {
+    width: 28px; height: 28px;
+    border: 2px solid rgba(0,207,255,0.12);
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: adm-spin 0.7s linear infinite;
+  }
+  .adm-spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+  @keyframes adm-spin { to { transform: rotate(360deg); } }
+
+  /* CARD */
+  .adm-card {
+    width: 100%;
+    max-width: 560px;
+    padding: 2.5rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .adm-card-head { display: flex; flex-direction: column; gap: 0.6rem; }
+  .adm-card-title-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .adm-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem; font-weight: 800;
+    color: var(--text);
+  }
+  .adm-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+  .adm-link { color: var(--cyan); text-decoration: none; }
+  .adm-link:hover { text-decoration: underline; }
+
+  /* STATUS BADGE */
+  .adm-status-badge {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    transition: all 0.3s;
+  }
+  .adm-status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .adm-status-loading {
+    background: rgba(107,122,153,0.12);
+    border: 1px solid rgba(107,122,153,0.2);
+    color: var(--muted);
+  }
+  .adm-status-loading .adm-status-dot { background: var(--muted); }
+  .adm-status-open {
+    background: rgba(0,207,255,0.1);
+    border: 1px solid rgba(0,207,255,0.25);
+    color: var(--cyan);
+  }
+  .adm-status-open .adm-status-dot {
+    background: var(--cyan);
+    box-shadow: 0 0 6px rgba(0,207,255,0.6);
+    animation: adm-pulse 1.8s ease-in-out infinite;
+  }
+  .adm-status-closed {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #fca5a5;
+  }
+  .adm-status-closed .adm-status-dot { background: #f87171; }
+  @keyframes adm-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* TOGGLE SKELETON */
+  .adm-toggle-skeleton { display: flex; align-items: center; gap: 1rem; }
+  .adm-skel {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    animation: adm-shimmer 1.4s ease-in-out infinite;
+  }
+  .adm-skel-toggle { width: 56px; height: 28px; border-radius: 999px; }
+  .adm-skel-label { width: 160px; height: 20px; }
+  @keyframes adm-shimmer {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+
+  /* TOGGLE BUTTON */
+  .adm-toggle-wrap { }
+  .adm-toggle-btn {
+    display: flex; align-items: center; gap: 1rem;
+    background: none; border: none; cursor: pointer;
+    padding: 0.75rem; border-radius: 12px;
+    transition: background 0.2s;
+    width: 100%;
+    text-align: left;
+  }
+  .adm-toggle-btn:hover { background: rgba(255,255,255,0.03); }
+
+  .adm-toggle-track {
+    position: relative;
+    width: 52px; height: 28px;
+    border-radius: 999px;
+    background: rgba(107,122,153,0.2);
+    border: 1px solid rgba(107,122,153,0.25);
+    flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .adm-toggle-track.is-open {
+    background: rgba(0,207,255,0.2);
+    border-color: rgba(0,207,255,0.4);
+  }
+  .adm-toggle-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s;
+  }
+  .adm-toggle-track.is-open .adm-toggle-thumb {
+    transform: translateX(24px);
+    background: var(--cyan);
+    box-shadow: 0 0 8px rgba(0,207,255,0.4);
+  }
+
+  .adm-toggle-labels { display: flex; flex-direction: column; gap: 0.15rem; }
+  .adm-toggle-main-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--text);
+  }
+  .adm-toggle-sub-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* CONFIRM */
+  .adm-confirm-wrap {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .adm-confirm-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .adm-confirm-btns { display: flex; gap: 0.6rem; }
+  .adm-confirm-btn { padding: 0.55rem 1.25rem; font-size: 0.85rem; }
+
+  /* SAVING */
+  .adm-saving {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; color: var(--muted);
+  }
+
+  /* TOAST */
+  .adm-toast {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    animation: adm-fadein 0.25s ease;
+  }
+  .adm-toast-success {
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.2);
+    color: var(--cyan);
+  }
+  .adm-toast-error {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #fca5a5;
+  }
+  @keyframes adm-fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* DIVIDER + LINKS */
+  .adm-divider { height: 1px; background: rgba(255,255,255,0.06); }
+  .adm-links-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .adm-quick-link {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .adm-quick-link:hover { color: var(--cyan); }
+</style>
+
+<script>
+  import { supabase } from '../../lib/supabase.ts';
+  import { isSpeakerApplicationsOpen, setSpeakerApplicationsOpen } from '../../lib/db.ts';
+
+  const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+  const authLoadingEl  = document.getElementById('adm-auth-loading')!;
+  const unauthEl       = document.getElementById('adm-unauth')!;
+  const panelEl        = document.getElementById('adm-panel')!;
+  const emailEl        = document.getElementById('adm-email')!;
+  const signinLink     = document.getElementById('adm-signin-link') as HTMLAnchorElement;
+  const signoutBtn     = document.getElementById('adm-signout')!;
+
+  const statusBadge    = document.getElementById('adm-status-badge')!;
+  const statusText     = document.getElementById('adm-status-text')!;
+  const toggleLoading  = document.getElementById('adm-toggle-loading')!;
+  const toggleWrap     = document.getElementById('adm-toggle-wrap')!;
+  const toggleBtn      = document.getElementById('adm-toggle-btn')!;
+  const toggleTrack    = document.getElementById('adm-toggle-track')!;
+  const toggleMainLabel = document.getElementById('adm-toggle-main-label')!;
+  const toggleSubLabel  = document.getElementById('adm-toggle-sub-label')!;
+  const confirmWrap    = document.getElementById('adm-confirm-wrap')!;
+  const confirmText    = document.getElementById('adm-confirm-text')!;
+  const confirmYes     = document.getElementById('adm-confirm-yes')!;
+  const confirmNo      = document.getElementById('adm-confirm-no')!;
+  const savingEl       = document.getElementById('adm-saving')!;
+  const toastEl        = document.getElementById('adm-toast')!;
+
+  let currentState: boolean | null = null;
+  let pendingState: boolean | null = null;
+  let toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // ── Auth flow ───────────────────────────────────────────────────────────────
+  supabase.auth.onAuthStateChange(async (_event, session) => {
+    authLoadingEl.style.display = 'none';
+    if (!session?.user) {
+      // Pass current URL as redirect param so user comes back after sign-in
+      signinLink.href = `${BASE}/signin?redirect=${encodeURIComponent(window.location.pathname)}`;
+      unauthEl.style.display = 'flex';
+      panelEl.style.display = 'none';
+      return;
+    }
+    unauthEl.style.display = 'none';
+    panelEl.style.display = '';
+    emailEl.textContent = session.user.email ?? '';
+    await loadToggleState();
+  });
+
+  // ── Sign out ────────────────────────────────────────────────────────────────
+  signoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+  });
+
+  // ── Load current state ──────────────────────────────────────────────────────
+  async function loadToggleState() {
+    try {
+      const isOpen = await isSpeakerApplicationsOpen();
+      currentState = isOpen;
+      renderToggle(isOpen);
+    } catch (_e) {
+      showToast('Failed to load current state. Try refreshing.', 'error');
+    }
+  }
+
+  function renderToggle(isOpen: boolean) {
+    toggleLoading.style.display = 'none';
+    toggleWrap.style.display = '';
+
+    // Status badge
+    statusBadge.className = `adm-status-badge ${isOpen ? 'adm-status-open' : 'adm-status-closed'}`;
+    statusText.textContent = isOpen ? 'Open' : 'Closed';
+
+    // Toggle track + thumb
+    if (isOpen) {
+      toggleTrack.classList.add('is-open');
+    } else {
+      toggleTrack.classList.remove('is-open');
+    }
+
+    // Labels
+    toggleMainLabel.textContent = isOpen ? 'Open' : 'Closed';
+    toggleSubLabel.textContent = isOpen
+      ? 'Visitors can submit speaker applications'
+      : 'Application form is hidden — submissions are paused';
+  }
+
+  // ── Toggle click → show confirm ─────────────────────────────────────────────
+  toggleBtn.addEventListener('click', () => {
+    if (currentState === null) return;
+    pendingState = !currentState;
+    confirmText.textContent = pendingState
+      ? 'Open speaker applications? The form will become visible on /speak immediately.'
+      : 'Close speaker applications? The form will be hidden and no new submissions will be accepted.';
+    confirmWrap.style.display = '';
+    toggleBtn.setAttribute('disabled', '');
+  });
+
+  // ── Confirm ─────────────────────────────────────────────────────────────────
+  confirmYes.addEventListener('click', async () => {
+    if (pendingState === null) return;
+    confirmWrap.style.display = 'none';
+    savingEl.style.display = 'flex';
+
+    try {
+      await setSpeakerApplicationsOpen(pendingState);
+      currentState = pendingState;
+      renderToggle(currentState);
+      showToast(
+        currentState ? '✓ Applications are now open.' : '✓ Applications are now closed.',
+        'success'
+      );
+    } catch (_e) {
+      showToast('Save failed. Check your connection and try again.', 'error');
+    } finally {
+      savingEl.style.display = 'none';
+      toggleBtn.removeAttribute('disabled');
+      pendingState = null;
+    }
+  });
+
+  // ── Cancel ──────────────────────────────────────────────────────────────────
+  confirmNo.addEventListener('click', () => {
+    confirmWrap.style.display = 'none';
+    toggleBtn.removeAttribute('disabled');
+    pendingState = null;
+  });
+
+  // ── Toast ────────────────────────────────────────────────────────────────────
+  function showToast(message: string, type: 'success' | 'error') {
+    if (toastTimer) clearTimeout(toastTimer);
+    toastEl.textContent = message;
+    toastEl.className = `adm-toast adm-toast-${type}`;
+    toastEl.style.display = '';
+    toastTimer = setTimeout(() => { toastEl.style.display = 'none'; }, 4000);
+  }
+</script>

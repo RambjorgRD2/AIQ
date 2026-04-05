@@ -197,6 +197,18 @@ export async function submitSpeakerApplication({
   }
 }
 
+/** Set the speaker applications toggle. Requires an authenticated session. */
+export async function setSpeakerApplicationsOpen(open: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('system_config')
+    .update({ value: open ? 'true' : 'false', updated_at: new Date().toISOString() })
+    .eq('key', 'speaker_applications_open')
+  if (error) {
+    console.error('[db] setSpeakerApplicationsOpen error:', error.message)
+    throw error
+  }
+}
+
 /**
  * Returns true if speaker applications are currently open.
  * Reads from system_config table. Defaults to true on error (fail-open).

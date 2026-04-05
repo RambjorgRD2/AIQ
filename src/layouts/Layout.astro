@@ -73,6 +73,14 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
               </a>
             </div>
           </div>
+          <!-- Admin section (shown only for admin users) -->
+          <div id="auth-admin-section" style="display:none">
+            <div class="auth-dd-divider"></div>
+            <a href={`${BASE}/admin/toggle`} class="auth-dd-admin-link">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="7" y="1" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+              Admin Panel
+            </a>
+          </div>
           <div class="auth-dd-divider"></div>
           <!-- Sign out -->
           <button data-sign-out class="auth-dd-signout">Sign Out</button>
@@ -145,9 +153,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         }
       }
 
+      const ADMIN_EMAIL = 'rambjorg.rdd@gmail.com'
+
       // Subscribe to auth state changes — fires on page load and on sign in/out
       supabase.auth.onAuthStateChange((_event, session) => {
         const user = session?.user ?? null
+        const isAdmin = user?.email === ADMIN_EMAIL
 
         // Toggle auth UI elements
         document.querySelectorAll('[data-auth-show]').forEach(el => {
@@ -166,6 +177,20 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
             ;(el as HTMLElement).textContent = emailShort
           })
 
+          // Admin section & badge
+          const adminSection = document.getElementById('auth-admin-section')
+          const badgeEl = document.getElementById('auth-tier-badge')
+          if (isAdmin) {
+            if (adminSection) adminSection.style.display = ''
+            if (badgeEl) {
+              badgeEl.textContent = 'ADMIN'
+              badgeEl.style.display = ''
+              badgeEl.classList.add('auth-tier-chip--admin')
+            }
+          } else {
+            if (adminSection) adminSection.style.display = 'none'
+          }
+
           // Populate dropdown data
           getLatestAssessmentResult(user.id).then(result => {
             if (result) {
@@ -174,7 +199,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
               const badgeEl = document.getElementById('auth-tier-badge')
               if (scoreEl) scoreEl.textContent = String(result.score)
               if (tierEl) tierEl.textContent = result.tier_label || result.tier
-              if (badgeEl) {
+              // Don't override the ADMIN badge for admin users
+              if (badgeEl && !isAdmin) {
                 badgeEl.textContent = result.tier ? `L${result.tier}` : ''
                 badgeEl.style.display = result.tier ? '' : 'none'
               }
@@ -200,9 +226,11 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           const scoreEl = document.getElementById('auth-aiq-score')
           const tierEl = document.getElementById('auth-aiq-tier')
           const badgeEl = document.getElementById('auth-tier-badge')
+          const adminSection = document.getElementById('auth-admin-section')
           if (scoreEl) scoreEl.textContent = '—'
           if (tierEl) tierEl.textContent = ''
-          if (badgeEl) { badgeEl.textContent = ''; badgeEl.style.display = 'none' }
+          if (badgeEl) { badgeEl.textContent = ''; badgeEl.style.display = 'none'; badgeEl.classList.remove('auth-tier-chip--admin') }
+          if (adminSection) adminSection.style.display = 'none'
           const progEls = [
             { id: 'prog-foundations', def: '0/12' },
             { id: 'prog-workflows', def: '0/22' },
@@ -586,6 +614,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   .auth-user-email-short {
     color: var(--muted);
     max-width: 120px;
+    min-width: 0;
+    flex-shrink: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -704,6 +734,29 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .auth-dd-signout:hover {
     color: var(--cyan);
+  }
+
+  .auth-tier-chip--admin {
+    color: var(--violet);
+    border-color: rgba(124, 58, 237, 0.5);
+    background: rgba(124, 58, 237, 0.12);
+  }
+
+  .auth-dd-admin-link {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--violet);
+    padding: 0.2rem 0;
+    transition: color 0.2s;
+  }
+
+  .auth-dd-admin-link:hover {
+    color: #a855f7;
   }
 
   /* Mobile: auth lives in the hamburger menu on all pages */

@@ -22,11 +22,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         </defs>
       </svg>
     </a>
-    <div class="adm-header-right">
-      <span class="adm-label-chip">Admin</span>
-      <span class="adm-user-email" id="adm-email"></span>
-      <button class="adm-signout-btn" id="adm-signout">Sign out</button>
-    </div>
+    <span class="adm-label-chip">Admin Panel</span>
   </header>
 
   <!-- Main content -->
@@ -152,7 +148,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     flex-shrink: 0;
   }
   .adm-logo { display: flex; align-items: center; text-decoration: none; }
-  .adm-header-right { display: flex; align-items: center; gap: 1rem; }
   .adm-label-chip {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem; font-weight: 700;
@@ -163,19 +158,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
   }
-  .adm-user-email {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-  .adm-signout-btn {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem; font-weight: 600;
-    background: none; border: none; cursor: pointer;
-    color: var(--muted); padding: 0.3rem 0.5rem;
-    transition: color 0.2s;
-  }
-  .adm-signout-btn:hover { color: var(--text); }
 
   /* MAIN */
   .adm-main {
@@ -407,9 +389,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   const authLoadingEl  = document.getElementById('adm-auth-loading')!;
   const unauthEl       = document.getElementById('adm-unauth')!;
   const panelEl        = document.getElementById('adm-panel')!;
-  const emailEl        = document.getElementById('adm-email')!;
   const signinLink     = document.getElementById('adm-signin-link') as HTMLAnchorElement;
-  const signoutBtn     = document.getElementById('adm-signout')!;
+
+  // Prefetch toggle state immediately — no auth needed for read
+  const toggleStatePromise = isSpeakerApplicationsOpen().catch(() => null);
 
   const statusBadge    = document.getElementById('adm-status-badge')!;
   const statusText     = document.getElementById('adm-status-text')!;
@@ -434,7 +417,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   supabase.auth.onAuthStateChange(async (_event, session) => {
     authLoadingEl.style.display = 'none';
     if (!session?.user) {
-      // Pass current URL as redirect param so user comes back after sign-in
       signinLink.href = `${BASE}/signin?redirect=${encodeURIComponent(window.location.pathname)}`;
       unauthEl.style.display = 'flex';
       panelEl.style.display = 'none';
@@ -442,19 +424,14 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     unauthEl.style.display = 'none';
     panelEl.style.display = '';
-    emailEl.textContent = session.user.email ?? '';
     await loadToggleState();
   });
 
-  // ── Sign out ────────────────────────────────────────────────────────────────
-  signoutBtn.addEventListener('click', async () => {
-    await supabase.auth.signOut();
-  });
-
-  // ── Load current state ──────────────────────────────────────────────────────
+  // ── Load current state (uses prefetched promise) ─────────────────────────────
   async function loadToggleState() {
     try {
-      const isOpen = await isSpeakerApplicationsOpen();
+      const isOpen = await toggleStatePromise;
+      if (isOpen === null) throw new Error('fetch failed');
       currentState = isOpen;
       renderToggle(isOpen);
     } catch (_e) {

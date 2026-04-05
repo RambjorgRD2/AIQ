@@ -49,6 +49,7 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     <div class="l-nav-meta">
       <span class="l-tier-badge">{lesson.tierLabel}</span>
       <span class="l-duration">{lesson.duration}</span>
+      <a href={`${BASE}/signin`} data-auth-hide class="l-nav-signin">Sign In</a>
     </div>
   </div>
 </nav>
@@ -326,6 +327,8 @@ const progressPct = Math.round((lesson.module / totalModules) * 100);
     white-space: nowrap;
   }
   .l-duration { font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+  .l-nav-signin { font-size:0.8rem;font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--cyan);text-decoration:none;padding:0.3rem 0.75rem;border:1px solid rgba(0,207,255,0.3);border-radius:999px;transition:background 0.2s; }
+  .l-nav-signin:hover { background:rgba(0,207,255,0.08); }
   @media(max-width:640px) { .l-breadcrumb { display: none; } .l-nav-meta { display: none; } }
 
   /* ─── Shell layout ─── */

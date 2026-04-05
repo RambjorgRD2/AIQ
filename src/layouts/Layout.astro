@@ -45,28 +45,29 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
           <!-- My AIQ section -->
           <div class="auth-dd-section">
             <div class="auth-dd-label">My AIQ</div>
-            <div id="auth-aiq-display" class="auth-dd-aiq">
+            <a href={`${BASE}/results`} class="auth-dd-aiq auth-dd-link" id="auth-aiq-display">
               <span id="auth-aiq-score" class="auth-aiq-score">—</span>
               <span id="auth-aiq-tier" class="auth-aiq-tier"></span>
-            </div>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style="margin-left:auto;opacity:0.4;flex-shrink:0"><path d="M2 8L8 2M8 2H4M8 2v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
           </div>
           <div class="auth-dd-divider"></div>
           <!-- Course progress section -->
           <div class="auth-dd-section">
             <div class="auth-dd-label">Course Progress</div>
             <div class="auth-dd-progress-list">
-              <div class="auth-dd-progress-row">
+              <a href={`${BASE}/courses/foundations`} class="auth-dd-progress-row auth-dd-link">
                 <span class="auth-dd-course-name">AI~Foundations</span>
                 <span id="prog-foundations" class="auth-dd-fraction">0/12</span>
-              </div>
-              <div class="auth-dd-progress-row">
+              </a>
+              <a href={`${BASE}/courses/workflows`} class="auth-dd-progress-row auth-dd-link">
                 <span class="auth-dd-course-name">AI~Workflows</span>
                 <span id="prog-workflows" class="auth-dd-fraction">0/22</span>
-              </div>
-              <div class="auth-dd-progress-row">
+              </a>
+              <a href={`${BASE}/courses/leadership`} class="auth-dd-progress-row auth-dd-link">
                 <span class="auth-dd-course-name">AI~Leadership</span>
                 <span id="prog-leadership" class="auth-dd-fraction">0/21</span>
-              </div>
+              </a>
             </div>
           </div>
           <div class="auth-dd-divider"></div>
@@ -646,11 +647,31 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     gap: 0.1rem;
   }
 
+  .auth-dd-link {
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.15s;
+    margin: 0 -0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+
+  .auth-dd-link:hover {
+    background: rgba(0, 207, 255, 0.06);
+  }
+
+  .auth-dd-aiq.auth-dd-link {
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
   .auth-dd-progress-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.2rem 0;
+    padding: 0.25rem 0.4rem;
+    margin: 0 -0.4rem;
   }
 
   .auth-dd-course-name {

@@ -176,69 +176,6 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     </div>
   </section>
 
-  <!-- ─── UPCOMING EVENTS PREVIEW ─────────────────────── -->
-  <section id="events" class="events-preview-section">
-    <div class="container">
-      <div class="ep-head reveal">
-        <div class="ep-head-left">
-          <div class="chip">Sosial AI Forum</div>
-          <h2 class="section-title" style="margin-bottom:0.5rem">What's on next</h2>
-          <p class="section-sub">Live sessions, workshops, and roundtables — hands-on by design.</p>
-        </div>
-        <a href={FORUM_URL} class="btn-secondary ep-view-all">View all events →</a>
-      </div>
-
-      {nextEvent ? (
-        <div class="ep-card glass reveal">
-          <div class="ep-date-badge">
-            <span class="ep-day">{formatDate(nextEvent.date).day}</span>
-            <span class="ep-month">{formatDate(nextEvent.date).month}</span>
-          </div>
-          <div class="ep-body">
-            <div class="ep-tags">
-              <span class="ep-format-chip" style={`background:${formatColors[nextEvent.format] ?? 'rgba(0,207,255,0.08)'};color:${formatTextColors[nextEvent.format] ?? 'var(--cyan)'};border-color:${(formatTextColors[nextEvent.format] ?? '#00CFFF')}33;border:1px solid`}>
-                {nextEvent.format}
-              </span>
-              <span class="ep-tier-chip">{nextEvent.tierRecommended}</span>
-            </div>
-            <h3 class="ep-title">{nextEvent.title}</h3>
-            <p class="ep-desc">{nextEvent.description}</p>
-            <div class="ep-meta">
-              <span class="ep-meta-item">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 3.5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                {nextEvent.time} {nextEvent.timezone}
-              </span>
-              <span class="ep-sep">·</span>
-              <span class="ep-meta-item">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 11.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                {nextEvent.capacity} spots
-              </span>
-              <span class="ep-sep">·</span>
-              <span class="ep-meta-item">{nextEvent.location}</span>
-            </div>
-          </div>
-          <div class="ep-cta">
-            <p class="ep-date-full">{formatDate(nextEvent.date).weekday}, {formatDate(nextEvent.date).full}</p>
-            <button
-              class="luma-checkout--button btn-primary ep-register-btn"
-              type="button"
-              data-luma-action="checkout"
-              data-luma-event-id={nextEvent.lumaEventId}
-            >
-              Register — Free
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <p class="ep-register-note">Opens Luma registration</p>
-          </div>
-        </div>
-      ) : (
-        <div class="ep-empty glass reveal">
-          <p>No upcoming events scheduled. <a href={FORUM_URL} style="color:var(--cyan);text-decoration:none">See the full calendar →</a></p>
-        </div>
-      )}
-    </div>
-  </section>
-
   <!-- ─── ABOUT AIQ ─────────────────────────────────────── -->
   <section id="about">
     <div class="container">
@@ -294,6 +231,117 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
             <span class="scale-mark" style="left:67%">Advanced</span>
             <span class="scale-mark" style="left:89%">Pioneer</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+  <section id="how" class="how-section grid-bg">
+    <div class="glow-blob how-glow"></div>
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;margin:0 auto 4rem">
+        <div class="chip" style="justify-content:center">The Process</div>
+        <h2 class="section-title">Three steps to AI fluency</h2>
+        <p class="section-sub" style="margin:0 auto">Simple, structured, and designed to create lasting results — not just surface knowledge.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal reveal-delay-1">
+          <div class="step-number">01</div>
+          <div class="step-connector"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="url(#sg1)" stroke-width="1.5"/><text x="14" y="19" text-anchor="middle" font-family="'JetBrains Mono'" font-size="13" font-weight="700" fill="url(#sg1)">?</text><defs><linearGradient id="sg1" x1="3" y1="3" x2="25" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+            </div>
+            <h3>Take the AIQ Assessment</h3>
+            <p>Answer a curated set of questions that measure your AI thinking, application, and leadership. Get your score in minutes.</p>
+          </div>
+        </div>
+
+        <div class="step reveal reveal-delay-2">
+          <div class="step-number">02</div>
+          <div class="step-connector"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="10" r="4" stroke="url(#sg2)" stroke-width="1.5"/><path d="M20 5l2 2-2 2" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="sg2" x1="6" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+            </div>
+            <h3>Join the Sosial AI Society</h3>
+            <p>Based on your score, you'll be placed in the right learning track. Access courses, community, and resources built for your level.</p>
+          </div>
+        </div>
+
+        <div class="step reveal reveal-delay-3">
+          <div class="step-number">03</div>
+          <div class="step-connector last"></div>
+          <div class="step-content glass">
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 6 6.5 1-4.7 4.6 1.1 6.5L14 19.2 8.6 22.1l1.1-6.5L5 11l6.5-1L14 4z" stroke="url(#sg3)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="sg3" x1="5" y1="4" x2="23" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+            </div>
+            <h3>Level Up Your AIQ</h3>
+            <p>Track your growth over time. Retake the assessment, move through tiers, earn your certification, and lead with confidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ──────────────────────────────────────── -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;margin:0 auto 3.5rem">
+        <div class="chip" style="justify-content:center">The Ecosystem</div>
+        <h2 class="section-title">Everything in the Forum ecosystem</h2>
+        <p class="section-sub" style="margin:0 auto">From free events to structured courses, verified certification to team upskilling — the full spectrum of AI development.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature glass reveal reveal-delay-1">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="url(#fg1)" stroke-width="1.5"/><path d="M7 11l3 3 5-5" stroke="url(#fg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fg1" x1="2" y1="2" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          </div>
+          <h3>AIQ Assessment</h3>
+          <p>Get a precise baseline score across Think, Apply, and Lead dimensions. Know exactly where you stand.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-2">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="url(#fg2)" stroke-width="1.5"/><path d="M7 8h8M7 11h5" stroke="url(#fg2)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="fg2" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs></svg>
+          </div>
+          <h3>Structured Courses</h3>
+          <p>Tier-based learning tracks designed to move you from where you are to where you want to be.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-3">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 16c0-2.8 2.2-5 5-5h4c2.8 0 5 2.2 5 5" stroke="url(#fg3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="8" r="3" stroke="url(#fg3)" stroke-width="1.5"/><defs><linearGradient id="fg3" x1="4" y1="3" x2="18" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+          </div>
+          <h3>Members Community</h3>
+          <p>Connect with peers, share wins, get feedback, and grow alongside other AI-fluent professionals.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-4">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 5h16M3 11h10M3 17h13" stroke="url(#fg4)" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="17" r="3" fill="none" stroke="url(#fg4)" stroke-width="1.5"/><defs><linearGradient id="fg4" x1="3" y1="5" x2="20" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+          </div>
+          <h3>Resources & Playbooks</h3>
+          <p>Curated prompt libraries, AI workflow templates, and tool guides — ready to use immediately.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-3">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2 6h6l-5 3.5 2 6L11 15l-5 3.5 2-6L3 9h6l2-6z" stroke="url(#fg5)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="fg5" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          </div>
+          <h3>Sosial AI Forum</h3>
+          <p>Monthly workshops, roundtables, and the brAInstorm Series — live events where AI practitioners meet, build, and push each other forward.</p>
+        </div>
+
+        <div class="feature glass reveal reveal-delay-4">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="13" width="14" height="7" rx="2" stroke="url(#fg6)" stroke-width="1.5"/><path d="M8 13V9a3 3 0 016 0v4" stroke="url(#fg6)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="17" r="1.2" fill="url(#fg6)"/><defs><linearGradient id="fg6" x1="4" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#00CFFF"/></linearGradient></defs></svg>
+          </div>
+          <h3>AIQ Certification</h3>
+          <p>Earn your verified AIQ certificate to showcase your AI fluency to employers, clients, and teams.</p>
         </div>
       </div>
     </div>
@@ -387,114 +435,66 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     </div>
   </section>
 
-  <!-- ─── FEATURES ──────────────────────────────────────── -->
-  <section id="features">
+  <!-- ─── UPCOMING EVENTS PREVIEW ─────────────────────── -->
+  <section id="events" class="events-preview-section">
     <div class="container">
-      <div class="section-header reveal" style="text-align:center;margin:0 auto 3.5rem">
-        <div class="chip" style="justify-content:center">The Ecosystem</div>
-        <h2 class="section-title">Everything in the Forum ecosystem</h2>
-        <p class="section-sub" style="margin:0 auto">From free events to structured courses, verified certification to team upskilling — the full spectrum of AI development.</p>
+      <div class="ep-head reveal">
+        <div class="ep-head-left">
+          <div class="chip">Sosial AI Forum</div>
+          <h2 class="section-title" style="margin-bottom:0.5rem">What's on next</h2>
+          <p class="section-sub">Live sessions, workshops, and roundtables — hands-on by design.</p>
+        </div>
+        <a href={FORUM_URL} class="btn-secondary ep-view-all">View all events →</a>
       </div>
 
-      <div class="features-grid">
-        <div class="feature glass reveal reveal-delay-1">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="url(#fg1)" stroke-width="1.5"/><path d="M7 11l3 3 5-5" stroke="url(#fg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fg1" x1="2" y1="2" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+      {nextEvent ? (
+        <div class="ep-card glass reveal">
+          <div class="ep-date-badge">
+            <span class="ep-day">{formatDate(nextEvent.date).day}</span>
+            <span class="ep-month">{formatDate(nextEvent.date).month}</span>
           </div>
-          <h3>AIQ Assessment</h3>
-          <p>Get a precise baseline score across Think, Apply, and Lead dimensions. Know exactly where you stand.</p>
-        </div>
-
-        <div class="feature glass reveal reveal-delay-2">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="url(#fg2)" stroke-width="1.5"/><path d="M7 8h8M7 11h5" stroke="url(#fg2)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="fg2" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs></svg>
-          </div>
-          <h3>Structured Courses</h3>
-          <p>Tier-based learning tracks designed to move you from where you are to where you want to be.</p>
-        </div>
-
-        <div class="feature glass reveal reveal-delay-3">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 16c0-2.8 2.2-5 5-5h4c2.8 0 5 2.2 5 5" stroke="url(#fg3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="8" r="3" stroke="url(#fg3)" stroke-width="1.5"/><defs><linearGradient id="fg3" x1="4" y1="3" x2="18" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
-          </div>
-          <h3>Members Community</h3>
-          <p>Connect with peers, share wins, get feedback, and grow alongside other AI-fluent professionals.</p>
-        </div>
-
-        <div class="feature glass reveal reveal-delay-4">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 5h16M3 11h10M3 17h13" stroke="url(#fg4)" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="17" r="3" fill="none" stroke="url(#fg4)" stroke-width="1.5"/><defs><linearGradient id="fg4" x1="3" y1="5" x2="20" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
-          </div>
-          <h3>Resources & Playbooks</h3>
-          <p>Curated prompt libraries, AI workflow templates, and tool guides — ready to use immediately.</p>
-        </div>
-
-        <div class="feature glass reveal reveal-delay-3">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2 6h6l-5 3.5 2 6L11 15l-5 3.5 2-6L3 9h6l2-6z" stroke="url(#fg5)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="fg5" x1="3" y1="3" x2="19" y2="19" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
-          </div>
-          <h3>Sosial AI Forum</h3>
-          <p>Monthly workshops, roundtables, and the brAInstorm Series — live events where AI practitioners meet, build, and push each other forward.</p>
-        </div>
-
-        <div class="feature glass reveal reveal-delay-4">
-          <div class="feature-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="13" width="14" height="7" rx="2" stroke="url(#fg6)" stroke-width="1.5"/><path d="M8 13V9a3 3 0 016 0v4" stroke="url(#fg6)" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="17" r="1.2" fill="url(#fg6)"/><defs><linearGradient id="fg6" x1="4" y1="4" x2="18" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#00CFFF"/></linearGradient></defs></svg>
-          </div>
-          <h3>AIQ Certification</h3>
-          <p>Earn your verified AIQ certificate to showcase your AI fluency to employers, clients, and teams.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
-  <section id="how" class="how-section grid-bg">
-    <div class="glow-blob how-glow"></div>
-    <div class="container">
-      <div class="section-header reveal" style="text-align:center;margin:0 auto 4rem">
-        <div class="chip" style="justify-content:center">The Process</div>
-        <h2 class="section-title">Three steps to AI fluency</h2>
-        <p class="section-sub" style="margin:0 auto">Simple, structured, and designed to create lasting results — not just surface knowledge.</p>
-      </div>
-
-      <div class="steps">
-        <div class="step reveal reveal-delay-1">
-          <div class="step-number">01</div>
-          <div class="step-connector"></div>
-          <div class="step-content glass">
-            <div class="step-icon">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="url(#sg1)" stroke-width="1.5"/><text x="14" y="19" text-anchor="middle" font-family="'JetBrains Mono'" font-size="13" font-weight="700" fill="url(#sg1)">?</text><defs><linearGradient id="sg1" x1="3" y1="3" x2="25" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          <div class="ep-body">
+            <div class="ep-tags">
+              <span class="ep-format-chip" style={`background:${formatColors[nextEvent.format] ?? 'rgba(0,207,255,0.08)'};color:${formatTextColors[nextEvent.format] ?? 'var(--cyan)'};border-color:${(formatTextColors[nextEvent.format] ?? '#00CFFF')}33;border:1px solid`}>
+                {nextEvent.format}
+              </span>
+              <span class="ep-tier-chip">{nextEvent.tierRecommended}</span>
             </div>
-            <h3>Take the AIQ Assessment</h3>
-            <p>Answer a curated set of questions that measure your AI thinking, application, and leadership. Get your score in minutes.</p>
-          </div>
-        </div>
-
-        <div class="step reveal reveal-delay-2">
-          <div class="step-number">02</div>
-          <div class="step-connector"></div>
-          <div class="step-content glass">
-            <div class="step-icon">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="10" r="4" stroke="url(#sg2)" stroke-width="1.5"/><path d="M20 5l2 2-2 2" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="sg2" x1="6" y1="4" x2="24" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
+            <h3 class="ep-title">{nextEvent.title}</h3>
+            <p class="ep-desc">{nextEvent.description}</p>
+            <div class="ep-meta">
+              <span class="ep-meta-item">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 3.5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                {nextEvent.time} {nextEvent.timezone}
+              </span>
+              <span class="ep-sep">·</span>
+              <span class="ep-meta-item">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="5" r="2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 11.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                {nextEvent.capacity} spots
+              </span>
+              <span class="ep-sep">·</span>
+              <span class="ep-meta-item">{nextEvent.location}</span>
             </div>
-            <h3>Join the Sosial AI Society</h3>
-            <p>Based on your score, you'll be placed in the right learning track. Access courses, community, and resources built for your level.</p>
+          </div>
+          <div class="ep-cta">
+            <p class="ep-date-full">{formatDate(nextEvent.date).weekday}, {formatDate(nextEvent.date).full}</p>
+            <button
+              class="luma-checkout--button btn-primary ep-register-btn"
+              type="button"
+              data-luma-action="checkout"
+              data-luma-event-id={nextEvent.lumaEventId}
+            >
+              Register — Free
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="ep-register-note">Opens Luma registration</p>
           </div>
         </div>
-
-        <div class="step reveal reveal-delay-3">
-          <div class="step-number">03</div>
-          <div class="step-connector last"></div>
-          <div class="step-content glass">
-            <div class="step-icon">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 6 6.5 1-4.7 4.6 1.1 6.5L14 19.2 8.6 22.1l1.1-6.5L5 11l6.5-1L14 4z" stroke="url(#sg3)" stroke-width="1.5" stroke-linejoin="round" fill="none"/><defs><linearGradient id="sg3" x1="5" y1="4" x2="23" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#00CFFF"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs></svg>
-            </div>
-            <h3>Level Up Your AIQ</h3>
-            <p>Track your growth over time. Retake the assessment, move through tiers, earn your certification, and lead with confidence.</p>
-          </div>
+      ) : (
+        <div class="ep-empty glass reveal">
+          <p>No upcoming events scheduled. <a href={FORUM_URL} style="color:var(--cyan);text-decoration:none">See the full calendar →</a></p>
         </div>
-      </div>
+      )}
     </div>
   </section>
 

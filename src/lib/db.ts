@@ -201,8 +201,10 @@ export async function submitSpeakerApplication({
 export async function setSpeakerApplicationsOpen(open: boolean): Promise<void> {
   const { error } = await supabase
     .from('system_config')
-    .update({ value: open ? 'true' : 'false', updated_at: new Date().toISOString() })
-    .eq('key', 'speaker_applications_open')
+    .upsert(
+      { key: 'speaker_applications_open', value: open ? 'true' : 'false', updated_at: new Date().toISOString() },
+      { onConflict: 'key' }
+    )
   if (error) {
     console.error('[db] setSpeakerApplicationsOpen error:', error.message)
     throw error

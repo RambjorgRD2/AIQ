@@ -441,7 +441,7 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
       <div class="ep-head reveal">
         <div class="ep-head-left">
           <div class="chip">Sosial AI Forum</div>
-          <h2 class="section-title" style="margin-bottom:0.5rem">What's on next</h2>
+          <h2 class="section-title" id="events-heading" style="margin-bottom:0.5rem">What's on next</h2>
           <p class="section-sub">Live sessions, workshops, and roundtables — hands-on by design.</p>
         </div>
         <a href={FORUM_URL} class="btn-secondary ep-view-all">View all events →</a>
@@ -1561,6 +1561,18 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     .hero-stats { gap: 0.5rem; }
     .stat-pill { padding: 0.5rem 0.75rem; min-width: 54px; }
   }
+  /* ─── EVENTS HEADING ROULETTE ─────────────────────── */
+  #events-heading {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #events-heading.heading-out {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  #events-heading.heading-in {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 </style>
 
 
@@ -1640,4 +1652,23 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     }
   }, { threshold: 0.3 });
   if (heroVisual) heroObs.observe(heroVisual);
+
+  // Events heading roulette
+  const headings = ["What's on next", "What's cooking", "What's next", "Upcoming", "What's brewing"];
+  const headingEl = document.getElementById('events-heading');
+  let headingIdx = 0;
+  if (headingEl) {
+    setInterval(() => {
+      headingEl.classList.add('heading-out');
+      setTimeout(() => {
+        headingIdx = (headingIdx + 1) % headings.length;
+        headingEl.textContent = headings[headingIdx];
+        headingEl.classList.remove('heading-out');
+        headingEl.classList.add('heading-in');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          headingEl.classList.remove('heading-in');
+        }));
+      }, 260);
+    }, 3500);
+  }
 </script>

@@ -139,7 +139,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   .adm-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 1rem;
     padding: 0 2rem;
     height: 60px;
     border-bottom: 1px solid rgba(0,207,255,0.08);
@@ -391,8 +392,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
   const panelEl        = document.getElementById('adm-panel')!;
   const signinLink     = document.getElementById('adm-signin-link') as HTMLAnchorElement;
 
-  // Prefetch toggle state immediately — no auth needed for read
-  const toggleStatePromise = isSpeakerApplicationsOpen().catch(() => null);
 
   const statusBadge    = document.getElementById('adm-status-badge')!;
   const statusText     = document.getElementById('adm-status-text')!;
@@ -427,11 +426,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
     await loadToggleState();
   });
 
-  // ── Load current state (uses prefetched promise) ─────────────────────────────
+  // ── Load current state ──────────────────────────────────────────────────────
   async function loadToggleState() {
     try {
-      const isOpen = await toggleStatePromise;
-      if (isOpen === null) throw new Error('fetch failed');
+      const isOpen = await isSpeakerApplicationsOpen();
       currentState = isOpen;
       renderToggle(isOpen);
     } catch (_e) {

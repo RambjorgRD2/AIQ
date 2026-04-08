@@ -7,6 +7,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ASSESSMENT_URL = `${BASE}/assessment`;
 const FORUM_URL = `${BASE}/forum`;
 const SERVICES_URL = `${BASE}/services`;
+// AI Summit Norway — swap '#' for real interest-form URL when ready to go live
+const SUMMIT_INTEREST_URL = '#';
 
 const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
 ---
@@ -495,6 +497,56 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
           <p>No upcoming events scheduled. <a href={FORUM_URL} style="color:var(--cyan);text-decoration:none">See the full calendar →</a></p>
         </div>
       )}
+    </div>
+  </section>
+
+  <!-- ─── AI SUMMIT NORWAY (hidden — remove style attr to publish) ── -->
+  <section id="summit" class="summit-section" style="display:none">
+    <div class="glow-blob summit-glow"></div>
+    <div class="container">
+      <div class="summit-inner reveal">
+        <div class="chip" style="justify-content:center;margin-bottom:1rem">Coming 2027</div>
+        <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.2rem);text-align:center">
+          <span class="gradient-text">AI Summit Norway</span>
+        </h2>
+        <p class="section-sub" style="text-align:center;max-width:580px;margin:0 auto 3rem">
+          Norway's annual gathering for AI-fluent professionals and leaders — where practitioners, builders, and decision-makers meet to raise the national standard of applied AI.
+        </p>
+
+        <div class="summit-timeline">
+          <div class="summit-milestone">
+            <div class="sm-marker"><span class="sm-year">2026</span></div>
+            <div class="sm-content">
+              <h4 class="sm-title">Community foundation</h4>
+              <p class="sm-desc">Monthly Sosial AI Forum sessions across Norway. Building the practitioner network.</p>
+            </div>
+          </div>
+          <div class="summit-connector"></div>
+          <div class="summit-milestone">
+            <div class="sm-marker"><span class="sm-year">Q1 '27</span></div>
+            <div class="sm-content">
+              <h4 class="sm-title">Programme &amp; tickets</h4>
+              <p class="sm-desc">Speaker lineup, founding sponsors, and early-bird registration opens.</p>
+            </div>
+          </div>
+          <div class="summit-connector"></div>
+          <div class="summit-milestone summit-milestone--highlight">
+            <div class="sm-marker sm-marker--highlight"><span class="sm-year">Q2 '27</span></div>
+            <div class="sm-content">
+              <h4 class="sm-title">Inaugural summit — Oslo</h4>
+              <p class="sm-desc">400–600 practitioners, leaders, and builders. "State of Norwegian AI Fluency" report released live.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="summit-cta">
+          <p class="summit-cta-label">Get notified when registration opens</p>
+          <a href={SUMMIT_INTEREST_URL} class="btn-primary">
+            Register interest
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1561,6 +1613,106 @@ const nextEvent = events.find(e => e.status === 'upcoming') ?? null;
     .hero-stats { gap: 0.5rem; }
     .stat-pill { padding: 0.5rem 0.75rem; min-width: 54px; }
   }
+  /* ─── AI SUMMIT NORWAY ─────────────────────────────── */
+  .summit-section {
+    padding: 5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .summit-glow {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+    top: -100px; left: 50%; transform: translateX(-50%);
+  }
+  .summit-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .summit-timeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+  .summit-milestone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  .summit-connector {
+    flex: 0 0 2rem;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(0,207,255,0.3), rgba(124,58,237,0.3));
+    margin-top: 1.5rem;
+    align-self: flex-start;
+  }
+  .sm-marker {
+    width: 3rem; height: 3rem;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,207,255,0.3);
+    background: rgba(0,207,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sm-marker--highlight {
+    border-color: rgba(124,58,237,0.6);
+    background: rgba(124,58,237,0.12);
+    box-shadow: 0 0 20px rgba(124,58,237,0.25);
+  }
+  .sm-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--cyan);
+  }
+  .sm-marker--highlight .sm-year { color: #c084fc; }
+  .sm-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.3rem;
+  }
+  .sm-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+    padding: 0 0.25rem;
+  }
+  .summit-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .summit-cta-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    .summit-timeline {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .summit-milestone { flex-direction: row; text-align: left; gap: 1rem; }
+    .summit-connector {
+      width: 2px; height: 1.5rem; flex: 0 0 1.5rem;
+      background: linear-gradient(180deg, rgba(0,207,255,0.3), rgba(124,58,237,0.3));
+      margin: 0 0 0 1.4rem;
+      align-self: auto;
+    }
+  }
+
   /* ─── EVENTS HEADING ROULETTE ─────────────────────── */
   #events-heading {
     transition: opacity 0.25s ease, transform 0.25s ease;

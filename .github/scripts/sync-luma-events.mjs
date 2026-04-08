@@ -118,11 +118,12 @@ function parseIcal(raw) {
     let time = d.length >= 13 ? `${d.slice(9,11)}:${d.slice(11,13)}` : '00:00';
 
     // Resolve timezone:
-    //   1. Explicit TZID on DTSTART → use as-is, no conversion needed
-    //   2. Z-suffix (UTC) + calTzid → convert UTC→local, use calTzid as label
+    //   1. Explicit TZID on DTSTART (non-UTC) → use as-is, no conversion needed
+    //   2. Z-suffix OR TZID=UTC → both mean UTC; convert to calTzid if available
     //   3. Floating time (no Z, no TZID) → already local, just label with calTzid
-    const effectiveTzid = tzid || calTzid || '';
-    if (dtstart.endsWith('Z') && effectiveTzid) {
+    const isUtcTime = dtstart.endsWith('Z') || tzid === 'UTC';
+    const effectiveTzid = (tzid && tzid !== 'UTC') ? tzid : (calTzid || tzid || '');
+    if (isUtcTime && effectiveTzid && effectiveTzid !== 'UTC') {
       const utc = new Date(`${date}T${time}:00Z`);
       date = new Intl.DateTimeFormat('en-CA', {
         timeZone: effectiveTzid, year: 'numeric', month: '2-digit', day: '2-digit',

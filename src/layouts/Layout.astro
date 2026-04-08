@@ -156,7 +156,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
       const ADMIN_EMAIL = 'rambjorg.rdd@gmail.com'
 
       // Subscribe to auth state changes — fires on page load and on sign in/out
-      supabase.auth.onAuthStateChange((_event, session) => {
+      supabase?.auth.onAuthStateChange((_event, session) => {
         const user = session?.user ?? null
         const isAdmin = user?.email === ADMIN_EMAIL
 
@@ -300,7 +300,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
         const signOutTimer = setTimeout(async () => {
           clearInterval(tick)
           toast.classList.remove('visible')
-          await supabase.auth.signOut()
+          await supabase?.auth.signOut()
           window.location.href = '/'
         }, TOAST_DURATION)
 

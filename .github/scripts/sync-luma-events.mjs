@@ -75,11 +75,11 @@ function unescape(s) {
 }
 
 const TZ_ABBR = {
-  'Europe/Oslo': 'CET',       'Europe/Stockholm': 'CET',
-  'Europe/Copenhagen': 'CET', 'Europe/Berlin': 'CET',
-  'Europe/Paris': 'CET',      'Europe/London': 'GMT',
-  'America/New_York': 'ET',   'America/Chicago': 'CT',
-  'America/Denver': 'MT',     'America/Los_Angeles': 'PT',
+  'Europe/Oslo': 'Norwegian Time', 'Europe/Stockholm': 'CET/CEST',
+  'Europe/Copenhagen': 'CET/CEST', 'Europe/Berlin': 'CET/CEST',
+  'Europe/Paris': 'CET/CEST',      'Europe/London': 'GMT',
+  'America/New_York': 'ET',        'America/Chicago': 'CT',
+  'America/Denver': 'MT',          'America/Los_Angeles': 'PT',
   'UTC': 'UTC',
 };
 

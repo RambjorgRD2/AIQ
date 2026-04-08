@@ -31,7 +31,7 @@ export const events: ForumEvent[] = [
     title: "Sosial AI | Workshop",
     date: "2026-04-15",
     time: "10:00",
-    timezone: "CET",
+    timezone: "Norwegian Time",
     format: "Meetup",
     location: "PEAK Sunnfjord, Hafstadvegen 23, Hafstadvegen 25, 6800 Førde, Norway",
     description: "PEAK Sunnfjord Førde, Vestland Norway 🤖 AI Agents — Setup, Creation & Understanding",

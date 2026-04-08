@@ -32,7 +32,7 @@ export const events: ForumEvent[] = [
     date: "2026-04-15",
     time: "10:00",
     timezone: "Norwegian Time",
-    format: "Meetup",
+    format: "Workshop",
     location: "PEAK Sunnfjord, Hafstadvegen 23, Hafstadvegen 25, 6800 Førde, Norway",
     description: "PEAK Sunnfjord Førde, Vestland Norway 🤖 AI Agents — Setup, Creation & Understanding",
     tierRecommended: "All tiers",

@@ -29,12 +29,13 @@ if (!ICAL_URL) {
 
 // ─── FORMAT INFERENCE ─────────────────────────────────────────────────────────
 const FORMAT_RULES = [
-  [/workshop/i,            'Workshop'],
-  [/webinar/i,             'Webinar'],
-  [/roundtable/i,          'Roundtable'],
-  [/q&a|q and a/i,         'Q&A'],
-  [/meetup/i,              'Meetup'],
-  [/brainstorm|brainstorm/i,'brAInstorm'],
+  [/workshop/i,             'Workshop'],
+  [/webinar/i,              'Webinar'],
+  [/roundtable/i,           'Roundtable'],
+  [/q&a|q and a/i,          'Q&A'],
+  [/meetup/i,               'Meetup'],
+  [/brainstorm|brainstorm/i, 'brAInstorm'],
+  [/summit/i,               'Meetup'],
 ];
 
 function inferFormat(title = '') {
@@ -42,6 +43,21 @@ function inferFormat(title = '') {
     if (re.test(title)) return fmt;
   }
   return 'Workshop';
+}
+
+// ─── TIER INFERENCE ───────────────────────────────────────────────────────────
+const TIER_RULES = [
+  [/nybegynner|beginner|intro|starter|grunnleggende/i, 'Beginner'],
+  [/viderekommen|intermediate/i,                        'Intermediate'],
+  [/avansert|advanced|ekspert|expert/i,                 'Advanced'],
+  [/leder|ledelse|leader|leadership|strategi|strategy|executive/i, 'Leadership'],
+];
+
+function inferTier(title = '') {
+  for (const [re, tier] of TIER_RULES) {
+    if (re.test(title)) return tier;
+  }
+  return 'All tiers';
 }
 
 // ─── ICAL PARSER ──────────────────────────────────────────────────────────────
@@ -165,25 +181,18 @@ function parseIcal(raw) {
 }
 
 // ─── PRESERVE MANUAL FIELDS ───────────────────────────────────────────────────
-// tierRecommended and capacity are not in iCal — keep any values already set.
+// capacity is not in iCal — keep any value already set.
+// format and tierRecommended are always re-derived from the event title.
 
 function parseExisting(src) {
-  const tiers = {}, capacities = {}, formats = {};
-  const re = /lumaEventId:\s*['"]([^'"]+)['"]\s*,[\s\S]*?tierRecommended:\s*([^,\n]+)[\s\S]*?capacity:\s*([^,\n]+)/g;
+  const capacities = {};
+  const re = /lumaEventId:\s*['"]([^'"]+)['"]\s*,[\s\S]*?capacity:\s*([^,\n]+)/g;
   let m;
   while ((m = re.exec(src)) !== null) {
-    const id = m[1];
-    const tier = m[2].trim();
-    const cap  = m[3].trim();
-    if (tier !== 'null' && tier !== "''") tiers[id] = tier.replace(/^['"]|['"]$/g, '');
-    if (cap  !== 'null')                  capacities[id] = cap;
+    const cap = m[2].trim();
+    if (cap !== 'null') capacities[m[1]] = cap;
   }
-  // Preserve manually set format (auto-inferred format from title may be wrong)
-  const fmtRe = /lumaEventId:\s*['"]([^'"]+)['"][\s\S]*?format:\s*['"]([^'"]+)['"]/g;
-  while ((m = fmtRe.exec(src)) !== null) {
-    formats[m[1]] = m[2];
-  }
-  return { tiers, capacities, formats };
+  return { capacities };
 }
 
 // ─── SERIALISE ────────────────────────────────────────────────────────────────
@@ -231,13 +240,12 @@ async function main() {
     process.exit(0);
   }
 
-  // Restore manually curated fields
+  // Restore manually curated fields + apply title-based inference
   const src = readFileSync(EVENTS_TS, 'utf-8');
-  const { tiers, capacities, formats } = parseExisting(src);
+  const { capacities } = parseExisting(src);
   for (const e of events) {
-    if (tiers[e.lumaEventId])      e.tierRecommended = tiers[e.lumaEventId];
-    if (capacities[e.lumaEventId]) e.capacity        = capacities[e.lumaEventId];
-    if (formats[e.lumaEventId])    e.format          = formats[e.lumaEventId];
+    e.tierRecommended = inferTier(e.title);
+    if (capacities[e.lumaEventId]) e.capacity = capacities[e.lumaEventId];
   }
 
   // Sort: upcoming first (chronological), then past (reverse chronological)

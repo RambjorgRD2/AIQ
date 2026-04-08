@@ -27,6 +27,14 @@ if (!ICAL_URL) {
   process.exit(1);
 }
 
+// ─── PRIVATE / UNLISTED EVENT BLOCKLIST ──────────────────────────────────────
+// Luma doesn't set CLASS:PRIVATE in its iCal feed — private events appear as
+// regular events. Add the lumaEventId of any event that should never be shown.
+const BLOCKED_EVENT_IDS = new Set([
+  'evt-1tNVfQUsInwFzHF', // Sosial AI | Nybegynner (private)
+  'evt-rJyZTxQqHLAVYEX', // AI Summit Norway (private — will remove when public)
+]);
+
 // ─── FORMAT INFERENCE ─────────────────────────────────────────────────────────
 const FORMAT_RULES = [
   [/workshop/i,             'Workshop'],
@@ -129,6 +137,7 @@ function parseIcal(raw) {
 
     if (!dtstart || !summary) continue;
     if (eventClass === 'PRIVATE' || eventClass === 'CONFIDENTIAL') continue;
+    if (BLOCKED_EVENT_IDS.has(lumaEventId)) continue;
 
     // Parse DTSTART: YYYYMMDDTHHMMSS[Z] or YYYYMMDD (all-day)
     const d = dtstart.replace(/Z$/, '');

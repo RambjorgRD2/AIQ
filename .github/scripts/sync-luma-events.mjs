@@ -102,15 +102,17 @@ function parseIcal(raw) {
       fields[key] = { value: line.slice(colon + 1).trim(), params };
     }
 
-    const summary   = unescape(fields.SUMMARY?.value   || '');
-    const uid       = fields.UID?.value                 || '';
-    const location  = unescape(fields.LOCATION?.value  || '');
-    const url       = fields.URL?.value                 || '';
-    const rawDesc   = unescape(fields.DESCRIPTION?.value || '');
-    const dtstart   = fields.DTSTART?.value             || '';
-    const tzid      = fields.DTSTART?.params?.TZID      || '';
+    const summary    = unescape(fields.SUMMARY?.value   || '');
+    const uid        = fields.UID?.value                 || '';
+    const location   = unescape(fields.LOCATION?.value  || '');
+    const url        = fields.URL?.value                 || '';
+    const rawDesc    = unescape(fields.DESCRIPTION?.value || '');
+    const dtstart    = fields.DTSTART?.value             || '';
+    const tzid       = fields.DTSTART?.params?.TZID      || '';
+    const eventClass = (fields.CLASS?.value || 'PUBLIC').toUpperCase();
 
     if (!dtstart || !summary) continue;
+    if (eventClass === 'PRIVATE' || eventClass === 'CONFIDENTIAL') continue;
 
     // Parse DTSTART: YYYYMMDDTHHMMSS[Z] or YYYYMMDD (all-day)
     const d = dtstart.replace(/Z$/, '');
